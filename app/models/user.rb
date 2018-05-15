@@ -13,4 +13,8 @@ class User < ApplicationRecord
     validates :pw_salt, presence: true, format: {
         with: /[a-z0-9]{10}/i
     }
+
+    def self.types
+        %w(Student)
+    end
 end
