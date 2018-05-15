@@ -12,7 +12,13 @@
 rails setup
 ```
 
-2 - Inicialize o aplicativo em um servidor local:
+2 - Gere o banco de dados:
+
+```
+rails db:migrate
+```
+
+3 - Inicialize o aplicativo em um servidor local:
 
 ```
 rails server
