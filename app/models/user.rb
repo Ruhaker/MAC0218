@@ -1,8 +1,6 @@
-require 'digest'
-
 class User < ApplicationRecord
     validates :name, presence: true
-    
+
     validates :email, presence: true, format: {
         with: /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i,
         message: "is not a valid e-mail"
