@@ -5,9 +5,3 @@ one:
   email: MyString
   pw_hash: MyString
   pw_salt: MyString
-
-two:
-  name: MyString
-  email: MyString
-  pw_hash: MyString
-  pw_salt: MyString
