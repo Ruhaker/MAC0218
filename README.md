@@ -1,19 +1,50 @@
 # (Nome do projeto a definir)
 
-
 ## Administre melhor seu curso na USP!
 
-### Instalação
+### Instalação e Execução
 
-Para instalar o 
+0 - Baixe o projeto do repositório;
+
+1 - Instale as dependências:
+
+```
+rails setup
+```
+
+2 - Inicialize o aplicativo em um servidor local:
+
+```
+rails server
+```
+
+Para acessar a aplicação, abra um navegador e entre com seguinte endereço:
+
+```
+localhost:3000
+```
 
 ### Execução de testes
 
-### Membros do grupo
+Para rodar os testes, execute:
+
+```
+rails test
+```
+
+### Autores do projeto
 
 * Lucas Yau (@Ruhaker) 
 * Victor Seiji (@seijihariki)
 * André Akabane (@andre19980)
-* Gabriely Rangel ()
+* Gabriely Rangel (@gprangel)
 
 ### Planejamento (Entregas)
+
+#### Primeira entrega:
+
+Nesta primeira entrega, planejamos implementar:
+
+* Autenticação de usuário;
+* Implementar o banco de dados;
+* Visualização básica;
