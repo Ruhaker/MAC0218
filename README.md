@@ -53,4 +53,3 @@ Nesta primeira entrega, planejamos implementar:
 
 * Autenticação de usuário;
 * Implementar o banco de dados;
-* Visualização básica;
