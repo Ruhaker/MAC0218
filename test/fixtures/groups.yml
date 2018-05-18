@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
+  name: Fixa
   min_credits: MyInteger
   min_subjects: MyInteger
 
 two:
-  name: MyString
+  name: Personalizada
   min_credits: MyInteger
   min_subjects: MyInteger
