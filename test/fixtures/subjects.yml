@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: MyString
+  name: MyString
+  credits_class: MyInteger 
+  credits_work: MyInteger
+  workload: MyInteger
+  description: MyString
+
+two:
+  code: MyString
+  name: MyString
+  credits_class: MyInteger 
+  credits_work: MyInteger
+  workload: MyInteger
+  description: MyString
