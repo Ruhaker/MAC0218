@@ -1,8 +1,10 @@
 class User < ApplicationRecord
+    email_regex = /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
+    
     validates :name, presence: true
 
     validates :email, presence: true, format: {
-        with: /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i,
+        with: email_regex,
         message: "is not a valid e-mail"
     }
 
