@@ -1,6 +1,9 @@
 class User < ApplicationRecord
+    #has_one :supervisor
+    #has_one :student
+
     email_regex = /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
-    
+
     validates :name, presence: true
 
     validates :email, presence: true, format: {
