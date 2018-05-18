@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180518133043) do
+ActiveRecord::Schema.define(version: 20180518144543) do
 
   create_table "courses", force: :cascade do |t|
     t.string "name"
@@ -29,12 +29,6 @@ ActiveRecord::Schema.define(version: 20180518133043) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "students", force: :cascade do |t|
-    t.integer "nusp"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "subjects", force: :cascade do |t|
     t.string "code"
     t.string "name"
@@ -46,12 +40,6 @@ ActiveRecord::Schema.define(version: 20180518133043) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "supervisors", force: :cascade do |t|
-    t.integer "cpf"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -59,6 +47,9 @@ ActiveRecord::Schema.define(version: 20180518133043) do
     t.string "pw_salt"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "nusp"
+    t.integer "cpf"
+    t.string "type"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
