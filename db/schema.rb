@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20180518172131) do
-=======
-ActiveRecord::Schema.define(version: 20180518144543) do
->>>>>>> c71314fb0a529138718b22799cfce377bf1cbdb9
 
   create_table "courses", force: :cascade do |t|
     t.string "name"
@@ -33,7 +29,6 @@ ActiveRecord::Schema.define(version: 20180518144543) do
     t.datetime "updated_at", null: false
   end
 
-<<<<<<< HEAD
   create_table "plans", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -50,8 +45,6 @@ ActiveRecord::Schema.define(version: 20180518144543) do
     t.datetime "updated_at", null: false
   end
 
-=======
->>>>>>> c71314fb0a529138718b22799cfce377bf1cbdb9
   create_table "subjects", force: :cascade do |t|
     t.string "code"
     t.string "name"
@@ -59,6 +52,12 @@ ActiveRecord::Schema.define(version: 20180518144543) do
     t.integer "credits_work"
     t.integer "workload"
     t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "supervisors", force: :cascade do |t|
+    t.integer "cpf"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
