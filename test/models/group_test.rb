@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class GroupTest < ActiveSupport::TestCase
-  def setup
+    def setup
         @group = Group.new(name: "Introdução à IA", min_credits: 12, min_subjets: 3)
     end
 
