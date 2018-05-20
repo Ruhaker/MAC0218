@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: Fixa
-  min_credits: MyInteger
-  min_subjects: MyInteger
+  name: Opt. de Estatística
+  min_credits: nil
+  min_subjects: 1
 
 two:
-  name: Personalizada
-  min_credits: MyInteger
-  min_subjects: MyInteger
+  name: Des. de Software
+  min_credits: nil
+  min_subjects: 4

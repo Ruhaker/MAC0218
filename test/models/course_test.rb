@@ -2,7 +2,12 @@ require 'test_helper'
 
 class CourseTest < ActiveSupport::TestCase
     def setup
-        @course = Course.new(name: "Ciência da Computação", credits: 195, faculty: "IME", expected_time: 8)
+        @course = Course.new(
+            name: "Ciência da Computação",
+            credits: 195,
+            teaching_unit: "IME",
+            expected_time: 8
+            )
     end
 
     test "should be valid" do
@@ -19,8 +24,8 @@ class CourseTest < ActiveSupport::TestCase
         assert_not @course.valid?
     end
     
-    test "faculty should be present" do
-        @course.faculty = ""
+    test "teaching_unit should be present" do
+        @course.teaching_unit = ""
         assert_not @course.valid?
     end
     

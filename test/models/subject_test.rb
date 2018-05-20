@@ -5,11 +5,17 @@ class SubjectTest < ActiveSupport::TestCase
   #   assert true
   # end
 def setup
-        @subject = Subject.new(code: "MAC0110", name: "Introdução à Computação", credits_class: 4, credits_work: 0, workload: 60, description: "Apresentação a linguagens de programação...")
+        @subject = Subject.new(
+            code: "MAC0110",
+            name: "Introdução à Computação",
+            credits_class: 4,
+            credits_work: 0,
+            workload: 60,
+            description: "Apresentação a linguagens de programação...")
     end
 
     test "should be valid" do
-        assert @subject.valid?
+        assert @subject.valid?, "Subject data should be valid: #{@subject.to_s}"
     end
 
     test "code should be present" do
@@ -34,12 +40,12 @@ def setup
 
 
     test "credits_class should be an integer number" do
-        @subject.credits = 19.5
+        @subject.credits_class = 19.5
         assert_not @subject.valid?
     end
 
     test "credits_work should be an integer number" do
-        @subject.credits = 19.5
+        @subject.credits_work = 19.5
         assert_not @subject.valid?
     end
 

@@ -2,7 +2,14 @@ require 'test_helper'
 
 class SupervisorTest < ActiveSupport::TestCase
     def setup
-        @supervisor = Supervisor.new(cpf: 87633547689)
+        # Supervisor with password = 123
+        @supervisor = Supervisor.new(
+            name: 'Supervisor 1',
+            cpf: 87633547689,
+            email: 'email@email.com',
+            pw_hash: '51f3395b4f88d87f58fc1e5e5de04a1dcf5b03ea321121be4d0ade81861dca20',
+            pw_salt: '7901253e91'
+            )
     end
 
     test "should be valid" do
@@ -28,7 +35,7 @@ class SupervisorTest < ActiveSupport::TestCase
     end
     
     test "cpf validation should reject invalid cpf numbers" do
-        invalid_cpfs = [979543678.45, 102947338-56, 473.84563989, "3748727859o", 5467398898]
+        invalid_cpfs = [979543678.45, 102947338-56, 473.84563989, "3748727859o", 539898]
         invalid_cpfs.each do |invalid_cpf|
             @supervisor.cpf = invalid_cpf
             assert_not @supervisor.valid?, "#{invalid_cpf.inspect} should be invalid"

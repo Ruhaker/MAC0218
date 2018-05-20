@@ -1,7 +1,17 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-three:
-  cpf: 12345 
+# Supervisor 1: password = coxinha
+super_1:
+  name: André Luiz Akabane Solak
+  cpf: 21766720382
+  email: deakabane@hotmail.com
+  pw_hash: 6f1f747b748c5bc0201360e11c701bdf028023f30e869e4faae8d89245f00da8
+  pw_salt: f31d0d2eb3
 
-four:
-  cpf: 54321 
+# Supervisor 1: password = miojo
+super_2:
+  name: Lucas Henrique Bahr Yau
+  cpf: 13272868828
+  email: lucas.yau@usp.br
+  pw_hash: b7efa261fb74743bcff2d99055fc70bf0a816e1172cf1466eb100294345e4ddb
+  pw_salt: 7fa8c8c96f

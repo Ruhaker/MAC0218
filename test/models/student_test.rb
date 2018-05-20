@@ -5,7 +5,14 @@ class StudentTest < ActiveSupport::TestCase
   #   assert true
   # end
     def setup
-        @student = Student.new(nusp: 9792571)
+        # Student with password = 123
+        @student = Student.new({
+            :name    => 'Student 1',
+            :nusp    => 9793692,
+            :email   => 'stu1@email.com',
+            :pw_hash => '215cdbc5fa64ba878835314da7daafbfdb814a534e3eb38cfcd198f30a0cf73d',
+            :pw_salt => 'b265ba01f7'
+            })
     end
 
     test "should be valid" do
@@ -22,6 +29,4 @@ class StudentTest < ActiveSupport::TestCase
         @student.nusp = 19.5
         assert_not @student.valid?
     end
-
-
 end

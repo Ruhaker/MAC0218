@@ -1,0 +1,6 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  browser: Chrome
+  ip_address: MyString
+  last_accessed: 2018-05-18 17:25:16

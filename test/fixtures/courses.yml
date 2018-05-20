@@ -1,13 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString 
-  credits: MyInteger 
-  faculty: MyString 
-  expected_time: MyInteger 
+  name: Ciência da Computação 
+  credits: 195
+  teaching_unit: IME 
+  expected_time: 8 
 
 two:
-  name: MyString 
-  credits: MyInteger 
-  faculty: MyString 
-  expected_time: MyInteger
+  name: Arquitetura e Urbanismo 
+  credits: 400 
+  teaching_unit: FAU 
+  expected_time: 10
