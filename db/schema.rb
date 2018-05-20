@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180518172131) do
+ActiveRecord::Schema.define(version: 20180520214242) do
 
   create_table "courses", force: :cascade do |t|
     t.string "name"
     t.integer "credits"
-    t.string "faculty"
+    t.string "teaching_unit"
     t.integer "expected_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -34,10 +34,14 @@ ActiveRecord::Schema.define(version: 20180518172131) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "students", force: :cascade do |t|
-    t.integer "nusp"
+  create_table "sessions", force: :cascade do |t|
+    t.string "browser"
+    t.string "ip_address"
+    t.datetime "last_accessed"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "session_key"
+    t.boolean "active"
   end
 
   create_table "subject_students", force: :cascade do |t|
@@ -56,12 +60,6 @@ ActiveRecord::Schema.define(version: 20180518172131) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "supervisors", force: :cascade do |t|
-    t.integer "cpf"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -70,7 +68,7 @@ ActiveRecord::Schema.define(version: 20180518172131) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "nusp"
-    t.integer "cpf"
+    t.bigint "cpf"
     t.string "type"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
