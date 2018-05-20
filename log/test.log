@@ -813,3 +813,523 @@ Completed 200 OK in 225ms (Views: 217.3ms | ActiveRecord: 0.0ms)
   [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
   [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
   [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (18.3ms)[0m  [1m[31mDELETE FROM "subject_students"[0m
+  [1m[36mFixture Insert (0.2ms)[0m  [1m[32mINSERT INTO "subject_students" ("created_at", "updated_at", "id") VALUES ('2018-05-18 18:30:30.886356', '2018-05-18 18:30:30.886356', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subject_students" ("created_at", "updated_at", "id") VALUES ('2018-05-18 18:30:30.886356', '2018-05-18 18:30:30.886356', 298486374)[0m
+  [1m[36mFixture Delete (0.2ms)[0m  [1m[31mDELETE FROM "subjects"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subjects" ("code", "name", "credits_class", "credits_work", "workload", "description", "created_at", "updated_at", "id") VALUES ('MAT123', 'MyString', 0, 0, 0, 'MyString', '2018-05-18 18:30:30.907226', '2018-05-18 18:30:30.907226', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subjects" ("code", "name", "credits_class", "credits_work", "workload", "description", "created_at", "updated_at", "id") VALUES ('MAC098', 'MyString', 0, 0, 0, 'MyString', '2018-05-18 18:30:30.907226', '2018-05-18 18:30:30.907226', 298486374)[0m
+  [1m[36mFixture Delete (0.2ms)[0m  [1m[31mDELETE FROM "plans"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "plans" ("created_at", "updated_at", "id") VALUES ('2018-05-18 18:30:30.909450', '2018-05-18 18:30:30.909450', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "plans" ("created_at", "updated_at", "id") VALUES ('2018-05-18 18:30:30.909450', '2018-05-18 18:30:30.909450', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "groups"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("name", "min_credits", "min_subjects", "created_at", "updated_at", "id") VALUES ('Fixa', 0, 0, '2018-05-18 18:30:30.911067', '2018-05-18 18:30:30.911067', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("name", "min_credits", "min_subjects", "created_at", "updated_at", "id") VALUES ('Personalizada', 0, 0, '2018-05-18 18:30:30.911067', '2018-05-18 18:30:30.911067', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "students"[0m
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.2ms)[0m  [1m[31mDELETE FROM "subject_students"[0m
+  [1m[36mFixture Insert (0.2ms)[0m  [1m[32mINSERT INTO "subject_students" ("created_at", "updated_at", "id") VALUES ('2018-05-18 18:31:31.678472', '2018-05-18 18:31:31.678472', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subject_students" ("created_at", "updated_at", "id") VALUES ('2018-05-18 18:31:31.678472', '2018-05-18 18:31:31.678472', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "subjects"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subjects" ("code", "name", "credits_class", "credits_work", "workload", "description", "created_at", "updated_at", "id") VALUES ('MAT123', 'MyString', 0, 0, 0, 'MyString', '2018-05-18 18:31:31.680949', '2018-05-18 18:31:31.680949', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subjects" ("code", "name", "credits_class", "credits_work", "workload", "description", "created_at", "updated_at", "id") VALUES ('MAC098', 'MyString', 0, 0, 0, 'MyString', '2018-05-18 18:31:31.680949', '2018-05-18 18:31:31.680949', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "plans"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "plans" ("created_at", "updated_at", "id") VALUES ('2018-05-18 18:31:31.683009', '2018-05-18 18:31:31.683009', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "plans" ("created_at", "updated_at", "id") VALUES ('2018-05-18 18:31:31.683009', '2018-05-18 18:31:31.683009', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "groups"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("name", "min_credits", "min_subjects", "created_at", "updated_at", "id") VALUES ('Fixa', 0, 0, '2018-05-18 18:31:31.684489', '2018-05-18 18:31:31.684489', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("name", "min_credits", "min_subjects", "created_at", "updated_at", "id") VALUES ('Personalizada', 0, 0, '2018-05-18 18:31:31.684489', '2018-05-18 18:31:31.684489', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "students"[0m
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.2ms)[0m  [1m[31mDELETE FROM "subject_students"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subject_students" ("created_at", "updated_at", "id") VALUES ('2018-05-18 18:31:58.071664', '2018-05-18 18:31:58.071664', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subject_students" ("created_at", "updated_at", "id") VALUES ('2018-05-18 18:31:58.071664', '2018-05-18 18:31:58.071664', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "subjects"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subjects" ("code", "name", "credits_class", "credits_work", "workload", "description", "created_at", "updated_at", "id") VALUES ('MAT123', 'MyString', 0, 0, 0, 'MyString', '2018-05-18 18:31:58.075108', '2018-05-18 18:31:58.075108', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subjects" ("code", "name", "credits_class", "credits_work", "workload", "description", "created_at", "updated_at", "id") VALUES ('MAC098', 'MyString', 0, 0, 0, 'MyString', '2018-05-18 18:31:58.075108', '2018-05-18 18:31:58.075108', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "plans"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "plans" ("created_at", "updated_at", "id") VALUES ('2018-05-18 18:31:58.078770', '2018-05-18 18:31:58.078770', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "plans" ("created_at", "updated_at", "id") VALUES ('2018-05-18 18:31:58.078770', '2018-05-18 18:31:58.078770', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "groups"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("name", "min_credits", "min_subjects", "created_at", "updated_at", "id") VALUES ('Fixa', 0, 0, '2018-05-18 18:31:58.080838', '2018-05-18 18:31:58.080838', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("name", "min_credits", "min_subjects", "created_at", "updated_at", "id") VALUES ('Personalizada', 0, 0, '2018-05-18 18:31:58.080838', '2018-05-18 18:31:58.080838', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "users"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "users" ("name", "nusp", "email", "pw_hash", "pw_salt", "created_at", "updated_at", "id") VALUES ('Victor Seiji Hariki', 9793694, 'victorseijih@gmail.com', 'hash', 'salt', '2018-05-18 18:31:58.083568', '2018-05-18 18:31:58.083568', 980190962)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "supervisors"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "supervisors" ("cpf", "created_at", "updated_at", "id") VALUES (12345, '2018-05-18 18:31:58.086874', '2018-05-18 18:31:58.086874', 113629430)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "supervisors" ("cpf", "created_at", "updated_at", "id") VALUES (54321, '2018-05-18 18:31:58.086874', '2018-05-18 18:31:58.086874', 281110143)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "courses"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "courses" ("name", "credits", "faculty", "expected_time", "created_at", "updated_at", "id") VALUES ('MyString', 0, 'MyString', 0, '2018-05-18 18:31:58.089040', '2018-05-18 18:31:58.089040', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "courses" ("name", "credits", "faculty", "expected_time", "created_at", "updated_at", "id") VALUES ('MyString', 0, 'MyString', 0, '2018-05-18 18:31:58.089040', '2018-05-18 18:31:58.089040', 298486374)[0m
+  [1m[35m (84.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+------------------------------
+UserTest: test_should_be_valid
+------------------------------
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.2ms)[0m  [1m[31mDELETE FROM "subject_students"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subject_students" ("created_at", "updated_at", "id") VALUES ('2018-05-18 18:32:35.255232', '2018-05-18 18:32:35.255232', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subject_students" ("created_at", "updated_at", "id") VALUES ('2018-05-18 18:32:35.255232', '2018-05-18 18:32:35.255232', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "subjects"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subjects" ("code", "name", "credits_class", "credits_work", "workload", "description", "created_at", "updated_at", "id") VALUES ('MAT123', 'MyString', 0, 0, 0, 'MyString', '2018-05-18 18:32:35.258985', '2018-05-18 18:32:35.258985', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subjects" ("code", "name", "credits_class", "credits_work", "workload", "description", "created_at", "updated_at", "id") VALUES ('MAC098', 'MyString', 0, 0, 0, 'MyString', '2018-05-18 18:32:35.258985', '2018-05-18 18:32:35.258985', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "plans"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "plans" ("created_at", "updated_at", "id") VALUES ('2018-05-18 18:32:35.262058', '2018-05-18 18:32:35.262058', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "plans" ("created_at", "updated_at", "id") VALUES ('2018-05-18 18:32:35.262058', '2018-05-18 18:32:35.262058', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "groups"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("name", "min_credits", "min_subjects", "created_at", "updated_at", "id") VALUES ('Fixa', 0, 0, '2018-05-18 18:32:35.264043', '2018-05-18 18:32:35.264043', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("name", "min_credits", "min_subjects", "created_at", "updated_at", "id") VALUES ('Personalizada', 0, 0, '2018-05-18 18:32:35.264043', '2018-05-18 18:32:35.264043', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "users"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "users" ("name", "nusp", "email", "pw_hash", "pw_salt", "created_at", "updated_at", "id") VALUES ('Victor Seiji Hariki', 9793694, 'victorseijih@gmail.com', 'hash', 'salt', '2018-05-18 18:32:35.267127', '2018-05-18 18:32:35.267127', 980190962)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "supervisors"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "supervisors" ("cpf", "created_at", "updated_at", "id") VALUES (12345, '2018-05-18 18:32:35.269809', '2018-05-18 18:32:35.269809', 113629430)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "supervisors" ("cpf", "created_at", "updated_at", "id") VALUES (54321, '2018-05-18 18:32:35.269809', '2018-05-18 18:32:35.269809', 281110143)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "courses"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "courses" ("name", "credits", "faculty", "expected_time", "created_at", "updated_at", "id") VALUES ('MyString', 0, 'MyString', 0, '2018-05-18 18:32:35.271803', '2018-05-18 18:32:35.271803', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "courses" ("name", "credits", "faculty", "expected_time", "created_at", "updated_at", "id") VALUES ('MyString', 0, 'MyString', 0, '2018-05-18 18:32:35.271803', '2018-05-18 18:32:35.271803', 298486374)[0m
+  [1m[35m (80.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+------------------------------
+UserTest: test_should_be_valid
+------------------------------
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.2ms)[0m  [1m[31mDELETE FROM "subject_students"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subject_students" ("created_at", "updated_at", "id") VALUES ('2018-05-18 18:32:41.674371', '2018-05-18 18:32:41.674371', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subject_students" ("created_at", "updated_at", "id") VALUES ('2018-05-18 18:32:41.674371', '2018-05-18 18:32:41.674371', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "subjects"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subjects" ("code", "name", "credits_class", "credits_work", "workload", "description", "created_at", "updated_at", "id") VALUES ('MAT123', 'MyString', 0, 0, 0, 'MyString', '2018-05-18 18:32:41.676559', '2018-05-18 18:32:41.676559', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subjects" ("code", "name", "credits_class", "credits_work", "workload", "description", "created_at", "updated_at", "id") VALUES ('MAC098', 'MyString', 0, 0, 0, 'MyString', '2018-05-18 18:32:41.676559', '2018-05-18 18:32:41.676559', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "plans"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "plans" ("created_at", "updated_at", "id") VALUES ('2018-05-18 18:32:41.678556', '2018-05-18 18:32:41.678556', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "plans" ("created_at", "updated_at", "id") VALUES ('2018-05-18 18:32:41.678556', '2018-05-18 18:32:41.678556', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "groups"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("name", "min_credits", "min_subjects", "created_at", "updated_at", "id") VALUES ('Fixa', 0, 0, '2018-05-18 18:32:41.680204', '2018-05-18 18:32:41.680204', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("name", "min_credits", "min_subjects", "created_at", "updated_at", "id") VALUES ('Personalizada', 0, 0, '2018-05-18 18:32:41.680204', '2018-05-18 18:32:41.680204', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "users"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "users" ("name", "nusp", "email", "pw_hash", "pw_salt", "created_at", "updated_at", "id") VALUES ('Victor Seiji Hariki', 9793694, 'victorseijih@gmail.com', 'hash', 'salt', '2018-05-18 18:32:41.681977', '2018-05-18 18:32:41.681977', 980190962)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "supervisors"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "supervisors" ("cpf", "created_at", "updated_at", "id") VALUES (12345, '2018-05-18 18:32:41.683618', '2018-05-18 18:32:41.683618', 113629430)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "supervisors" ("cpf", "created_at", "updated_at", "id") VALUES (54321, '2018-05-18 18:32:41.683618', '2018-05-18 18:32:41.683618', 281110143)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "courses"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "courses" ("name", "credits", "faculty", "expected_time", "created_at", "updated_at", "id") VALUES ('MyString', 0, 'MyString', 0, '2018-05-18 18:32:41.685164', '2018-05-18 18:32:41.685164', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "courses" ("name", "credits", "faculty", "expected_time", "created_at", "updated_at", "id") VALUES ('MyString', 0, 'MyString', 0, '2018-05-18 18:32:41.685164', '2018-05-18 18:32:41.685164', 298486374)[0m
+  [1m[35m (80.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+------------------------------
+UserTest: test_should_be_valid
+------------------------------
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.2ms)[0m  [1m[31mDELETE FROM "subject_students"[0m
+  [1m[36mFixture Insert (0.2ms)[0m  [1m[32mINSERT INTO "subject_students" ("created_at", "updated_at", "id") VALUES ('2018-05-18 18:33:11.421597', '2018-05-18 18:33:11.421597', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subject_students" ("created_at", "updated_at", "id") VALUES ('2018-05-18 18:33:11.421597', '2018-05-18 18:33:11.421597', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "subjects"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subjects" ("code", "name", "credits_class", "credits_work", "workload", "description", "created_at", "updated_at", "id") VALUES ('MAT123', 'MyString', 0, 0, 0, 'MyString', '2018-05-18 18:33:11.424250', '2018-05-18 18:33:11.424250', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subjects" ("code", "name", "credits_class", "credits_work", "workload", "description", "created_at", "updated_at", "id") VALUES ('MAC098', 'MyString', 0, 0, 0, 'MyString', '2018-05-18 18:33:11.424250', '2018-05-18 18:33:11.424250', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "plans"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "plans" ("created_at", "updated_at", "id") VALUES ('2018-05-18 18:33:11.426599', '2018-05-18 18:33:11.426599', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "plans" ("created_at", "updated_at", "id") VALUES ('2018-05-18 18:33:11.426599', '2018-05-18 18:33:11.426599', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "groups"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("name", "min_credits", "min_subjects", "created_at", "updated_at", "id") VALUES ('Fixa', 0, 0, '2018-05-18 18:33:11.428120', '2018-05-18 18:33:11.428120', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("name", "min_credits", "min_subjects", "created_at", "updated_at", "id") VALUES ('Personalizada', 0, 0, '2018-05-18 18:33:11.428120', '2018-05-18 18:33:11.428120', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "users"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "users" ("name", "nusp", "email", "pw_hash", "pw_salt", "created_at", "updated_at", "id") VALUES ('Victor Seiji Hariki', 9793694, 'victorseijih@gmail.com', 'hash', 'salt', '2018-05-18 18:33:11.429812', '2018-05-18 18:33:11.429812', 980190962)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "supervisors"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "supervisors" ("cpf", "created_at", "updated_at", "id") VALUES (12345, '2018-05-18 18:33:11.431479', '2018-05-18 18:33:11.431479', 113629430)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "supervisors" ("cpf", "created_at", "updated_at", "id") VALUES (54321, '2018-05-18 18:33:11.431479', '2018-05-18 18:33:11.431479', 281110143)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "courses"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "courses" ("name", "credits", "faculty", "expected_time", "created_at", "updated_at", "id") VALUES ('MyString', 0, 'MyString', 0, '2018-05-18 18:33:11.433054', '2018-05-18 18:33:11.433054', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "courses" ("name", "credits", "faculty", "expected_time", "created_at", "updated_at", "id") VALUES ('MyString', 0, 'MyString', 0, '2018-05-18 18:33:11.433054', '2018-05-18 18:33:11.433054', 298486374)[0m
+  [1m[35m (100.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+------------------------------
+UserTest: test_should_be_valid
+------------------------------
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.2ms)[0m  [1m[31mDELETE FROM "subject_students"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subject_students" ("created_at", "updated_at", "id") VALUES ('2018-05-18 18:33:27.141357', '2018-05-18 18:33:27.141357', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subject_students" ("created_at", "updated_at", "id") VALUES ('2018-05-18 18:33:27.141357', '2018-05-18 18:33:27.141357', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "subjects"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subjects" ("code", "name", "credits_class", "credits_work", "workload", "description", "created_at", "updated_at", "id") VALUES ('MAT123', 'MyString', 0, 0, 0, 'MyString', '2018-05-18 18:33:27.143573', '2018-05-18 18:33:27.143573', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subjects" ("code", "name", "credits_class", "credits_work", "workload", "description", "created_at", "updated_at", "id") VALUES ('MAC098', 'MyString', 0, 0, 0, 'MyString', '2018-05-18 18:33:27.143573', '2018-05-18 18:33:27.143573', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "plans"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "plans" ("created_at", "updated_at", "id") VALUES ('2018-05-18 18:33:27.145635', '2018-05-18 18:33:27.145635', 980190962)[0m
+  [1m[36mFixture Insert (0.0ms)[0m  [1m[32mINSERT INTO "plans" ("created_at", "updated_at", "id") VALUES ('2018-05-18 18:33:27.145635', '2018-05-18 18:33:27.145635', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "groups"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("name", "min_credits", "min_subjects", "created_at", "updated_at", "id") VALUES ('Fixa', 0, 0, '2018-05-18 18:33:27.147068', '2018-05-18 18:33:27.147068', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("name", "min_credits", "min_subjects", "created_at", "updated_at", "id") VALUES ('Personalizada', 0, 0, '2018-05-18 18:33:27.147068', '2018-05-18 18:33:27.147068', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "users"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "users" ("name", "nusp", "email", "pw_hash", "pw_salt", "created_at", "updated_at", "id") VALUES ('Victor Seiji Hariki', 9793694, 'victorseijih@gmail.com', 'hash', 'salt', '2018-05-18 18:33:27.148738', '2018-05-18 18:33:27.148738', 980190962)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "supervisors"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "supervisors" ("cpf", "created_at", "updated_at", "id") VALUES (12345, '2018-05-18 18:33:27.150638', '2018-05-18 18:33:27.150638', 113629430)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "supervisors" ("cpf", "created_at", "updated_at", "id") VALUES (54321, '2018-05-18 18:33:27.150638', '2018-05-18 18:33:27.150638', 281110143)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "courses"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "courses" ("name", "credits", "faculty", "expected_time", "created_at", "updated_at", "id") VALUES ('MyString', 0, 'MyString', 0, '2018-05-18 18:33:27.152142', '2018-05-18 18:33:27.152142', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "courses" ("name", "credits", "faculty", "expected_time", "created_at", "updated_at", "id") VALUES ('MyString', 0, 'MyString', 0, '2018-05-18 18:33:27.152142', '2018-05-18 18:33:27.152142', 298486374)[0m
+  [1m[35m (92.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+------------------------------
+UserTest: test_should_be_valid
+------------------------------
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.3ms)[0m  [1m[31mDELETE FROM "subject_students"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subject_students" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:08:33.411529', '2018-05-18 19:08:33.411529', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subject_students" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:08:33.411529', '2018-05-18 19:08:33.411529', 298486374)[0m
+  [1m[36mFixture Delete (0.2ms)[0m  [1m[31mDELETE FROM "subjects"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subjects" ("code", "name", "credits_class", "credits_work", "workload", "description", "created_at", "updated_at", "id") VALUES ('MAT123', 'MyString', 0, 0, 0, 'MyString', '2018-05-18 19:08:33.414525', '2018-05-18 19:08:33.414525', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subjects" ("code", "name", "credits_class", "credits_work", "workload", "description", "created_at", "updated_at", "id") VALUES ('MAC098', 'MyString', 0, 0, 0, 'MyString', '2018-05-18 19:08:33.414525', '2018-05-18 19:08:33.414525', 298486374)[0m
+  [1m[36mFixture Delete (0.3ms)[0m  [1m[31mDELETE FROM "plans"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "plans" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:08:33.416843', '2018-05-18 19:08:33.416843', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "plans" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:08:33.416843', '2018-05-18 19:08:33.416843', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "groups"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("name", "min_credits", "min_subjects", "created_at", "updated_at", "id") VALUES ('Fixa', 0, 0, '2018-05-18 19:08:33.419289', '2018-05-18 19:08:33.419289', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("name", "min_credits", "min_subjects", "created_at", "updated_at", "id") VALUES ('Personalizada', 0, 0, '2018-05-18 19:08:33.419289', '2018-05-18 19:08:33.419289', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "students"[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "subject_students"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subject_students" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:08:33.430847', '2018-05-18 19:08:33.430847', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subject_students" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:08:33.430847', '2018-05-18 19:08:33.430847', 298486374)[0m
+  [1m[36mFixture Delete (0.5ms)[0m  [1m[31mDELETE FROM "subjects"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subjects" ("code", "name", "credits_class", "credits_work", "workload", "description", "created_at", "updated_at", "id") VALUES ('MAT123', 'MyString', 0, 0, 0, 'MyString', '2018-05-18 19:08:33.432349', '2018-05-18 19:08:33.432349', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subjects" ("code", "name", "credits_class", "credits_work", "workload", "description", "created_at", "updated_at", "id") VALUES ('MAC098', 'MyString', 0, 0, 0, 'MyString', '2018-05-18 19:08:33.432349', '2018-05-18 19:08:33.432349', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "plans"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "plans" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:08:33.433920', '2018-05-18 19:08:33.433920', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "plans" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:08:33.433920', '2018-05-18 19:08:33.433920', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "groups"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("name", "min_credits", "min_subjects", "created_at", "updated_at", "id") VALUES ('Fixa', 0, 0, '2018-05-18 19:08:33.435197', '2018-05-18 19:08:33.435197', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("name", "min_credits", "min_subjects", "created_at", "updated_at", "id") VALUES ('Personalizada', 0, 0, '2018-05-18 19:08:33.435197', '2018-05-18 19:08:33.435197', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "students"[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "subject_students"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subject_students" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:08:33.444909', '2018-05-18 19:08:33.444909', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subject_students" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:08:33.444909', '2018-05-18 19:08:33.444909', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "subjects"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subjects" ("code", "name", "credits_class", "credits_work", "workload", "description", "created_at", "updated_at", "id") VALUES ('MAT123', 'MyString', 0, 0, 0, 'MyString', '2018-05-18 19:08:33.445869', '2018-05-18 19:08:33.445869', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subjects" ("code", "name", "credits_class", "credits_work", "workload", "description", "created_at", "updated_at", "id") VALUES ('MAC098', 'MyString', 0, 0, 0, 'MyString', '2018-05-18 19:08:33.445869', '2018-05-18 19:08:33.445869', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "plans"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "plans" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:08:33.447614', '2018-05-18 19:08:33.447614', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "plans" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:08:33.447614', '2018-05-18 19:08:33.447614', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "groups"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("name", "min_credits", "min_subjects", "created_at", "updated_at", "id") VALUES ('Fixa', 0, 0, '2018-05-18 19:08:33.448455', '2018-05-18 19:08:33.448455', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("name", "min_credits", "min_subjects", "created_at", "updated_at", "id") VALUES ('Personalizada', 0, 0, '2018-05-18 19:08:33.448455', '2018-05-18 19:08:33.448455', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "students"[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "subject_students"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subject_students" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:08:33.459326', '2018-05-18 19:08:33.459326', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subject_students" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:08:33.459326', '2018-05-18 19:08:33.459326', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "subjects"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subjects" ("code", "name", "credits_class", "credits_work", "workload", "description", "created_at", "updated_at", "id") VALUES ('MAT123', 'MyString', 0, 0, 0, 'MyString', '2018-05-18 19:08:33.460840', '2018-05-18 19:08:33.460840', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subjects" ("code", "name", "credits_class", "credits_work", "workload", "description", "created_at", "updated_at", "id") VALUES ('MAC098', 'MyString', 0, 0, 0, 'MyString', '2018-05-18 19:08:33.460840', '2018-05-18 19:08:33.460840', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "plans"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "plans" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:08:33.462300', '2018-05-18 19:08:33.462300', 980190962)[0m
+  [1m[36mFixture Insert (0.0ms)[0m  [1m[32mINSERT INTO "plans" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:08:33.462300', '2018-05-18 19:08:33.462300', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "groups"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("name", "min_credits", "min_subjects", "created_at", "updated_at", "id") VALUES ('Fixa', 0, 0, '2018-05-18 19:08:33.463479', '2018-05-18 19:08:33.463479', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("name", "min_credits", "min_subjects", "created_at", "updated_at", "id") VALUES ('Personalizada', 0, 0, '2018-05-18 19:08:33.463479', '2018-05-18 19:08:33.463479', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "students"[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "subject_students"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subject_students" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:09:19.954429', '2018-05-18 19:09:19.954429', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subject_students" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:09:19.954429', '2018-05-18 19:09:19.954429', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "subjects"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subjects" ("code", "name", "credits_class", "credits_work", "workload", "description", "created_at", "updated_at", "id") VALUES ('MAT123', 'MyString', 0, 0, 0, 'MyString', '2018-05-18 19:09:19.956550', '2018-05-18 19:09:19.956550', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subjects" ("code", "name", "credits_class", "credits_work", "workload", "description", "created_at", "updated_at", "id") VALUES ('MAC098', 'MyString', 0, 0, 0, 'MyString', '2018-05-18 19:09:19.956550', '2018-05-18 19:09:19.956550', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "plans"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "plans" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:09:19.958576', '2018-05-18 19:09:19.958576', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "plans" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:09:19.958576', '2018-05-18 19:09:19.958576', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "groups"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("name", "min_credits", "min_subjects", "created_at", "updated_at", "id") VALUES ('Fixa', 0, 0, '2018-05-18 19:09:19.960160', '2018-05-18 19:09:19.960160', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("name", "min_credits", "min_subjects", "created_at", "updated_at", "id") VALUES ('Personalizada', 0, 0, '2018-05-18 19:09:19.960160', '2018-05-18 19:09:19.960160', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "students"[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "subject_students"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subject_students" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:09:19.966932', '2018-05-18 19:09:19.966932', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subject_students" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:09:19.966932', '2018-05-18 19:09:19.966932', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "subjects"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subjects" ("code", "name", "credits_class", "credits_work", "workload", "description", "created_at", "updated_at", "id") VALUES ('MAT123', 'MyString', 0, 0, 0, 'MyString', '2018-05-18 19:09:19.967924', '2018-05-18 19:09:19.967924', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subjects" ("code", "name", "credits_class", "credits_work", "workload", "description", "created_at", "updated_at", "id") VALUES ('MAC098', 'MyString', 0, 0, 0, 'MyString', '2018-05-18 19:09:19.967924', '2018-05-18 19:09:19.967924', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "plans"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "plans" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:09:19.969013', '2018-05-18 19:09:19.969013', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "plans" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:09:19.969013', '2018-05-18 19:09:19.969013', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "groups"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("name", "min_credits", "min_subjects", "created_at", "updated_at", "id") VALUES ('Fixa', 0, 0, '2018-05-18 19:09:19.970189', '2018-05-18 19:09:19.970189', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("name", "min_credits", "min_subjects", "created_at", "updated_at", "id") VALUES ('Personalizada', 0, 0, '2018-05-18 19:09:19.970189', '2018-05-18 19:09:19.970189', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "students"[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "subject_students"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subject_students" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:09:19.976275', '2018-05-18 19:09:19.976275', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subject_students" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:09:19.976275', '2018-05-18 19:09:19.976275', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "subjects"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subjects" ("code", "name", "credits_class", "credits_work", "workload", "description", "created_at", "updated_at", "id") VALUES ('MAT123', 'MyString', 0, 0, 0, 'MyString', '2018-05-18 19:09:19.977255', '2018-05-18 19:09:19.977255', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subjects" ("code", "name", "credits_class", "credits_work", "workload", "description", "created_at", "updated_at", "id") VALUES ('MAC098', 'MyString', 0, 0, 0, 'MyString', '2018-05-18 19:09:19.977255', '2018-05-18 19:09:19.977255', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "plans"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "plans" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:09:19.978297', '2018-05-18 19:09:19.978297', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "plans" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:09:19.978297', '2018-05-18 19:09:19.978297', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "groups"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("name", "min_credits", "min_subjects", "created_at", "updated_at", "id") VALUES ('Fixa', 0, 0, '2018-05-18 19:09:19.979464', '2018-05-18 19:09:19.979464', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("name", "min_credits", "min_subjects", "created_at", "updated_at", "id") VALUES ('Personalizada', 0, 0, '2018-05-18 19:09:19.979464', '2018-05-18 19:09:19.979464', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "students"[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "subject_students"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subject_students" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:09:19.985704', '2018-05-18 19:09:19.985704', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subject_students" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:09:19.985704', '2018-05-18 19:09:19.985704', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "subjects"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subjects" ("code", "name", "credits_class", "credits_work", "workload", "description", "created_at", "updated_at", "id") VALUES ('MAT123', 'MyString', 0, 0, 0, 'MyString', '2018-05-18 19:09:19.986685', '2018-05-18 19:09:19.986685', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subjects" ("code", "name", "credits_class", "credits_work", "workload", "description", "created_at", "updated_at", "id") VALUES ('MAC098', 'MyString', 0, 0, 0, 'MyString', '2018-05-18 19:09:19.986685', '2018-05-18 19:09:19.986685', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "plans"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "plans" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:09:19.987705', '2018-05-18 19:09:19.987705', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "plans" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:09:19.987705', '2018-05-18 19:09:19.987705', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "groups"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("name", "min_credits", "min_subjects", "created_at", "updated_at", "id") VALUES ('Fixa', 0, 0, '2018-05-18 19:09:19.988581', '2018-05-18 19:09:19.988581', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("name", "min_credits", "min_subjects", "created_at", "updated_at", "id") VALUES ('Personalizada', 0, 0, '2018-05-18 19:09:19.988581', '2018-05-18 19:09:19.988581', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "students"[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "subject_students"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subject_students" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:10:48.859352', '2018-05-18 19:10:48.859352', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subject_students" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:10:48.859352', '2018-05-18 19:10:48.859352', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "subjects"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subjects" ("code", "name", "credits_class", "credits_work", "workload", "description", "created_at", "updated_at", "id") VALUES ('MAT123', 'MyString', 0, 0, 0, 'MyString', '2018-05-18 19:10:48.861590', '2018-05-18 19:10:48.861590', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subjects" ("code", "name", "credits_class", "credits_work", "workload", "description", "created_at", "updated_at", "id") VALUES ('MAC098', 'MyString', 0, 0, 0, 'MyString', '2018-05-18 19:10:48.861590', '2018-05-18 19:10:48.861590', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "plans"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "plans" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:10:48.864628', '2018-05-18 19:10:48.864628', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "plans" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:10:48.864628', '2018-05-18 19:10:48.864628', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "groups"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("name", "min_credits", "min_subjects", "created_at", "updated_at", "id") VALUES ('Fixa', 0, 0, '2018-05-18 19:10:48.867318', '2018-05-18 19:10:48.867318', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("name", "min_credits", "min_subjects", "created_at", "updated_at", "id") VALUES ('Personalizada', 0, 0, '2018-05-18 19:10:48.867318', '2018-05-18 19:10:48.867318', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "users"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "users" ("name", "nusp", "email", "pw_hash", "pw_salt", "created_at", "updated_at", "id") VALUES ('Victor Seiji Hariki', 9793694, 'victorseijih@gmail.com', 'hash', 'salt', '2018-05-18 19:10:48.870156', '2018-05-18 19:10:48.870156', 980190962)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "supervisors"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "supervisors" ("cpf", "created_at", "updated_at", "id") VALUES (12345, '2018-05-18 19:10:48.873380', '2018-05-18 19:10:48.873380', 113629430)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "supervisors" ("cpf", "created_at", "updated_at", "id") VALUES (54321, '2018-05-18 19:10:48.873380', '2018-05-18 19:10:48.873380', 281110143)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "courses"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "courses" ("name", "credits", "faculty", "expected_time", "created_at", "updated_at", "id") VALUES ('MyString', 0, 'MyString', 0, '2018-05-18 19:10:48.875926', '2018-05-18 19:10:48.875926', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "courses" ("name", "credits", "faculty", "expected_time", "created_at", "updated_at", "id") VALUES ('MyString', 0, 'MyString', 0, '2018-05-18 19:10:48.875926', '2018-05-18 19:10:48.875926', 298486374)[0m
+  [1m[35m (129.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+-------------------------------------
+UserTest: test_name_should_be_present
+-------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+--------------------------------------
+UserTest: test_email_should_be_present
+--------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+---------------------------------------------------------------
+UserTest: test_email_validation_should_reject_invalid_addresses
+---------------------------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+------------------------------
+UserTest: test_should_be_valid
+------------------------------
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "subject_students"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subject_students" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:11:37.934725', '2018-05-18 19:11:37.934725', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subject_students" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:11:37.934725', '2018-05-18 19:11:37.934725', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "subjects"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subjects" ("code", "name", "credits_class", "credits_work", "workload", "description", "created_at", "updated_at", "id") VALUES ('MAT123', 'MyString', 0, 0, 0, 'MyString', '2018-05-18 19:11:37.936752', '2018-05-18 19:11:37.936752', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subjects" ("code", "name", "credits_class", "credits_work", "workload", "description", "created_at", "updated_at", "id") VALUES ('MAC098', 'MyString', 0, 0, 0, 'MyString', '2018-05-18 19:11:37.936752', '2018-05-18 19:11:37.936752', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "plans"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "plans" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:11:37.938698', '2018-05-18 19:11:37.938698', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "plans" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:11:37.938698', '2018-05-18 19:11:37.938698', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "groups"[0m
+  [1m[36mFixture Insert (0.3ms)[0m  [1m[32mINSERT INTO "groups" ("name", "min_credits", "min_subjects", "created_at", "updated_at", "id") VALUES ('Fixa', 0, 0, '2018-05-18 19:11:37.940122', '2018-05-18 19:11:37.940122', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("name", "min_credits", "min_subjects", "created_at", "updated_at", "id") VALUES ('Personalizada', 0, 0, '2018-05-18 19:11:37.940122', '2018-05-18 19:11:37.940122', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "users"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "users" ("name", "nusp", "email", "pw_hash", "pw_salt", "created_at", "updated_at", "id") VALUES ('Victor Seiji Hariki', 9793694, 'victorseijih@gmail.com', 'hash', 'salt', '2018-05-18 19:11:37.942885', '2018-05-18 19:11:37.942885', 980190962)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "supervisors"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "supervisors" ("cpf", "created_at", "updated_at", "id") VALUES (12345, '2018-05-18 19:11:37.944710', '2018-05-18 19:11:37.944710', 113629430)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "supervisors" ("cpf", "created_at", "updated_at", "id") VALUES (54321, '2018-05-18 19:11:37.944710', '2018-05-18 19:11:37.944710', 281110143)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "courses"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "courses" ("name", "credits", "faculty", "expected_time", "created_at", "updated_at", "id") VALUES ('MyString', 0, 'MyString', 0, '2018-05-18 19:11:37.946211', '2018-05-18 19:11:37.946211', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "courses" ("name", "credits", "faculty", "expected_time", "created_at", "updated_at", "id") VALUES ('MyString', 0, 'MyString', 0, '2018-05-18 19:11:37.946211', '2018-05-18 19:11:37.946211', 298486374)[0m
+  [1m[35m (83.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+--------------------------------------
+UserTest: test_email_should_be_present
+--------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+---------------------------------------------------------------
+UserTest: test_email_validation_should_reject_invalid_addresses
+---------------------------------------------------------------
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+-------------------------------------
+UserTest: test_name_should_be_present
+-------------------------------------
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+------------------------------
+UserTest: test_should_be_valid
+------------------------------
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.2ms)[0m  [1m[31mDELETE FROM "subject_students"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subject_students" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:13:12.270291', '2018-05-18 19:13:12.270291', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subject_students" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:13:12.270291', '2018-05-18 19:13:12.270291', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "subjects"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subjects" ("code", "name", "credits_class", "credits_work", "workload", "description", "created_at", "updated_at", "id") VALUES ('MAT123', 'MyString', 0, 0, 0, 'MyString', '2018-05-18 19:13:12.272609', '2018-05-18 19:13:12.272609', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "subjects" ("code", "name", "credits_class", "credits_work", "workload", "description", "created_at", "updated_at", "id") VALUES ('MAC098', 'MyString', 0, 0, 0, 'MyString', '2018-05-18 19:13:12.272609', '2018-05-18 19:13:12.272609', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "plans"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "plans" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:13:12.274668', '2018-05-18 19:13:12.274668', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "plans" ("created_at", "updated_at", "id") VALUES ('2018-05-18 19:13:12.274668', '2018-05-18 19:13:12.274668', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "groups"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("name", "min_credits", "min_subjects", "created_at", "updated_at", "id") VALUES ('Fixa', 0, 0, '2018-05-18 19:13:12.276140', '2018-05-18 19:13:12.276140', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("name", "min_credits", "min_subjects", "created_at", "updated_at", "id") VALUES ('Personalizada', 0, 0, '2018-05-18 19:13:12.276140', '2018-05-18 19:13:12.276140', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "users"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "users" ("name", "nusp", "email", "pw_hash", "pw_salt", "created_at", "updated_at", "id") VALUES ('Victor Seiji Hariki', 9793694, 'victorseijih@gmail.com', 'hash', 'salt', '2018-05-18 19:13:12.277849', '2018-05-18 19:13:12.277849', 980190962)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "supervisors"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "supervisors" ("cpf", "created_at", "updated_at", "id") VALUES (12345, '2018-05-18 19:13:12.279528', '2018-05-18 19:13:12.279528', 113629430)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "supervisors" ("cpf", "created_at", "updated_at", "id") VALUES (54321, '2018-05-18 19:13:12.279528', '2018-05-18 19:13:12.279528', 281110143)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "courses"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "courses" ("name", "credits", "faculty", "expected_time", "created_at", "updated_at", "id") VALUES ('MyString', 0, 'MyString', 0, '2018-05-18 19:13:12.281245', '2018-05-18 19:13:12.281245', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "courses" ("name", "credits", "faculty", "expected_time", "created_at", "updated_at", "id") VALUES ('MyString', 0, 'MyString', 0, '2018-05-18 19:13:12.281245', '2018-05-18 19:13:12.281245', 298486374)[0m
+  [1m[35m (96.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+--------------------------------------
+UserTest: test_email_should_be_present
+--------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+-------------------------------------
+UserTest: test_name_should_be_present
+-------------------------------------
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+------------------------------
+UserTest: test_should_be_valid
+------------------------------
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+---------------------------------------------------------------
+UserTest: test_email_validation_should_reject_invalid_addresses
+---------------------------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
