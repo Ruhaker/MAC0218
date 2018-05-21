@@ -15,8 +15,8 @@
         <th>Usado em</th>
         <th>Ativo</th>
     </tr>
-<% @user.sessions.where(active: ['t', 1]).each do |session_o| %>
-    <tr style="background-color: <%=  'yellow' if session_o.session_key == session[:user_session]%>">
+<% @user.sessions.where(active: true).each do |session_o| %>
+    <tr style="background-color: <%= 'yellow' if session_o.session_key == session[:user_session]%>">
         <th><%= session_o.browser %></th>
         <th><%= session_o.ip_address %></th>
         <th><%= session_o.last_accessed %></th>

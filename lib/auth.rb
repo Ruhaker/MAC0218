@@ -12,7 +12,7 @@ module Auth
         end
 
         if session[:user_session]
-            session_o = Session.where(active: ['t', 1]).find_by(:session_key => session[:user_session])
+            session_o = Session.where(active: true).find_by(:session_key => session[:user_session])
             session_o.last_accessed = Time.now if session_o
             session_o.save if session_o
             return session_o.user if session_o
