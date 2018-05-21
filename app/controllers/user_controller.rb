@@ -1,18 +1,21 @@
 require 'securerandom'
-include Auth
+require 'time'
 
 class UserController < ApplicationController
+    include Auth
+
     #
     # List all users in database
     # - ONLY IN DEVELOPMENT
     #
     def list
+        @user = get_logged_user()
         if Rails.env.development? and not Rails.env.test?
             @user_list    = User.all
             @list_message = (
-                "Esses são todos os " +
+                "Atualmente há " +
                 @user_list.count.to_s +
-                " usuários no banco de dados:"
+                " usuário#{'s' unless @user_list.count == 1} no banco de dados:"
             )
         else
             # Empty array if not development
@@ -22,22 +25,48 @@ class UserController < ApplicationController
     end
 
     #
-    # Create user
+    # Close session for existing user
     #
-    def create
+    def close_session
+        # Must be POST request to close session
+        return unless request.post?
+
+        # Get session to terminate
+        session_id = params[:session_id]
+        session_o = Session.find(session_id) if session_id
+
+        # Get current user and exit if not logged in
+        user = get_logged_user()
+        return unless user
+
+        # Find session to close from this user's sessions and exit if session not found
+        session_o = user.sessions.find_by(session_key: session[:user_session]) unless session_o
+        return unless session_o
+
+        # If session is not this user's then don't do anything
+        return if session_o.user_id != user.id
+
+        # Finally deactivate session
+        session_o[:active] = false
+        session_o.save
+
+        redirect_back fallback_location: "/"
     end
 
     #
     # Loads new session for existing user
     #
     def new_session
+        # Must be POST request to authenticate
+        return unless request.post?
+
         # Load params passed to here
         login_field  = params[:login_field]
         password     = params[:password]
 
         # Fallback to default values for nil variables
-        login_field = ""        unless login_field
-        password    = ""        unless password
+        login_field = "" unless login_field
+        password    = "" unless password
 
         # Try to login user in
         begin
@@ -57,14 +86,16 @@ class UserController < ApplicationController
                 user_ipaddr  = request.remote_ip
 
                 # Create session
-                Session.create!({
-                    :session_key => session_key,
-                    :browser     => user_browser,
-                    :ip_address  => user_ipaddr
+                user.sessions.create!({
+                    :session_key   => session_key,
+                    :browser       => user_browser,
+                    :ip_address    => user_ipaddr,
+                    :last_accessed => Time.now,
+                    :active        => true
                 })
 
-                # Record user id to rails' native session keeping mechanism
-                session[:user_id]                = user_id
+                # Record session key to rails' native session keeping mechanism
+                session[:user_session]           = session_key
                 # Store permanent login key to a permanent cookie
                 cookies.permanent[:user_session] = session_key
             else
@@ -75,5 +106,7 @@ class UserController < ApplicationController
         rescue ActiveRecord::RecordInvalid => e
             puts e
         end
+        
+        redirect_back fallback_location: "/"
     end
 end

@@ -1,4 +1,44 @@
 <h1>User#list</h1>
+<% if @user %>
+<div>Olá, <%= @user.name %>
+    <%= form_tag "/user/close_session", :method => "post" do %>
+        <input type="submit" value="Sair" />
+    <% end %>
+</div>
+<div>Você está logado nos seguintes lugares atualmente:</div>
+<table border="1">
+    <tr>
+        <th>Navegador</th>
+        <th>IP</th>
+        <th>Usado em</th>
+        <th>Ativo</th>
+    </tr>
+<% @user.sessions.where(active: ['t', 1]).each do |session_o| %>
+    <tr>
+        <th><%= session_o.browser %></th>
+        <th><%= session_o.ip_address %></th>
+        <th><%= session_o.last_accessed %></th>
+        <th><%= session_o.active %></th>
+        <th>
+        <%= form_tag "/user/close_session", :method => "post" do %>
+            <input type="hidden" name="session_id" value="<%= session_o.id %>" />
+            <input type="submit" value="Sair" />
+        <% end %>
+        </th>
+    </tr>
+<% end %>
+</table>
+
+<% else %>
+    <div>Você não está logado no momento! Use o formulário abaixo para entrar!</div>
+    <%= form_tag "/user/new_session", :method => "post" do %>
+        <%= text_field_tag :login_field, nil, placeholder: "Email" %><br>
+        <%= password_field_tag :password, nil, placeholder: "Senha" %><br>
+        <input type="submit" value="Entrar" />
+    <% end %>
+<% end %>
+<br>
+<div><%= @list_message %></div>
 <table border="1">
     <tr>
         <th>Email</th>
