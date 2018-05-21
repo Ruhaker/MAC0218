@@ -1,4 +1,6 @@
 <h1>User#list</h1>
+<%= link_to  "Create new student!", '/student/create' %>
+<%= link_to  "Create new supervisor!", '/supervisor/create' %>
 <% if @user %>
 <div>Olá, <%= @user.name %>
     <%= form_tag "/user/close_session", :method => "post" do %>

@@ -1,2 +1,10 @@
-<h1>Student#create</h1>
-<p>Find me in app/views/student/create.html.erb</p>
+<h1>Creating student</h1>
+<%= link_to  "Voltar", "/" %>
+
+<%= form_tag "/student/create", :method => "post" do %>
+    <%= text_field_tag :login_field, nil, placeholder: "email" %><br>
+    <%= text_field_tag :full_name, nil, placeholder: "nome" %><br>
+    <%= text_field_tag :nusp, nil, placeholder: "número usp" %><br>
+    <%= password_field_tag :password, nil, placeholder: "senha" %><br>
+    <input type="submit" value="Criar" />
+<% end %>

@@ -1,6 +1,10 @@
 class StudentController < ApplicationController
   include Auth
+
   def create
+    # Must be POST request to create user
+    return unless request.post?
+
     # Load params passed to here
     login_field  = params[:login_field]
     user_fname   = params[:full_name]
@@ -25,5 +29,7 @@ class StudentController < ApplicationController
       :pw_salt => pw_salt,
       :pw_hash => pw_hash
     })
+    
+    redirect_back fallback_location: "/"
   end
 end

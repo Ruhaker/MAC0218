@@ -9,7 +9,7 @@
 1 - Instale as dependências:
 
 ```
-rails setup
+bundle install
 ```
 
 2 - Gere o banco de dados:
