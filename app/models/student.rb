@@ -4,7 +4,7 @@ class Student < User
 
     validates :nusp, numericality: true,
                         presence: {message: 'this field cannot be left black'},
-                        format: {with: /[0-9]{6,8}/,
+                        format: {with: /[0-9]{1,8}/,
                                  message: 'is not a valid No. USP'},
                         uniqueness: {message: 'this No. USP already belongs to an user'}
 end
