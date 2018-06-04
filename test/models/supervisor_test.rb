@@ -3,17 +3,33 @@ require 'test_helper'
 class SupervisorTest < ActiveSupport::TestCase
     def setup
         # Supervisor with password = 123
-        @supervisor = Supervisor.new(
+        @supervisor = Supervisor.create(
             name: 'Supervisor 1',
             cpf: 87633547689,
             email: 'email@email.com',
             pw_hash: '51f3395b4f88d87f58fc1e5e5de04a1dcf5b03ea321121be4d0ade81861dca20',
             pw_salt: '7901253e91'
             )
+        
+        @supervisor.save
+    end
+
+    test "supervises relationship" do
+        @architecture = Course.find_by!(:name => "Arquitetura e Urbanismo")
+        @computing    = Course.find_by!(:name => "Ciência da Computação")
+        @supervisor   = Supervisor.find_by!(:name => "Supervisor 1")
+        @supervisor.courses << @architecture
+
+        # 'supervises?' method
+        assert     @supervisor.supervises?(@architecture), "'#{@architecture.name}' should be supervised by #{@supervisor.name}"
+        assert_not @supervisor.supervises?(@computing), "'#{@architecture.name}' should not be supervised by #{@supervisor.name}"
+    
+        @supervisor.courses << @computing
+        assert     @supervisor.supervises?(@computing), "'#{@architecture.name}' should be supervised by #{@supervisor.name}"
     end
 
     test "should be valid" do
-        assert @supervisor.valid?
+        assert @supervisor.valid?, "Supervisor #{@supervisor.name} should be valid!"
     end
 
     test "cpf should be present" do

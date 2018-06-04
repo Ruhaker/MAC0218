@@ -8,4 +8,9 @@ class Group < ApplicationRecord
     validates :min_credits, numericality: {only_integer: true, allow_nil: true}
 
     validates :min_subjects, numericality: {only_integer: true, allow_nil: true}
+
+    # For easier debugging
+    def to_s
+        "Group: #{name} #{subjects.count}"
+    end
 end

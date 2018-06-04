@@ -7,6 +7,7 @@ study_1:
   email: victorseijih@gmail.com
   pw_hash: 9028a7fb6482ccd7e74a0030c4ce38b682d12409854650ff47e849135fbfde4b
   pw_salt: 8a53c5f41d
+  type: Student
 
 # Student 2: password = senha123
 study_2:
@@ -15,3 +16,4 @@ study_2:
   email: gabriely.pereira@usp.br
   pw_hash: 1ef467914d7cfed47685df36143e685216c497128da3f7c3643bbfae558cb3f5
   pw_salt: 68d733858c
+  type: Student

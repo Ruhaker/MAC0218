@@ -24,9 +24,4 @@ class StudentTest < ActiveSupport::TestCase
         @student.nusp = ""
         assert_not @student.valid?
     end
-
-    test "nusp should be an integer number" do
-        @student.nusp = 19.5
-        assert_not @student.valid?
-    end
 end

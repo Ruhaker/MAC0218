@@ -1,6 +1,6 @@
 class Student < User
     has_many :subjects, :through => :subject_students
-    has_many :course, :through => :plans
+    has_many :courses, :through => :plans
 
     validates :nusp, numericality: true,
                         presence: {message: 'this field cannot be left black'},
