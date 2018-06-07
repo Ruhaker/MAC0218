@@ -5,7 +5,7 @@ class CourseTest < ActiveSupport::TestCase
         @course = Course.create(
             name: "Curso 1",
             credits: 152,
-            teaching_unit: "FFLSCH",
+            teaching_unit: "FFLCH",
             expected_time: 8
             )
         @course.supervisors << Supervisor.find_by!({:name => "Lucas Henrique Bahr Yau"})
@@ -30,7 +30,7 @@ class CourseTest < ActiveSupport::TestCase
         assert group.destroyed?, "Course failed auto destroying group!"
     end
 
-    # Tests whether 
+    # Tests whether
 
     test "get supervisors" do
         @course.supervisors.each do |course|
@@ -46,17 +46,17 @@ class CourseTest < ActiveSupport::TestCase
         @course.name = ""
         assert_not @course.valid?
     end
-    
+
     test "credits should be present" do
         @course.credits = ""
         assert_not @course.valid?
     end
-    
+
     test "teaching_unit should be present" do
         @course.teaching_unit = ""
         assert_not @course.valid?
     end
-    
+
     test "credits should be an integer number" do
         @course.credits = 19.5
         assert_not @course.valid?

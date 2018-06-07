@@ -1,5 +1,5 @@
 class Student < User
-    has_many :subjects, :through => :subject_students
+    has_and_belongs_to_many :subjects, :through => :subject_students
     has_many :courses, :through => :plans
 
     validates :nusp, numericality: true,

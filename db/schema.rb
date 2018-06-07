@@ -21,13 +21,6 @@ ActiveRecord::Schema.define(version: 20180604211719) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "enrollment", force: :cascade do |t|
-    t.integer "course_id"
-    t.integer "student_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "groups", force: :cascade do |t|
     t.string "name"
     t.integer "min_credits"
@@ -45,6 +38,9 @@ ActiveRecord::Schema.define(version: 20180604211719) do
   end
 
   create_table "plans", force: :cascade do |t|
+    t.integer "course_id"
+    t.integer "student_id"
+    t.integer "group_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

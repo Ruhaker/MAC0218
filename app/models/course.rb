@@ -1,7 +1,7 @@
 class Course < ApplicationRecord
     has_and_belongs_to_many :supervisors, :join_table => :supervises
     has_one :group, required: true, :dependent => :destroy
-    has_many :students, :through => :plans
+    has_and_belongs_to_many :students, :through => :plans, :join_table => :plans
 
     validates :name, presence: {message: 'cannot be left blank'}
 
@@ -18,7 +18,7 @@ class Course < ApplicationRecord
     # Automagically creates required associated group
     def create_group
         assign_attributes({
-            :group => Group.create({
+                :group => Group.create({
                 :name         => "Grade",
                 :min_credits  => nil,
                 :min_subjects => nil
