@@ -1,17 +1,23 @@
 require 'test_helper'
 
 class SubjectTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
-def setup
-        @subject = Subject.new(
+    def setup
+        @subject = Subject.create(
             code: "MAC0110",
             name: "Introdução à Computação",
             credits_class: 4,
             credits_work: 0,
             workload: 60,
             description: "Apresentação a linguagens de programação...")
+        @subject.students << Student.find_by!({:name => "Gabriely Rangel Pereira"})
+        @subject.students << Student.find_by!({:name => "Victor Seiji Hariki"})
+    end 
+    
+    # Tests the subject students
+    test "verify subject students" do
+        @subject.students.each do |student|
+            assert @subject.students.exists?(student.id) , "Subject student should be valid: #{student.to_s}"
+        end
     end
 
     test "should be valid" do
