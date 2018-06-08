@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'add_course/addcourse'
+
   # Paths for creating users
   get  'supervisor/create'
   post 'supervisor/create'
