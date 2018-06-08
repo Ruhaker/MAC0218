@@ -1,9 +1,8 @@
 class Subject < ApplicationRecord
 
-    has_and_belongs_to_many :groups
-    has_and_belongs_to_many :students
+    has_and_belongs_to_many :groups, :join_table => :groups_subjects
     has_and_belongs_to_many :subjects
-    has_many :students, :through => :subject_students
+    has_and_belongs_to_many :students, :through => :subject_students, :join_table => :subject_students
 
     validates :code, presence: {message: 'this field cannot be left black'},
                        format: {with: /[A-Z]{3}[0-9]{4}/,
@@ -15,4 +14,9 @@ class Subject < ApplicationRecord
                         presence: {message: 'this field cannot be left black'}
 
     validates :credits_work, numericality: {only_integer: true}
+
+    # For easier debugging
+    def to_s
+        "Subject: #{name}"
+    end
 end

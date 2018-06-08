@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   get 'web/home'
-
   get 'web/profile'
+  
+  # Paths for dealing with courses
+  get 'add_course/addcourse'
 
   # Paths for creating users
   get  'supervisor/create'

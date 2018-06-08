@@ -1,5 +1,5 @@
 class Student < User
-    has_and_belongs_to_many :subjects, :through => :subject_students
+    has_and_belongs_to_many :subjects, :through => :subject_students, :join_table => :subject_students
     has_many :plans, :dependent => :destroy
     has_and_belongs_to_many :courses, :through => :plans, :join_table => :plans
 
@@ -9,8 +9,8 @@ class Student < User
                                  message: 'is not a valid No. USP'},
                         uniqueness: {message: 'this No. USP already belongs to an user'}
 
+    # For easier debugging
     def to_s
       "Student: #{name} - #{nusp}"
     end
 end
-
