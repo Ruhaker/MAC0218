@@ -3,7 +3,7 @@
 one:
   code: MAE0217
   name: Estatística Descritiva
-  credits_class: 6 
+  credits_class: 6
   credits_work: 0
   workload: 60
   description: Possibilitar ao aluno um primeiro contato com dados reais e com as principais técnicas de análise exploratória de dados. Introduzir o uso de pacotes estatísticos.
@@ -12,7 +12,15 @@ one:
 two:
   code: MAE0221
   name: Probabilidade 1
-  credits_class: 6 
+  credits_class: 6
   credits_work: 0
   workload: 90
   description: Apresentar os conceitos fundamentais da Teoria das Probabilidades. Estudar os principais modelos probabilísticos discretos e contínuos, transformações de variáveis e principais distribuições amostrais.
+
+three:
+  code: MAP2009
+  name: Matemática, Design e Arquitetura
+  credits_class: 4
+  credits_work: 0
+  workload: 90
+  description: Elaborar um projeto maneiro.

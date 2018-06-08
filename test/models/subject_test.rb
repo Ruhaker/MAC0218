@@ -11,8 +11,8 @@ class SubjectTest < ActiveSupport::TestCase
             description: "Apresentação a linguagens de programação...")
         @subject.students << Student.find_by!({:name => "Gabriely Rangel Pereira"})
         @subject.students << Student.find_by!({:name => "Victor Seiji Hariki"})
-    end 
-    
+    end
+
     # Tests the subject students
     test "verify subject students" do
         @subject.students.each do |student|
