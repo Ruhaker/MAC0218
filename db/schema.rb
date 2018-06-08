@@ -31,9 +31,9 @@ ActiveRecord::Schema.define(version: 20180607191414) do
     t.string "name"
     t.integer "min_credits"
     t.integer "min_subjects"
-    t.integer "course_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "course_id"
   end
 
   create_table "groups_subjects", force: :cascade do |t|
@@ -55,11 +55,11 @@ ActiveRecord::Schema.define(version: 20180607191414) do
     t.string "browser"
     t.string "ip_address"
     t.datetime "last_accessed"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "session_key"
     t.boolean "active"
     t.integer "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "subject_students", force: :cascade do |t|
@@ -93,12 +93,12 @@ ActiveRecord::Schema.define(version: 20180607191414) do
     t.string "email"
     t.string "pw_hash"
     t.string "pw_salt"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "nusp"
     t.bigint "cpf"
     t.string "type"
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
 end
