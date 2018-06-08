@@ -9,3 +9,8 @@ two:
   name: Des. de Software
   min_credits: nil
   min_subjects: 4
+  
+three:
+  name: Obrigatórias
+  min_credits: 155
+  min_subjects: nil
