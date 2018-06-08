@@ -11,13 +11,31 @@ class SubjectTest < ActiveSupport::TestCase
             description: "Apresentação a linguagens de programação...")
         @subject.students << Student.find_by!({:name => "Gabriely Rangel Pereira"})
         @subject.students << Student.find_by!({:name => "Victor Seiji Hariki"})
-    end
-
+        @subject.groups   << Group.find_by!({:name => "Des. de Software"})
+        @subject.groups   << Group.find_by!({:name => "Obrigatórias"})
+    end 
+    
     # Tests the subject students
-    test "verify subject students" do
+    test "subject students should exist" do
         @subject.students.each do |student|
             assert @subject.students.exists?(student.id) , "Subject student should be valid: #{student.to_s}"
         end
+    end
+
+    test "subject student shouldn't exist" do
+    	@student = Student.find_by!({:name => "José Alves Garcia"})
+    	assert_not @subject.students.exists?(@student.id), "Subject student shouldn't be valid: #{@student.to_s}"
+    end
+
+    test "subject groups should exist" do
+    	@subject.groups.each do |group|
+    		assert @subject.groups.exists?(group.id), "Subject group should be valid: #{group.to_s}"
+    	end
+    end
+
+    test "subject group shouldn't exist" do
+    	@group = Group.find_by!({:name => "Opt. de Estatística"})
+    	assert_not @subject.groups.exists?(@group.id), "Subject group shouldn't be valid: #{@group.to_s}"
     end
 
     test "should be valid" do
