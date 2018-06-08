@@ -1,6 +1,7 @@
 class Course < ApplicationRecord
     has_and_belongs_to_many :supervisors, :join_table => :supervises
     has_one :group, required: true, :dependent => :destroy
+    has_many :plans, :dependent => :destroy
     has_and_belongs_to_many :students, :through => :plans, :join_table => :plans
 
     validates :name, presence: {message: 'cannot be left blank'}

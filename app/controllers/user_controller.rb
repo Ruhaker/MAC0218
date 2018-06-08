@@ -99,12 +99,15 @@ class UserController < ApplicationController
                 # Store permanent login key to a permanent cookie
                 cookies.permanent[:user_session] = session_key
             else
+                puts "Invalid user or password"
                 flash[:error_msg] = "Usuário ou Senha inválida"                
             end
         rescue ActiveRecord::RecordNotFound => e
             puts e
+            flash[:error_msg] = "Usuário ou Senha inválida"                
         rescue ActiveRecord::RecordInvalid => e
             puts e
+            flash[:error_msg] = "Usuário ou Senha inválida"                
         end
         
         redirect_back fallback_location: "/"

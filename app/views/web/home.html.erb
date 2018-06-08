@@ -1,0 +1,40 @@
+<h1>Web#home</h1>
+<% if @user %>
+<div>Olá, <%= @user.name %>
+    <%= form_tag "/user/close_session", :method => "post" do %>
+        <input type="submit" value="Sair" />
+    <% end %>
+</div>
+<% else %>
+    <div>Você não está logado no momento! Use o formulário abaixo para entrar!</div>
+    <%= form_tag "/user/new_session", :method => "post" do %>
+        <%= text_field_tag :login_field, nil, placeholder: "Email" %><br>
+        <%= password_field_tag :password, nil, placeholder: "Senha" %><br>
+        <% if flash[:error_msg] %>
+            <%= flash[:error_msg] %><br>
+        <% end %>
+        <input type="submit" value="Entrar" />
+    <% end %>
+<% end %>
+
+<!-- Function for drawing a group -->
+<%
+  def draw_group(group)
+    group.groups.each do |child_group|
+%>
+      <li><%= child_group.name %>
+<%
+          if child_group.children.any?
+%>
+              <ol><% draw_group(child) %></ol>
+<%
+          end
+%>
+      </li>
+<%
+    end; nil
+  end
+%>
+
+<%= @base %>
+<%= @personal %>

@@ -10,8 +10,6 @@ class SupervisorTest < ActiveSupport::TestCase
             pw_hash: '51f3395b4f88d87f58fc1e5e5de04a1dcf5b03ea321121be4d0ade81861dca20',
             pw_salt: '7901253e91'
             )
-        
-        @supervisor.save
     end
 
     test "supervises relationship" do

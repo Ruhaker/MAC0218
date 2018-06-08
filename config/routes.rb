@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'web/home'
+
+  get 'web/profile'
+
   # Paths for creating users
   get  'supervisor/create'
   post 'supervisor/create'
