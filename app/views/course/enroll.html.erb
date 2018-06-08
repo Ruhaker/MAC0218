@@ -1,0 +1,8 @@
+<h1>Enroll in course</h1>
+<%= link_to  "Voltar", "/" %>
+
+<%= form_tag "/course/enroll", :method => "post" do %>
+    <%= select_tag :student_id , options_from_collection_for_select(Student.all, 'id', 'name') %><br>
+    <%= select_tag :course_id, options_from_collection_for_select(Course.all, 'id', 'name') %><br>
+    <input type="submit" value="Criar" />
+<% end %>

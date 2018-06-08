@@ -17,24 +17,21 @@
     <% end %>
 <% end %>
 
-<!-- Function for drawing a group -->
-<%
-  def draw_group(group)
-    group.groups.each do |child_group|
-%>
-      <li><%= child_group.name %>
-<%
-          if child_group.children.any?
-%>
-              <ol><% draw_group(child) %></ol>
-<%
-          end
-%>
-      </li>
-<%
-    end; nil
-  end
-%>
+<div>
+    <% @courses.each do |course|  %>
+    <h1><%= "#{course.name}" %></h1>
+    <% end %>
+</div>
 
-<%= @base %>
-<%= @personal %>
+<!-- Function for drawing a group -->
+<% def draw_group(group) %>
+    <li><%= group.name %>
+        <% group.groups.each do |child_group| %>
+            <ul><% draw_group(child_group) %></ul>
+        <% end %>
+    </li>
+<% end %>
+<h1>Base</h1>
+<% draw_group(@base) if @base %><br>
+<h1>Personal</h1>
+<% draw_group(@personal) if @personal %><br>

@@ -5,17 +5,21 @@ class WebController < ApplicationController
     # Retrieves logged-in user
     @user = get_logged_user()
 
+    # Retrieves courses
+    @courses = Course.all
+
+    # TODO: Get this thing decently
     # Fetch user's current course
-    puts "{#{@user.courses.join ', '}} "
+    @current_course = @user.courses[0]
 
     case @user.class.name
     # If it is a student
     when "Student"
       # Load course's base group
-      @base = @user.courses[0] ? @user.courses[0].group : nil
+      @base = @current_course ? @current_course.group : nil
 
       # Load user's personal group
-      @personal = @user.courses[0] ? @user.courses[0].plans : nil
+      @personal = @current_course ? @user.plans.find_by!({:course_id => @current_course.id}).group : nil
 
     # If it is a supervisor
     when "Supervisor"

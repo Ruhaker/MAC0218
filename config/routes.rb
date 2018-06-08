@@ -1,9 +1,17 @@
 Rails.application.routes.draw do
-  get 'web/home'
-  get 'web/profile'
-  
+  get 'course/enroll'
+  post 'course/enroll'
+
+  get 'group/create'
+  post 'group/create'
+
+  get 'group/modify'
+
+  get 'group/destroy'
+
   # Paths for dealing with courses
-  get 'add_course/addcourse'
+  get 'course/create'
+  post 'course/create'
 
   # Paths for creating users
   get  'supervisor/create'
@@ -18,6 +26,10 @@ Rails.application.routes.draw do
   get  'user/close_session'
   post 'user/close_session'
 
+  # Paths for web
+  get 'web/home'
+  get 'web/profile'
+  
   # Main page for now (Allows only basic auth)
   get 'user/list'
   root 'user#list'

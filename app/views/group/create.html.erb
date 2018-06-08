@@ -1,0 +1,10 @@
+<h1>Creating group</h1>
+<%= link_to  "Voltar", "/" %>
+
+<%= form_tag "/group/create", :method => "post" do %>
+    <%= select_tag :parent_group_id, options_from_collection_for_select(Group.all, 'id', 'name') %><br>
+    <%= text_field_tag :name, nil, placeholder: "Nome" %><br>
+    <%= text_field_tag :min_credits, nil, placeholder: "Número mínimo de créditos" %><br>
+    <%= text_field_tag :min_subjects, nil, placeholder: "Número mínimo de disciplinas" %><br>
+    <input type="submit" value="Criar" />
+<% end %>

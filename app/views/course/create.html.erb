@@ -1,10 +1,10 @@
 <h1>Creating course</h1>
 <%= link_to  "Voltar", "/" %>
 
-<%= form_tag "/addcourse/create", :method => "post" do %>
+<%= form_tag "/course/create", :method => "post" do %>
     <%= text_field_tag :name, nil, placeholder: "Nome" %><br>
     <%= text_field_tag :credits, nil, placeholder: "Número de créditos" %><br>
     <%= text_field_tag :teaching_unit, nil, placeholder: "Faculdade/Instituto" %><br>
-    <%= password_field_tag :expected_time, nil, placeholder: "Tempo esperado de término" %><br>
+    <%= text_field_tag :expected_time, nil, placeholder: "Tempo esperado de término" %><br>
     <input type="submit" value="Criar" />
 <% end %>
