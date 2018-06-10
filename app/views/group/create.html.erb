@@ -1,5 +1,5 @@
 <h1>Creating group</h1>
-<%= link_to  "Voltar", "/" %>
+<%= link_to  "Voltar", "/web/home" %>
 
 <%= form_tag "/group/create", :method => "post" do %>
     <%= select_tag :parent_group_id, options_from_collection_for_select(Group.all, 'id', 'name') %><br>

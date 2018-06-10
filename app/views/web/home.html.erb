@@ -1,5 +1,7 @@
 <h1>Web#home</h1>
 <% if @user %>
+<%= link_to  "Enroll in a course!", '/course/enroll' %>
+<%= link_to  "Create new group!", '/group/create' %>
 <div>Olá, <%= @user.name %>
     <%= form_tag "/user/close_session", :method => "post" do %>
         <input type="submit" value="Sair" />
@@ -17,11 +19,14 @@
     <% end %>
 <% end %>
 
+<!-- Commented block -->
+<% if false %>
 <div>
     <% @courses.each do |course|  %>
     <h1><%= "#{course.name}" %></h1>
     <% end %>
 </div>
+<% end %>
 
 <!-- Function for drawing a group -->
 <% def draw_group(group) %>
