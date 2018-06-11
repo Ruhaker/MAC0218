@@ -37,7 +37,7 @@ Rails.application.routes.draw do
   get 'web/profile'
   
   # Main page for now
-  get 'user/list'
-  root 'user#list'
+  get 'web/home'
+  root 'web#home'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
