@@ -4,7 +4,8 @@
 <% if @user.type == 'Student' %>
     <%= link_to  "My home", '/web/home' %>
 <% elsif @user.type == 'Supervisor' %>
-    <%= link_to  "Create new course!", '/course/create' %>
+    <%= link_to  "My home", '/web/home' %><br>
+    <%= link_to  "Create new course! (temporary link)", '/course/create' %>
 <% end %>
 <div>Olá, <%= @user.name %>
     <%= form_tag "/user/close_session", :method => "post" do %>
@@ -55,6 +56,7 @@
         <th>Identificador</th>
         <th>Salt</th>
         <th>Hash</th>
+        <th>Sessões ativas</th>
     </tr>
 <% @user_list.each do |user| %>
     <tr>
@@ -64,6 +66,7 @@
         <th><%= user.type == 'Student' ? user.nusp : user.cpf %></th>
         <th><%= user.pw_salt %></th>
         <th><%= user.pw_hash[0, 5] + '...' + user.pw_hash[-5..-1]%></th>
+        <th><%= user.sessions.where(active: true).count %></th>
     </tr>
 <% end %>
 </table>

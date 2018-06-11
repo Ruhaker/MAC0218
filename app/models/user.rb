@@ -21,4 +21,8 @@ class User < ApplicationRecord
     validates :pw_salt, presence: true, format: {
         with: /[a-z0-9]{10}/
     }
+
+    def is?(cls)
+        return type.casecmp(cls) == 0
+    end
 end

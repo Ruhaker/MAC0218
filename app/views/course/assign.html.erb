@@ -1,0 +1,7 @@
+<h1>Assign course</h1>
+<%= link_to  "Voltar", :back %>
+
+<%= form_tag "/course/assign", :method => "post" do %>
+    <%= select_tag :course_id, options_from_collection_for_select(Course.all, 'id', 'name') %><br>
+    <input type="submit" value="Assign" />
+<% end %>

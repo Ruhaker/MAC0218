@@ -1,17 +1,23 @@
 Rails.application.routes.draw do
-  get 'course/enroll'
-  post 'course/enroll'
 
+  # Paths for dealing with groups 
   get 'group/create'
   post 'group/create'
 
   get 'group/modify'
 
   get 'group/destroy'
+  post 'group/destroy'
 
   # Paths for dealing with courses
   get 'course/create'
   post 'course/create'
+  
+  get 'course/enroll'
+  post 'course/enroll'
+  
+  get 'course/assign'
+  post 'course/assign'
 
   # Paths for creating users
   get  'supervisor/create'
@@ -30,7 +36,7 @@ Rails.application.routes.draw do
   get 'web/home'
   get 'web/profile'
   
-  # Main page for now (Allows only basic auth)
+  # Main page for now
   get 'user/list'
   root 'user#list'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
