@@ -1,4 +1,4 @@
-<h1>Web#home</h1>
+<h1>Welcome to our project!</h1>
 <% if @user %>
 <% enroll_label = "Enroll in a course!" if @user.is? "student" %>
 <% enroll_label = "Enroll a student in a course!" if @user.is? "supervisor" %>
@@ -31,6 +31,8 @@
 <% end %>
 </table>
 <% else %>
+    <%= link_to  "Sign up as stutent", '/student/create' %> <br>
+    <%= link_to  "Sign up as supervisor", '/supervisor/create' %>
     <div>Você não está logado no momento! Use o formulário abaixo para entrar!</div>
     <%= form_tag "/user/new_session", :method => "post" do %>
         <%= text_field_tag :login_field, nil, placeholder: "Email" %><br>
