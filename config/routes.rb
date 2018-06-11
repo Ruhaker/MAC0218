@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  get 'subject/enroll'
+  post 'subject/enroll'
+
+  get 'subject/create'
+  post 'subject/create'
+
   get 'course/enroll'
   post 'course/enroll'
 

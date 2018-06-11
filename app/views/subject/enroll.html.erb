@@ -1,0 +1,8 @@
+<h1>Enroll in subject</h1>
+<%= link_to  "Voltar", "/web/home" %>
+
+<%= form_tag "/subject/enroll", :method => "post" do %>
+    <%= select_tag :group_id , options_from_collection_for_select(Group.all, 'id', 'name') %><br>
+    <%= select_tag :subject_id, options_from_collection_for_select(Subject.all, 'id', 'name') %><br>
+    <input type="submit" value="Criar" />
+<% end %>

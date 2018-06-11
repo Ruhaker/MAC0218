@@ -2,6 +2,7 @@
 <% if @user %>
 <%= link_to  "Enroll in a course!", '/course/enroll' %>
 <%= link_to  "Create new group!", '/group/create' %>
+<%= link_to  "Enroll in a subject!", '/subject/enroll' %>
 <div>Olá, <%= @user.name %>
     <%= form_tag "/user/close_session", :method => "post" do %>
         <input type="submit" value="Sair" />

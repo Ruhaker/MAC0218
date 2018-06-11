@@ -5,6 +5,7 @@
     <%= link_to  "My home", '/web/home' %>
 <% elsif @user.type == 'Supervisor' %>
     <%= link_to  "Create new course!", '/course/create' %>
+    <%= link_to  "Create new subject!", '/subject/create' %>
 <% end %>
 <div>Olá, <%= @user.name %>
     <%= form_tag "/user/close_session", :method => "post" do %>

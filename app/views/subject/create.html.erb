@@ -1,0 +1,12 @@
+<h1>Creating Subject</h1>
+<%= link_to  "Voltar", "/" %>
+
+<%= form_tag "/subject/create", :method => "post" do %>
+	<%= text_field_tag :code, nil, placeholder: "Código" %><br>
+    <%= text_field_tag :name, nil, placeholder: "Nome" %><br>
+    <%= text_field_tag :credits_class, nil, placeholder: "Número de créditos aula" %><br>
+    <%= text_field_tag :credits_work, nil, placeholder: "Número de créditos trabalho" %><br>
+    <%= text_field_tag :workload, nil, placeholder: "Carga horária" %><br>
+    <%= text_field_tag :description, nil, placeholder: "Descrição" %><br>
+    <input type="submit" value="Criar" />
+<% end %>
