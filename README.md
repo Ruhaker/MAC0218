@@ -58,6 +58,6 @@ Nesta primeira entrega, planejamos implementar:
 
 Para a segunda entrega:
 
-* Controladores para criação de curso, grupos e disciplinas;
+* Controladores para criação de usuários, curso, grupos e disciplinas;
 * Criação de mais testes para os modelos e controladores;
 * Visualização simples, para fins de depuração;
