@@ -50,7 +50,7 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
-group :production do
+group :production do 
   # Use pgsql as the database for Active Record
   gem 'pg'
 end
