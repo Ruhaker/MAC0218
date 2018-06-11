@@ -1,8 +1,16 @@
 <h1>Enroll in course</h1>
 <%= link_to  "Voltar", "/web/home" %>
 
-<%= form_tag "/course/enroll", :method => "post" do %>
-    <%= select_tag :student_id , options_from_collection_for_select(Student.all, 'id', 'name') %><br>
-    <%= select_tag :course_id, options_from_collection_for_select(Course.all, 'id', 'name') %><br>
-    <input type="submit" value="Criar" />
+<% if @user %>
+    <%= form_tag "/course/enroll", :method => "post" do %>
+        <% if @user.class.name == "Supervisor" %>
+            <%= select_tag :student_id , options_from_collection_for_select(Student.all, 'id', 'name') %><br>
+        <% end %>
+        <% courses = Course.all if @user.is? "student" %>
+        <% courses = @user.courses if @user.is? "supervisor" %>
+        <%= select_tag :course_id, options_from_collection_for_select(courses, 'id', 'name') %><br>
+        <input type="submit" value="Criar" />
+    <% end %>
+<% else %>
+    <div>Você precisa logar primeiro!</div>
 <% end %>

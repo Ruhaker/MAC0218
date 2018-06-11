@@ -53,3 +53,11 @@ Nesta primeira entrega, planejamos implementar:
 
 * Autenticação de usuário;
 * Implementar o banco de dados;
+
+#### Segunda entrega:
+
+Para a segunda entrega:
+
+* Controladores para criação de curso, grupos e disciplinas;
+* Criação de mais testes para os modelos e controladores;
+* Visualização simples, para fins de depuração;

@@ -9,8 +9,11 @@ class WebController < ApplicationController
     @courses = Course.all
 
     # TODO: Get this thing decently
-    # Fetch user's current course
-    @current_course = @user.courses[0]
+    # Fetch user's current course (Just gets first course for now)
+    @current_course = @user.courses[0] if @user
+
+    # If specified, load another course
+    @current_course = @user.courses.find(params[:course_id]) if params[:course_id]
 
     case @user.class.name
     # If it is a student
@@ -24,6 +27,7 @@ class WebController < ApplicationController
     # If it is a supervisor
     when "Supervisor"
       # Only load course's base group
+      @base = @current_course ? @current_course.group : nil
 
     # If neither
     else
