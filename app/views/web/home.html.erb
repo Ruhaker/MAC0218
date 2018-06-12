@@ -6,8 +6,8 @@
 <% if @user.is? "supervisor" %>
     <%= link_to  "Become a supervisor of a course! (temporary)", '/course/assign' %><br>
 <% end %>
-<%= link_to  "Create new group!", '/group/create' %>
-<%= link_to  "Enroll in a subject!", '/subject/enroll' %>
+<%= link_to  "Create new group!", '/group/create' %><br>
+<%= link_to  "Create subject! (temporary?)", '/subject/create' %>
 <div>Olá, <%= @user.name %> (<%= @user.type %>)
     <%= form_tag "/user/close_session", :method => "post" do %>
         <input type="submit" value="Sair" />
@@ -31,7 +31,7 @@
 <% end %>
 </table>
 <% else %>
-    <%= link_to  "Sign up as stutent", '/student/create' %> <br>
+    <%= link_to  "Sign up as student", '/student/create' %> <br>
     <%= link_to  "Sign up as supervisor", '/supervisor/create' %>
     <div>Você não está logado no momento! Use o formulário abaixo para entrar!</div>
     <%= form_tag "/user/new_session", :method => "post" do %>
@@ -81,31 +81,50 @@ end
 %>
 
 <!-- Function for drawing a group -->
-<% def draw_group(group) %>
-    <li><%= group.name %> (cr: <%= group.min_credits || "nil" %>, dis: <%= group.min_subjects || "nil" %>)
-        <% if can_modify_group? group && group.group %>
-            <%= form_tag "/group/destroy", :method => "post" do %>
-                <input type="hidden" name="group_id" value="<%= group.id %>" />
-                <input type="submit" value="Deletar grupo" />
-            <% end %>
-        <% end %>
-        <% group.groups.each do |child_group| %>
-            <ul><% draw_group(child_group) %></ul>
-        <% end %>
-        <% if group && can_modify_group?(group) %>
-            <ul>
-            <li>
-                <%= form_tag "/group/create", :method => "post" do %>
-                    <%= hidden_field_tag :parent_group_id, group.id %>
-                    <%= text_field_tag :name, nil, placeholder: "Nome do novo grupo" %>
-                    <%= text_field_tag :min_credits, nil, placeholder: "Mínimo de créditos" %>
-                    <%= text_field_tag :min_subjects, nil, placeholder: "Mínimo de disciplinas" %>
-                    <input type="submit" value="<%= "Criar grupo filho de #{group.name}" %>" />
+<% def draw_group(group, color = 0xddddee) %>
+    <div class="group-frame" style="background-color: <%= "#%06x" % (color)%>">
+        <li><%= group.name %> (cr: <%= group.min_credits || "nil" %>, dis: <%= group.min_subjects || "nil" %>)
+            <% if can_modify_group? group && group.group %>
+                <%= form_tag "/group/destroy", :method => "post" do %>
+                    <input type="hidden" name="group_id" value="<%= group.id %>" />
+                    <input type="submit" value="Deletar grupo" />
                 <% end %>
-            </li>
-            </ul>
-        <% end %>
-    </li>
+            <% end %>
+            <hr>
+            <% group.subjects.each do |subject| %>
+                <ul><li><%= subject %>
+                <% if can_modify_group? group %>
+                    <%= form_tag "/group/rem_subject", :method => "post" do %>
+                        <%= hidden_field_tag :group_id, group.id %>
+                        <%= hidden_field_tag :subject_id, subject.id %>
+                        <input type="submit" value="Remover disciplina" />
+                    <% end %>
+                <% end %>
+                </li></ul>
+            <% end %>
+            <% group.groups.each do |child_group| %>
+                <ul><% draw_group(child_group, color - 0x171717) %></ul>
+            <% end %>
+            <% if group && can_modify_group?(group) %>
+                <ul>
+                <li>
+                    <%= form_tag "/group/create", :method => "post" do %>
+                        <%= hidden_field_tag :parent_group_id, group.id %>
+                        <%= text_field_tag :name, nil, placeholder: "Nome do novo grupo" %>
+                        <%= text_field_tag :min_credits, nil, placeholder: "Mínimo de créditos" %>
+                        <%= text_field_tag :min_subjects, nil, placeholder: "Mínimo de disciplinas" %>
+                        <input type="submit" value="<%= "Criar grupo filho de #{group.name}" %>" />
+                    <% end %>
+                    <%= form_tag "/group/add_subject", :method => "post" do %>
+                        <%= hidden_field_tag :group_id, group.id %>
+                        <%= select_tag :subject_id, options_from_collection_for_select(@subjects.select {|subject| not group.subjects.include? subject }, 'id', 'name') %>
+                        <input type="submit" value="<%= "Adicionar disciplina em grupo #{group.name}" %>" />
+                    <% end %>
+                </li>
+                </ul>
+            <% end %>
+        </li>
+    </div>
 <% end %>
 <% if @user && @current_course %>
     <div>Escolha o curso</div>

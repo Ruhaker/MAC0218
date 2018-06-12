@@ -8,6 +8,9 @@ class WebController < ApplicationController
     # Retrieves courses
     @courses = Course.all
 
+    # Retrieves subjects
+    @subjects = Subject.all
+
     # TODO: Get this thing decently
     # Fetch user's current course (Just gets first course for now)
     @current_course = @user.courses[0] if @user

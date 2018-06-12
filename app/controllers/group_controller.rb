@@ -87,4 +87,54 @@ class GroupController < ApplicationController
     
     redirect_back fallback_location: "/"
   end
+
+  def add_subject
+    # Must be POST request to create group
+    return unless request.post?
+
+    # Receives parameters
+    group_id   = params[:group_id]
+    subject_id = params[:subject_id]
+
+    return unless group_id
+    return unless subject_id
+
+    # Check if user can modify given group
+    group = Group.find(group_id)
+    return unless group
+    return unless can_modify? group
+    
+    # Adds subject to group
+    subject = Subject.find(subject_id)
+    return unless subject
+
+    group.subjects << subject
+    
+    redirect_back fallback_location: "/"
+  end
+  
+  def rem_subject
+    # Must be POST request to create group
+    return unless request.post?
+
+    # Receives parameters
+    group_id   = params[:group_id]
+    subject_id = params[:subject_id]
+
+    return unless group_id
+    return unless subject_id
+
+    # Check if user can modify given group
+    group = Group.find(group_id)
+    return unless group
+    return unless can_modify? group
+    
+    # Adds subject to group
+    subject = Subject.find(subject_id)
+    return unless subject
+
+    group.subjects.delete(subject)
+    
+    redirect_back fallback_location: "/"
+  end
 end

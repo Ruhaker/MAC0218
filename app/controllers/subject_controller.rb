@@ -12,18 +12,18 @@ class SubjectController < ApplicationController
     subject_description     = params[:description]
 
     # Fallback to default values for nil parameters
-    subject_code            = "" unless subject_code
-    subject_name            = "" unless subject_name
+    subject_code            = ""  unless subject_code
+    subject_name            = ""  unless subject_name
     subject_credits_class   = nil unless subject_credits_class
     subject_credits_work    = nil unless subject_credits_work
     subject_workload        = nil unless subject_workload
-    subject_description     = "" unless subject_description
+    subject_description     = ""  unless subject_description
 
     subject = Subject.create!(
-      :code    			=> subject_code,
-      :name   			=> subject_name,
-      :credits_class    => subject_credits_class,
-      :credits_work     => subject_credits_work,
+      :code    			  => subject_code,
+      :name   			  => subject_name,
+      :credits_class  => subject_credits_class,
+      :credits_work   => subject_credits_work,
       :workload   		=> subject_workload,
       :description   	=> subject_description
     )

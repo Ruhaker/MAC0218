@@ -17,6 +17,10 @@ Rails.application.routes.draw do
 
   get 'group/destroy'
   post 'group/destroy'
+  
+  post 'group/add_subject'
+  
+  post 'group/rem_subject'
 
   # Paths for dealing with courses
   get 'course/create'
@@ -34,6 +38,9 @@ Rails.application.routes.draw do
 
   get  'student/create'
   post 'student/create'
+
+  # Paths for debugging
+  get 'user/list'
 
   # Session management
   get  'user/new_session'
