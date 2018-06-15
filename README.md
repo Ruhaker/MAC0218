@@ -10,6 +10,7 @@
 
 ```
 bundle install
+yarn install
 ```
 
 2 - Gere o banco de dados:
@@ -21,7 +22,7 @@ rails db:migrate
 3 - Inicialize o aplicativo em um servidor local:
 
 ```
-rails server
+foreman start
 ```
 
 Para acessar a aplicação, abra um navegador e entre com seguinte endereço:
