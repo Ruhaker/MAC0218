@@ -5,9 +5,8 @@
 <%= link_to enroll_label, '/course/enroll' %><br>
 <% if @user.is? "supervisor" %>
     <%= link_to  "Become a supervisor of a course! (temporary)", '/course/assign' %><br>
+    <%= link_to  "Create subject! (temporary?)", '/subject/create' %>
 <% end %>
-<%= link_to  "Create new group!", '/group/create' %><br>
-<%= link_to  "Create subject! (temporary?)", '/subject/create' %>
 <div>Olá, <%= @user.name %> (<%= @user.type %>)
     <%= form_tag "/user/close_session", :method => "post" do %>
         <input type="submit" value="Sair" />
@@ -115,7 +114,7 @@ end
                         <%= text_field_tag :min_subjects, nil, placeholder: "Mínimo de disciplinas" %>
                         <input type="submit" value="<%= "Criar grupo filho de #{group.name}" %>" />
                     <% end %>
-                    <%= form_tag "/group/add_subject", :method => "post" do %>
+                    <%= form_with url: "/group/add_subject", :method => "post" do %>
                         <%= hidden_field_tag :group_id, group.id %>
                         <%= select_tag :subject_id, options_from_collection_for_select(@subjects.select {|subject| not group.subjects.include? subject }, 'id', 'name') %>
                         <input type="submit" value="<%= "Adicionar disciplina em grupo #{group.name}" %>" />

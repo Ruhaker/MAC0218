@@ -1,14 +1,31 @@
+<% vue_devel = false %>
 <!DOCTYPE html>
 <html>
   <head>
     <title>CoursesUsp</title>
     <%= csrf_meta_tags %>
-
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <% if !vue_devel %>
+      <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+      <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <% else %>
+      <style>
+        html, body {
+          height: 100%;
+          overflow: hidden;
+          padding: 0;
+          margin: 0;
+        }
+      </style>
+    <% end %>
+    <%= javascript_pack_tag 'application' %>
+    <%= stylesheet_pack_tag 'application' %>
   </head>
 
   <body>
-    <%= yield %>
+    <% if !vue_devel %>
+      <%= yield %>
+    <% else %>
+      <div id='app'></div>
+    <% end %>
   </body>
 </html>

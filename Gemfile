@@ -28,6 +28,10 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
+# Webpacker for vue
+gem 'webpacker'
+gem 'foreman'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

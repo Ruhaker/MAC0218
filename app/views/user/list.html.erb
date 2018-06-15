@@ -1,9 +1,9 @@
 <h1>User#list</h1>
 
 <% if @user %>
-<% if @user.type == 'Student' %>
+<% if @user.is? 'Student' %>
     <%= link_to  "My home", '/web/home' %>
-<% elsif @user.type == 'Supervisor' %>
+<% elsif @user.is? 'Supervisor' %>
     <%= link_to  "My home", '/web/home' %><br>
     <%= link_to  "Create new course! (temporary link)", '/course/create' %>
     <%= link_to  "Create new subject!", '/subject/create' %>

@@ -54,6 +54,7 @@ Rails.application.routes.draw do
   
   # Main page for now
   get 'web/home'
-  root 'web#home'
+  #root 'web#home'
+  root to: 'web#home'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
