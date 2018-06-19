@@ -1,7 +1,7 @@
 <template>
   <div id='root'>
     <div id='main_content'>
-      <h1>Main Content</h1>
+      <h1>{{message}}</h1>
     </div>
     <sidebar id='sidebar' />
   </div>
@@ -16,7 +16,8 @@ export default {
     return {
       message: 'Welcome to Cinematronix!'
     };
-  }
+  },
+  methods: {}
 };
 </script>
 

@@ -1,19 +1,25 @@
 <template>
   <div id='root'>
-    <div id='main_content'>
-    </div>
-    <sidebar id='sidebar' />
-    <p>{{ message }}</p>
-
+    <sidebar-in v-if="logged_in()" />
+    <sidebar-out v-if="!logged_in()" />
   </div>
 </template>
 
 <script>
+import SidebarIn from './sidebar/sidebar_in';
+import SidebarOut from './sidebar/sidebar_out';
+
 export default {
-  data: function() {
-    return {
-      message: 'Sidebar'
-    };
+  components: [SidebarIn, SidebarOut],
+  props: { message: { default: 'Sidebar' } },
+  data() {
+    return {};
+  },
+  methods: {
+    logged_in() {
+      // TODO: MAKE THIS THING
+      return false;
+    }
   }
 };
 </script>

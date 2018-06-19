@@ -21,7 +21,7 @@ class CourseController < ApplicationController
     course_credits       = 0  unless course_credits
     course_teaching_unit = "" unless course_teaching_unit
     course_expected_time = 0  unless course_expected_time
-    
+
     # Retrieves current user and checks if it is a supervisor
     user = get_logged_user()
     return unless user
@@ -45,6 +45,8 @@ class CourseController < ApplicationController
     course.save
 
     redirect_back fallback_location: "/"
+
+    render :json => {:status => 'Success'}
   end
 
   #

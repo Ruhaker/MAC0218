@@ -1,10 +1,14 @@
-import Vue from 'vue/dist/vue.js';
+import Vue from 'vue';
 import router from './routes.js';
+import Resource from 'vue-resource';
+import App from './App.vue';
+
+Vue.use(Resource);
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
-    template: '<router-view></router-view>',
-    router
-  }).$mount('#app');
-  console.log(app);
+    el: '#app',
+    router,
+    render: h => h(App)
+  });
 });
