@@ -10,7 +10,8 @@ import SidebarIn from './sidebar/sidebar_in';
 import SidebarOut from './sidebar/sidebar_out';
 
 export default {
-  components: [SidebarIn, SidebarOut],
+  name: 'sidebar',
+  components: { SidebarIn, SidebarOut },
   props: { message: { default: 'Sidebar' } },
   data() {
     return {};

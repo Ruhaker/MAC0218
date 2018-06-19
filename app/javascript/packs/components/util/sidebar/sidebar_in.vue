@@ -5,6 +5,7 @@
 
 <script>
 export default {
+  name: 'sidebar-in',
   props: {},
   data() {
     return {};

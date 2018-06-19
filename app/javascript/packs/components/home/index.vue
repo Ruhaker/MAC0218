@@ -14,7 +14,7 @@ export default {
   components: { Sidebar },
   data: function() {
     return {
-      message: 'Welcome to Cinematronix!'
+      message: 'Welcome to Cinematranix!'
     };
   },
   methods: {}
