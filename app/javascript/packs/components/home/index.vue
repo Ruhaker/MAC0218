@@ -1,5 +1,7 @@
 <template>
   <div id='root'>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed">
     <div id='main_content'>
       <h1>{{message}}</h1>
     </div>
@@ -32,6 +34,7 @@ div#root {
 }
 
 div#main_content {
+  font-family: 'Encode Sans Condensed', sans-serif;
   flex: 4;
   background-color: green;
 }
