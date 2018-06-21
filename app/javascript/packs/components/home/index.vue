@@ -1,5 +1,7 @@
 <template>
   <div id='root'>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed">
     <div id='main_content'>
       <group :user='user' />
     </div>
@@ -33,6 +35,7 @@ div#root {
 div#main_content {
   flex: 3;
   background-color: #0000;
+  font-family: 'Encode Sans Condensed', sans-serif;
 }
 
 div#sidebar {
