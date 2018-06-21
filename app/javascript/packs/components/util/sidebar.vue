@@ -25,11 +25,11 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 #root {
   display: flex;
-  flex-direction: row;
-  background-color: red;
+  flex-direction: columns;
+  background: #333;
 }
 
 p {

@@ -1,21 +1,20 @@
 <template>
   <div id='root'>
     <div id='main_content'>
-      <h1>{{message}}</h1>
+      <group :user='user' />
     </div>
-    <sidebar id='sidebar' />
+    <sidebar id='sidebar' :user='user' />
   </div>
 </template>
 
 <script>
+import Group from '../util/group';
 import Sidebar from '../util/sidebar';
 
 export default {
-  components: { Sidebar },
+  components: { Group, Sidebar },
   data: function() {
-    return {
-      message: 'Welcome to Cinematranix!'
-    };
+    return { user: undefined };
   },
   methods: {}
 };
@@ -25,20 +24,20 @@ export default {
 div#root {
   display: flex;
   flex-direction: row;
-  background-color: red;
   height: 100%;
   padding: 0;
   margin: 0;
+  background-attachment: fixed;
 }
 
 div#main_content {
-  flex: 4;
-  background-color: green;
+  flex: 3;
+  background-color: #0000;
 }
 
 div#sidebar {
   flex: 1;
-  background-color: blue;
+  background: inherit;
 }
 
 p {
