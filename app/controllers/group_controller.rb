@@ -1,36 +1,64 @@
-class GroupController < ApplicationController
+class GroupController < ApplicationControllerAPI
 
   #
   # Returns whether given user can modify given group
   #
   def can_modify?(group)
-    # Get root group
-    curr_group = group
-    while curr_group.group
-      curr_group = curr_group.group
-    end
+    begin 
+      response = {}
+      status_code = 200
 
-    # Verify if can be modified by current user
-    user = get_logged_user()
-    return unless user
+      # Get root group
+      curr_group = group
+      while curr_group.group
+        curr_group = curr_group.group
+      end
 
-    if user.class.name == "Student"
-      # If student, must be part of this student's plan
-      return false unless curr_group.plan
-      return false unless user == curr_group.plan.student
+      # Verify if can be modified by current user
+      user = get_logged_user()
+      unless user
+        status_code = 401
+        raise 'Not logged in!'        
+      end
 
-    elsif user.class.name == "Supervisor"
-      # If supervisor, must supervise course that has this group
-      return false unless user.courses.find(curr_group.course.id)
+      if user.class.name == "Student"
+        # If student, must be part of this student's plan
+        unless curr_group.plan
+          status_code = 403
+          raise 'You cannot modify this group!'
+        end
+        unless user == curr_group.plan.student
+          status_code = 403
+          raise 'You cannot modify this group!'
+        end
+
+      elsif user.class.name == "Supervisor"
+        # If supervisor, must supervise course that has this group
+        unless user.courses.find(curr_group.course.id)
+          status_code = 403
+          raise 'You cannot modify this group!'
+        end
+      else
+        # If unknown class, do nothing
+        return
+      end
+
+      return true
+    rescue Exception => e
+      response[:status] = 'error'
+      response[:error]  = "#{e}"
     else
-      # If unknown class, do nothing
-      return
+      status_code 201
+      response[:status] = 'success'
     end
 
-    return true
+    render :json => response, :status => status_code
   end
 
   def create
+    response = {}
+    status_code = 200
+
     # Must be POST request to create group
     return unless request.post?
 
@@ -47,6 +75,7 @@ class GroupController < ApplicationController
     
     # Check if user can modify given parent group
     parent_group = Group.find(group_parent_id)
+
     return unless parent_group
     return unless can_modify? parent_group
 
@@ -111,6 +140,7 @@ class GroupController < ApplicationController
     group.subjects << subject
     
     redirect_back fallback_location: "/"
+
   end
   
   def rem_subject
