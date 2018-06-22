@@ -7,46 +7,62 @@ class StudentController < ApplicationControllerAPI
   def create
     response = {}
     status_code = 200
-
     begin
       # Must be POST request to create user
       return unless request.post?
 
       # Load params passed to here
-      login_field  = params[:login_field]
+      email        = params[:email]
       user_fname   = params[:full_name]
       nusp         = params[:nusp]
       password     = params[:password]
 
-      # Fallback to default values for nil variables
-      login_field = "" unless login_field
-      user_fname  = "" unless user_fname
-      nusp        = 0  unless nusp
-      password    = "" unless password
+      if !email or !user_fname or !nusp or !password
+        response = {}
+        status_code = 400
+        raise 'email, full_name, nusp and password are required'
+      end
 
       # Generate 10 char hex password salt for this account
       pw_salt = SecureRandom.hex 5
       pw_hash = calculate_hash(pw_salt, password)
 
-       # Retrieves current user and checks if it is a student
-      user = get_logged_user()
+
+      # If has not same email nor nusp
+      if Student.find_by(:email => email)
+        status_code = 409
+        raise 'email is already being used by another user'
+      end
+
+      if Student.find_by(:nusp => nusp)
+        status_code = 409
+        raise 'nusp is already being used by another student'
+      end
 
       # Create student
-      Student.create!({
-        :email   => login_field,
+      student = Student.create({
+        :email   => email,
         :name    => user_fname,
         :nusp    => nusp,
         :pw_salt => pw_salt,
         :pw_hash => pw_hash
       })
 
-      redirect_back fallback_location: "/"
+    rescue ActiveRecord::RecordInvalid => e
+      status_code = 500
+      response[:status] = 'error'
+      response[:error]  = "#{e}"
+
     rescue Exception => e
       response[:status] = 'error'
       response[:error]  = "#{e}"
     else
-      status_code 201
+
+      status_code = 201
       response[:status] = 'success'
-      response[:message] = 'Student was created with success!'
     end
+
+    render :json => response, :status => status_code
+  end
+
 end

@@ -29,13 +29,14 @@ class CourseController < ApplicationControllerAPI
 
       # Retrieves current user and checks if it is a supervisor
       user = get_logged_user()
+
       if !user
         status_code = 401
-        raise 'Not logged in!'
+        raise 'Not logged in'
       end
       if !user.is? "supervisor"
         status_code = 403
-        raise 'User cannot edit course!'
+        raise 'User cannot edit course'
       end
 
       # Create a course
@@ -45,6 +46,11 @@ class CourseController < ApplicationControllerAPI
         :teaching_unit => course_teaching_unit,
         :expected_time => course_expected_time
       })
+
+      if !course.valid?
+        status_code = 400
+        raise 'Invalid course data'
+      end
 
       base_group = Group.create!({
         :name         => "Grade",
@@ -56,13 +62,17 @@ class CourseController < ApplicationControllerAPI
       course.save
 
       redirect_back fallback_location: "/"
+    rescue ActiveRecord::RecordInvalid => e
+      status_code = 500
+      response[:status] = 'error'
+      response[:error]  = "#{e}"
     rescue Exception => e
       response[:status] = 'error'
       response[:error]  = "#{e}"
     else
       status_code 201
       response[:status] = 'success'
-      response[:message] = 'Course was created with success!'
+      response[:message] = 'Course created with success'
     end
 
     render :json => response, :status => status_code

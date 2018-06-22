@@ -1,7 +1,7 @@
 <template>
   <div id='root'>
-    <sidebar-in v-if="logged_in()" />
-    <sidebar-out v-if="!logged_in()" />
+    <sidebar-in v-if="user" v-on:auth-update='update_user()'/>
+    <sidebar-out v-if="!user" v-on:auth-update='update_user()'/>
   </div>
 </template>
 
@@ -9,17 +9,24 @@
 import SidebarIn from './sidebar/sidebar_in';
 import SidebarOut from './sidebar/sidebar_out';
 
+import auth from './auth.js';
+
 export default {
   name: 'sidebar',
   components: { SidebarIn, SidebarOut },
-  props: { message: { default: 'Sidebar' } },
+  props: {},
   data() {
-    return {};
+    return { user: null };
+  },
+  beforeMount() {
+    this.update_user();
   },
   methods: {
-    logged_in() {
-      // TODO: MAKE THIS THING
-      return false;
+    update_user() {
+      auth
+        .get_user_object()
+        .then(u => (this.user = u))
+        .catch(err => console.error(err));
     }
   }
 };

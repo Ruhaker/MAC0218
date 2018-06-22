@@ -45,10 +45,11 @@ Rails.application.routes.draw do
   get 'user/list'
 
   # Session management
-  get  'user/new_session'
   post 'user/new_session'
-  get  'user/close_session'
   post 'user/close_session'
+
+  # User actions
+  post 'user/get'
 
   # Paths for web
   get 'web/home'
