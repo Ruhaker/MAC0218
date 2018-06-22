@@ -1,13 +1,14 @@
 <template>
   <div id='root'>
     <div id='form_area'>
-      <form v-on:submit.prevent="login">
+      <form v-on:submit.prevent="send">
           <input type='email' placeholder="email" v-model="form_email"/>
           <input :type='visible_pass ? "text" : "password"' placeholder="password" v-model="form_password"/>
           <transition name='fade-shrink' class='form-section'>
             <div v-if="!sign_in_mode">
               <div style="display: flex; flex-direction: column;">
                 <input :type='visible_pass ? "text" : "password"' placeholder="confirm password" v-model="form_cpassword" />
+                <input :type='visible_pass ? "text" : "name"' placeholder="name" v-model="form_name" />
                 <select v-model="form_user_type" >
                   <option value='student'>{{text.user_type.student}}</option>
                   <option value='supervisor'>{{text.user_type.supervisor}}</option>
@@ -27,10 +28,11 @@
 
 <script>
 import Vue from 'vue';
+import auth from '../auth.js';
 
 export default {
   name: 'sidebar-out',
-  props: {},
+  props: { user: { default: null } },
   data() {
     return {
       // Strings
@@ -48,22 +50,36 @@ export default {
       form_email: '',
       form_password: '',
       form_cpassword: '',
+      form_name: '',
       form_identifier: ''
     };
   },
   methods: {
-    login: () => {
-      Vue.http
-        .post('course/create', { name: 'Curso' })
-        .then(result => {
-          console.log('Received');
-          console.log(result);
+    send() {
+      if (this.sign_in_mode) {
+        this.login();
+      } else {
+        this.register();
+      }
+    },
+    login() {
+      auth
+        .login(this.form_email, this.form_password, navigator.userAgent)
+        .then(() => {
+          this.$emit('auth-update');
         })
-        .catch(error => {
-          console.error('Error');
-          console.error(error);
-          alert(error.data.error);
-        });
+        .catch(() => {});
+    },
+    register() {
+      Vue.http
+        .post(`${this.form_user_type}/create`, {
+          email: this.form_email,
+          full_name: this.form_name,
+          nusp: this.form_identifier,
+          password: this.form_password
+        })
+        .then(result => {})
+        .catch(error => {});
     }
   }
 };
@@ -131,7 +147,7 @@ form select:focus {
 }
 
 // Animation
-$section-height: 150px;
+$section-height: 200px;
 $anim-time: 0.15s;
 
 .fade-shrink-enter-active {

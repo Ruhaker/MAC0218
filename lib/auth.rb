@@ -7,17 +7,14 @@ module Auth
     end
 
     def get_logged_user()
-        if !:json_request? and cookies[:user_session] and not session[:user_session]
-            session[:user_session] = cookies[:user_session]
-        end
+        auth = params[:auth]
+        return nil unless auth
 
-        if session[:user_session]
-            session_o = Session.where(active: true).find_by(:session_key => session[:user_session])
-            session_o.last_accessed = Time.now if session_o
-            session_o.save if session_o
-            return session_o.user if session_o
-        end
+        session_o = Session.where(active: true).find_by(:session_key => auth[:session_key])
+        session_o.last_accessed = Time.now if session_o
+        session_o.save if session_o
 
+        return session_o.user if session_o
         return nil
     end
 end

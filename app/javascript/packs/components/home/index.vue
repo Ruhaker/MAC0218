@@ -3,9 +3,9 @@
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed">
     <div id='main_content'>
-      <group :user='user' />
+      <group/>
     </div>
-    <sidebar id='sidebar' :user='user' />
+    <sidebar id='sidebar'/>
   </div>
 </template>
 
@@ -16,7 +16,7 @@ import Sidebar from '../util/sidebar';
 export default {
   components: { Group, Sidebar },
   data: function() {
-    return { user: undefined };
+    return {};
   },
   methods: {}
 };
