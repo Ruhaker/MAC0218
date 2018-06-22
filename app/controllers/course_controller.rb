@@ -34,7 +34,7 @@ class CourseController < ApplicationControllerAPI
         raise 'Not logged in!'
       end
       if !user.is? "supervisor"
-        status_code = 401
+        status_code = 403
         raise 'User cannot edit course!'
       end
 
@@ -71,53 +71,75 @@ class CourseController < ApplicationControllerAPI
   #
   # Enroll a student in a course.
   #
-  # For now, students may only enroll themselves in a course.
   # Supervisors may only enroll students in the courses they manage.
   #
   def enroll
-    # Must be POST request to create course
-    return unless request.post?
 
-    # Retrieves current user
-    user = get_logged_user()
-    return unless user
+    response = {}
+    status_code = 200
 
-    # Receives parameters from the course creation page
-    # If logged in user is a student
-    if user.is? "student"
-      # He can enroll only himself
-      student_id = user.id
-      course_id  = params[:course_id]
+    begin
 
-    # If a supervisor
-    elsif user.is? "supervisor"
-      # Get parameters
-      student_id = params[:student_id]
-      course_id  = params[:course_id]
+        # Must be POST request to create course
+        return unless request.post?
 
-      # Only allowed to enroll students in courses he supervises
-      return unless user.courses.find(course_id)
+        # Retrieves current user
+        user = get_logged_user()
+        return unless user
+
+        if !user
+            status_code = 401
+            raise 'Not logged in!'
+        end
+
+        if !user.is? "supervisor"
+            status_code = 403
+            raise 'Student cannot edit course!'
+        end
+
+        # If a supervisor
+        if user.is? "supervisor"
+          # Get parameters
+          student_id = params[:student_id]
+          course_id  = params[:course_id]
+
+          # Only allowed to enroll students in courses he supervises
+          return unless user.courses.find(course_id)
+        else
+          # If unknown class, do nothing
+          return
+        end
+
+        # Create plan
+        plan = Plan.new
+
+        group = Group.create!(
+          :name         => "Pessoal",
+          :min_credits  => nil,
+          :min_subjects => nil
+        )
+
+        # Supervisor only enrolls if student exists
+        if Student.find(student_id) != nil
+            plan.course  = Course.find(course_id)
+            plan.student = Student.find(student_id)
+            plan.group   = group
+
+            plan.save
+        else
+            status_code = 404
+            raise 'Student does not exist!'
+        end
+
+        redirect_back fallback_location: "/"
+    rescue Exception => e
+        response[:status] = 'error'
+        response[:error]  = "#{e}"
     else
-      # If unknown class, do nothing
-      return
+        status_code 201
+        response[:status] = 'success'
+        response[:message] = 'Student was enrolled with success!'
     end
-
-    # Create plan
-    plan = Plan.new
-
-    group = Group.create!(
-      :name         => "Pessoal",
-      :min_credits  => nil,
-      :min_subjects => nil
-    )
-
-    plan.course  = Course.find(course_id)
-    plan.student = Student.find(student_id)
-    plan.group   = group
-
-    plan.save
-
-    redirect_back fallback_location: "/"
   end
 
   #
@@ -137,7 +159,7 @@ class CourseController < ApplicationControllerAPI
 
     # Receives parameters from the course creation page
     course_id  = params[:course_id]
-    
+
     # Get course
     course = Course.find(course_id)
 
