@@ -6,10 +6,12 @@ Rails.application.routes.draw do
   get 'subject/create'
   post 'subject/create'
 
+  post 'subject/change_progress'
+
   get 'course/enroll'
   post 'course/enroll'
 
-  # Paths for dealing with groups 
+  # Paths for dealing with groups
   get 'group/create'
   post 'group/create'
 
@@ -17,18 +19,18 @@ Rails.application.routes.draw do
 
   get 'group/destroy'
   post 'group/destroy'
-  
+
   post 'group/add_subject'
-  
+
   post 'group/rem_subject'
 
   # Paths for dealing with courses
   get 'course/create'
   post 'course/create'
-  
+
   get 'course/enroll'
   post 'course/enroll'
-  
+
   get 'course/assign'
   post 'course/assign'
 

@@ -1,6 +1,9 @@
 class StudentController < ApplicationControllerAPI
   include Auth
 
+  #
+  # Creates a new student
+  #
   def create
     response = {}
     status_code = 200
@@ -24,6 +27,7 @@ class StudentController < ApplicationControllerAPI
       pw_salt = SecureRandom.hex 5
       pw_hash = calculate_hash(pw_salt, password)
 
+
       # If has not same email nor nusp
       if Student.find_by(:email => email)
         status_code = 409
@@ -43,18 +47,22 @@ class StudentController < ApplicationControllerAPI
         :pw_salt => pw_salt,
         :pw_hash => pw_hash
       })
+
     rescue ActiveRecord::RecordInvalid => e
       status_code = 500
       response[:status] = 'error'
       response[:error]  = "#{e}"
+
     rescue Exception => e
       response[:status] = 'error'
       response[:error]  = "#{e}"
     else
+
       status_code = 201
       response[:status] = 'success'
     end
 
     render :json => response, :status => status_code
   end
+
 end
