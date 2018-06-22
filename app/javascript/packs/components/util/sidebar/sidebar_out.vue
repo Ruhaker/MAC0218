@@ -26,6 +26,8 @@
 </template>
 
 <script>
+import Vue from 'vue';
+
 export default {
   name: 'sidebar-out',
   props: {},
@@ -51,7 +53,17 @@ export default {
   },
   methods: {
     login: () => {
-      alert('HEllo');
+      Vue.http
+        .post('course/create', { name: 'Curso' })
+        .then(result => {
+          console.log('Received');
+          console.log(result);
+        })
+        .catch(error => {
+          console.error('Error');
+          console.error(error);
+          alert(error.data.error);
+        });
     }
   }
 };

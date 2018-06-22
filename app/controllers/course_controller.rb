@@ -1,52 +1,71 @@
-class CourseController < ApplicationController
+class CourseController < ApplicationControllerAPI
   include Auth
-  
+
   #
   # Creates a new course
   #
   # For now, any supervisor can create courses, but this will change later.
   #
   def create
-    # Must be POST request to create course
-    return unless request.post?
+    response = {}
+    status_code = 200
 
-    # Receives parameters from the course creation page
-    course_name          = params[:name]
-    course_credits       = params[:credits]
-    course_teaching_unit = params[:teaching_unit]
-    corse_expected_time  = params[:expected_time]
+    begin
+      # Must be POST request to create course
+      return unless request.post?
 
-    # Fallback to default values for nil parameters
-    course_name          = "" unless course_name
-    course_credits       = 0  unless course_credits
-    course_teaching_unit = "" unless course_teaching_unit
-    course_expected_time = 0  unless course_expected_time
+      # Receives parameters from the course creation page
+      p = params
+      course_name          = p[:name]
+      course_credits       = p[:credits]
+      course_teaching_unit = p[:teaching_unit]
+      corse_expected_time  = p[:expected_time]
 
-    # Retrieves current user and checks if it is a supervisor
-    user = get_logged_user()
-    return unless user
-    return unless user.is? "supervisor"
+      # Fallback to default values for nil parameters
+      course_name          = "" unless course_name
+      course_credits       = 0  unless course_credits
+      course_teaching_unit = "" unless course_teaching_unit
+      course_expected_time = 0  unless course_expected_time
 
-    # Create a course
-    course = Course.new({
-      :name          => course_name,
-      :credits       => course_credits,
-      :teaching_unit => course_teaching_unit,
-      :expected_time => course_expected_time
-    })
+      # Retrieves current user and checks if it is a supervisor
+      user = get_logged_user()
+      if !user
+        status_code = 401
+        raise 'Not logged in!'
+      end
+      if !user.is? "supervisor"
+        status_code = 401
+        raise 'User cannot edit course!'
+      end
 
-    base_group = Group.create!({
-      :name         => "Grade",
-      :min_credits  => nil,
-      :min_subjects => nil
-    })
+      # Create a course
+      course = Course.new({
+        :name          => course_name,
+        :credits       => course_credits,
+        :teaching_unit => course_teaching_unit,
+        :expected_time => course_expected_time
+      })
 
-    course.group = base_group
-    course.save
+      base_group = Group.create!({
+        :name         => "Grade",
+        :min_credits  => nil,
+        :min_subjects => nil
+      })
 
-    redirect_back fallback_location: "/"
+      course.group = base_group
+      course.save
 
-    render :json => {:status => 'Success'}
+      redirect_back fallback_location: "/"
+    rescue Exception => e
+      response[:status] = 'error'
+      response[:error]  = "#{e}"
+    else
+      status_code 201
+      response[:status] = 'success'
+      response[:message] = 'Course was created with success!'
+    end
+
+    render :json => response, :status => status_code
   end
 
   #

@@ -7,7 +7,7 @@ module Auth
     end
 
     def get_logged_user()
-        if cookies[:user_session] and not session[:user_session]
+        if !:json_request? and cookies[:user_session] and not session[:user_session]
             session[:user_session] = cookies[:user_session]
         end
 
@@ -17,7 +17,7 @@ module Auth
             session_o.save if session_o
             return session_o.user if session_o
         end
-        
+
         return nil
     end
 end
