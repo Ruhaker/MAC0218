@@ -32,6 +32,9 @@ gem 'jbuilder', '~> 2.5'
 gem 'webpacker'
 gem 'foreman'
 
+# Generator of fake data for testing
+gem 'faker'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
