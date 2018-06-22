@@ -1,6 +1,6 @@
 <template>
   <div id='root'>
-    <button text='logout' v-on:click='logout()' />
+    <button name='loglout' v-on:click='logout()' />
   </div>
 </template>
 
@@ -17,9 +17,7 @@ export default {
     logout() {
       auth
         .logout()
-        .then(() => {
-          this.$emit('auth-update');
-        })
+        .then(() => this.$emit('auth-update'))
         .catch(() => {});
     }
   }
@@ -29,7 +27,10 @@ export default {
 <style scoped>
 #root {
   height: 100%;
-  align-items: center;
+  display: block;
   color: red;
+}
+
+button {
 }
 </style>

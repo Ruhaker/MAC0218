@@ -16,7 +16,7 @@ export default {
       if (user != null) {
         resolve(user);
       } else {
-        if (session_token == null) {
+        if (this.get_session_token() == null) {
           user = null;
           resolve(null);
         }
@@ -36,34 +36,42 @@ export default {
   },
   // Starts session
   login(email, password, client) {
-    return this.request('user/new_session', {
-      email,
-      password,
-      client
-    })
-      .then(result => {
-        session_token = result.data.session_key;
-        localStorage.token = session_token;
+    return new Promise((resolve, reject) => {
+      this.request('user/new_session', {
+        email,
+        password,
+        client
       })
-      .catch(error => {
-        console.error('Error logging in');
-        console.error(error);
-      });
+        .then(result => {
+          session_token = result.data.session_key;
+          localStorage.token = session_token;
+          resolve(result);
+        })
+        .catch(error => {
+          console.error('Error logging in');
+          console.error(error);
+          reject(error);
+        });
+    });
   },
   // Logs out locally
   logout() {
-    return this.request('user/close_session', {
-      session_key: this.get_session_token()
-    })
-      .then(() => {
-        user = null;
-        session_token = null;
-        localStorage.token = null;
+    return new Promise((resolve, reject) => {
+      this.request('user/close_session', {
+        session_key: this.get_session_token()
       })
-      .catch(error => {
-        console.error('Error logging out');
-        console.error(error);
-      });
+        .then(result => {
+          user = null;
+          session_token = null;
+          localStorage.token = null;
+          resolve(result);
+        })
+        .catch(error => {
+          console.error('Error logging out');
+          console.error(error);
+          reject(error);
+        });
+    });
   },
   // Sends POST request to API
   request(path, data) {

@@ -65,9 +65,7 @@ export default {
     login() {
       auth
         .login(this.form_email, this.form_password, navigator.userAgent)
-        .then(() => {
-          this.$emit('auth-update');
-        })
+        .then(() => this.$emit('auth-update'))
         .catch(() => {});
     },
     register() {
