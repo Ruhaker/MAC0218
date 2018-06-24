@@ -1,6 +1,11 @@
 <template>
   <div id='root'>
-    <button name='loglout' v-on:click='logout()' />
+    <div>
+      <button class='logout' v-on:click='logout()' />
+    </div>
+    <div class='welcome' v-if='user'>Olá, {{user.name}}</div>
+    <select>
+    </select>
   </div>
 </template>
 
@@ -11,7 +16,12 @@ export default {
   name: 'sidebar-in',
   props: {},
   data() {
-    return {};
+    return { user: null };
+  },
+  beforeMount() {
+    auth.get_user_object().then(result => {
+      this.user = result;
+    });
   },
   methods: {
     logout() {
@@ -31,6 +41,15 @@ export default {
   color: red;
 }
 
-button {
+.welcome {
+  color: white;
+  text-align: center;
+  font-size: 15pt;
+}
+
+button.logout {
+  width: 15pt;
+  height: 15pt;
+  float: right;
 }
 </style>

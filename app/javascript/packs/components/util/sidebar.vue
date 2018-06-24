@@ -1,7 +1,7 @@
 <template>
   <div id='root'>
-    <sidebar-in v-if="user" v-on:auth-update='update_user()'/>
-    <sidebar-out v-if="!user" v-on:auth-update='update_user()'/>
+    <sidebar-in v-if="loaded && user" v-on:auth-update='update_user()'/>
+    <sidebar-out v-if="loaded && !user" v-on:auth-update='update_user()'/>
   </div>
 </template>
 
@@ -16,7 +16,7 @@ export default {
   components: { SidebarIn, SidebarOut },
   props: {},
   data() {
-    return { user: null };
+    return { user: null, loaded: false };
   },
   beforeMount() {
     this.update_user();
@@ -25,7 +25,10 @@ export default {
     update_user() {
       auth
         .get_user_object()
-        .then(u => (this.user = u))
+        .then(u => {
+          this.user = u;
+          this.loaded = true;
+        })
         .catch(err => console.error(err));
     }
   }

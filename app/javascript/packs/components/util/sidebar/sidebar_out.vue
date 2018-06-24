@@ -129,6 +129,11 @@ form select {
   border: none;
 }
 
+form select .select-items {
+  border-top-left-radius: 5pt;
+  border-top-right-radius: 5pt;
+}
+
 // Remove arrows from number input
 input[type='number']::-webkit-inner-spin-button {
   -webkit-appearance: none;
