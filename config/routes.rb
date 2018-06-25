@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  post 'plan/create'
+
+  post 'plan/fetch'
+
   get 'subject/enroll'
   post 'subject/enroll'
 
@@ -12,6 +16,8 @@ Rails.application.routes.draw do
   post 'course/enroll'
 
   # Paths for dealing with groups
+  post 'group/fetch'
+
   get 'group/create'
   post 'group/create'
 
@@ -49,14 +55,14 @@ Rails.application.routes.draw do
   post 'user/close_session'
 
   # User actions
-  post 'user/get'
+  post 'user/fetch'
 
   # Paths for web
-  get 'web/home'
-  get 'web/profile'
+  #get 'web/home'
+  #get 'web/profile'
 
   # Main page for now
-  get 'web/home'
+  #get 'web/home'
   #root 'web#home'
   root to: 'web#home'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

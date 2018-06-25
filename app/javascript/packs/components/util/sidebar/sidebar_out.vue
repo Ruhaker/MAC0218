@@ -65,18 +65,20 @@ export default {
     login() {
       auth
         .login(this.form_email, this.form_password, navigator.userAgent)
-        .then(() => this.$emit('auth-update'))
+        .then(() => window.bus.$emit('auth-changed'))
         .catch(() => {});
     },
     register() {
-      Vue.http
-        .post(`${this.form_user_type}/create`, {
+      auth
+        .request(`${this.form_user_type}/create`, {
           email: this.form_email,
           full_name: this.form_name,
           nusp: this.form_identifier,
           password: this.form_password
         })
-        .then(result => {})
+        .then(result => {
+          this.login();
+        })
         .catch(error => {});
     }
   }
@@ -138,15 +140,6 @@ form select .select-items {
 input[type='number']::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
-}
-
-// Removes blue outline
-form input:focus {
-  outline: none;
-}
-
-form select:focus {
-  outline: none;
 }
 
 // Animation

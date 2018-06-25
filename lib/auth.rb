@@ -10,11 +10,33 @@ module Auth
         auth = params[:auth]
         return nil unless auth
 
-        session_o = Session.where(active: true).find_by(:session_key => auth[:session_key])
-        session_o.last_accessed = Time.now if session_o
-        session_o.save if session_o
+        session_o = nil
 
-        return session_o.user if session_o
-        return nil
+        session_key = auth[:session_key]
+
+        session_o = Session.where(:active => true).find_by(:session_key => session_key)
+
+        Thread.new do
+            retry_cnt = 3
+            begin
+                if session_o
+                    session_o.last_accessed = Time.now
+                    session_o.save
+                end
+            rescue ActiveRecord::StatementInvalid => e
+                retry_cnt -= 1
+                if retry_cnt > 0
+                    sleep rand
+                    retry
+                end
+            end
+            ActiveRecord::Base.connection.close
+        end if false
+
+        if session_o
+            return session_o.user
+        else
+            return nil
+        end
     end
 end

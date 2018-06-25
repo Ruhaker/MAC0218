@@ -1,7 +1,7 @@
 <template>
   <div id='root'>
-    <sidebar-in v-if="loaded && user" v-on:auth-update='update_user()'/>
-    <sidebar-out v-if="loaded && !user" v-on:auth-update='update_user()'/>
+    <sidebar-in v-if="loaded && user" />
+    <sidebar-out v-if="loaded && !user" />
   </div>
 </template>
 
@@ -20,6 +20,7 @@ export default {
   },
   beforeMount() {
     this.update_user();
+    window.bus.$on('auth-changed', this.update_user);
   },
   methods: {
     update_user() {
@@ -29,7 +30,11 @@ export default {
           this.user = u;
           this.loaded = true;
         })
-        .catch(err => console.error(err));
+        .catch(err => {
+          console.error(err);
+          this.user = null;
+          this.loaded = true;
+        });
     }
   }
 };

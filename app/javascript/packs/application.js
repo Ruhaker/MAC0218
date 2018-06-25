@@ -1,9 +1,12 @@
 import Vue from 'vue';
 import router from './routes.js';
-import Resource from 'vue-resource';
 import App from './App.vue';
 
+import Resource from 'vue-resource';
 Vue.use(Resource);
+
+// Create event bus
+window.bus = new Vue();
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({

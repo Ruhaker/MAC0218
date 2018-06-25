@@ -2,27 +2,45 @@
   <div id='root'>
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed">
-    <div id='main_content'>
-      <group/>
-    </div>
+    <main-content id='main_content' :groupids='groups' v-on:change-plan='changed_plan($event)'/>
     <sidebar id='sidebar'/>
   </div>
 </template>
 
 <script>
-import Group from '../util/group';
+import auth from '../util/auth.js';
+document.auth = auth;
+
+import MainContent from '../util/main_content';
 import Sidebar from '../util/sidebar';
+import 'vue-ionicons/ionicons.css';
 
 export default {
-  components: { Group, Sidebar },
+  components: { MainContent, Sidebar },
   data: function() {
-    return {};
+    return { groups: [1] };
   },
-  methods: {}
+  methods: {
+    changed_plan(event) {
+      console.log('Changed!');
+      console.log(event);
+    }
+  }
 };
 </script>
 
-<style scoped>
+<style lang="scss">
+// Toolbar utilities
+.toolbar {
+  display: flex;
+}
+.spacer {
+  flex-grow: 1;
+}
+</style>
+
+
+<style lang='scss' scoped>
 div#root {
   display: flex;
   flex-direction: row;
@@ -36,11 +54,21 @@ div#main_content {
   flex: 3;
   background-color: #0000;
   font-family: 'Encode Sans Condensed', sans-serif;
+  overflow: auto;
 }
 
 div#sidebar {
   flex: 1;
   background: inherit;
+}
+
+// Removes blue outline for input fields
+input:focus {
+  outline: none;
+}
+
+select:focus {
+  outline: none;
 }
 
 p {

@@ -27,7 +27,7 @@ class UserController < ApplicationControllerAPI
     #
     # Get user object from session key
     #
-    def get
+    def fetch
         response = {}
         status_code = 200
         begin
@@ -60,8 +60,20 @@ class UserController < ApplicationControllerAPI
             end
 
             response[:user] = {}
+            response[:user][:type]  = user.type
             response[:user][:name]  = user.name
             response[:user][:email] = user.email
+
+            if user.is? 'student'
+                response[:user][:plans] = []
+                user.plans.each do |plan|
+                    user_plan = {}
+                    user_plan[:id] = plan.id
+                    user_plan[:course] = plan.course.name
+                    user_plan[:start_year] = plan.start_year
+                    response[:user][:plans].push user_plan
+                end
+            end
         rescue Exception => e
             response[:status] = 'error'
             response[:error]  = "#{e}"

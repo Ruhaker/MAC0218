@@ -2,6 +2,7 @@ class WebController < ApplicationController
   include Auth
 
   def home
+    return
     # Retrieves logged-in user
     @user = get_logged_user()
 

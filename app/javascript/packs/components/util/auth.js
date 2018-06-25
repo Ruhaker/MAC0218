@@ -20,7 +20,7 @@ export default {
           user = null;
           resolve(null);
         }
-        this.request('user/get')
+        this.request('user/fetch')
           .then(result => {
             user = result.data.user;
             console.log(user);
