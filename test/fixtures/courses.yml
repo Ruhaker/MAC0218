@@ -1,10 +1,10 @@
-one:
+comp:
   name: Ciência da Computação
   credits: 195
   teaching_unit: IME
   expected_time: 8
 
-two:
+arq:
   name: Arquitetura e Urbanismo
   credits: 400
   teaching_unit: FAU
