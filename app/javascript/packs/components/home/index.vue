@@ -21,10 +21,7 @@ export default {
     return { groups: [1] };
   },
   methods: {
-    changed_plan(event) {
-      console.log('Changed!');
-      console.log(event);
-    }
+    changed_plan(event) {}
   }
 };
 </script>

@@ -1,41 +1,12 @@
 <template>
-  <div id='root'>
-    <div id='header'>
-      <!-- If Subject -->
-      <div v-if='group_obj && !is_group' class='toolbar'>
-        <div id='left'>
-          <div>{{group_obj.code}} - {{group_obj.name}}</div>
-        </div>
-        <div class='spacer'/>
-        <div id='right' class='toolbar'>
-        </div>
-      </div>
-      <!-- If Group -->
-      <div v-if='group_obj && is_group' class='toolbar'>
-        <div id='left'>
-          <div>{{group_obj.name}}</div>
-        </div>
-        <div class='spacer'/>
-        <div id='right' class='toolbar'>
-          <div v-if='true' style='display: flex'>
-            <div v-on:click="enable_editing">
-              <create-icon rootClass='header-icon' w='25' h='25' />
-            </div>
-            <div v-on:click="add_child">
-              <add-icon rootClass='header-icon' w='25' h='25' />
-            </div>
-          </div>
-        </div>
-      </div>
-      <hr v-if='group_obj && is_group'>
-    </div>
+  <div id='root' ref='root'>
+    <!-- Draw header -->
+    <group-header :groupobj='group_obj' :parentobj='parent_obj' v-on:add-child='add_child'/>
     <!-- Draw children -->
-    <div v-if='group_obj'>
-      <transition-group name='children-list'>
-        <div v-for='(child, index) in group_obj.children' v-bind:key="index" class='children-list-item'>
-          <group :groupobj='child'/>
-        </div>
-      </transition-group>
+    <div v-if='group_obj && is_group' class='children-list'>
+      <draggable v-model="group_obj.children" :options='draggable_options' ghostClass='draggable-ghost' :move='drag_check' :disabled='!group_obj.can_modify'>
+        <group :groupobj='child' :parentobj='group_obj' v-for='(child, index) in group_obj.children' v-bind:key="index" />
+      </draggable>
     </div>
   </div>
 </template>
@@ -44,61 +15,96 @@
 import group from './group';
 import auth from './auth';
 
-import AddIcon from 'vue-ionicons/dist/md-add.vue';
-import CreateIcon from 'vue-ionicons/dist/md-create.vue';
-import CheckIcon from 'vue-ionicons/dist/md-checkmark.vue';
+import GroupHeader from './group/group_header';
+
+import draggable from 'vuedraggable';
 
 import { Chrome } from 'vue-color';
 
 export default {
   name: 'group',
-  props: { groupid: { default: null }, groupobj: { default: null } },
+  props: {
+    groupid: { default: null },
+    groupobj: { default: null },
+    parentobj: { default: null }
+  },
   data() {
-    return { groupo: null };
+    return {
+      // Local instance of group objects
+      groupo: null,
+      pgroupo: null,
+      // Options for Vue.Draggable
+      draggable_options: {
+        animation: 200,
+        group: 'item',
+        handle: '.handle',
+        ghostClass: 'ghost'
+      }
+    };
   },
   components: {
     'chrome-color-picker': Chrome,
     group,
-    AddIcon,
-    CreateIcon,
-    CheckIcon
+    GroupHeader,
+    draggable
   },
   computed: {
+    // Returns this group's id
     group_id() {
       return this.groupid;
     },
+    // Return this group's object
     group_obj: {
       get() {
-        if (this.groupobj) return this.groupobj;
-        else return this.groupo;
+        if (this.groupo) return this.groupo;
+        else return this.groupobj;
       },
       set(value) {
         this.groupo = value;
       }
     },
+    // Return this group's parent object
+    parent_obj: {
+      get() {
+        if (this.pgroupo) return this.pgroupo;
+        else return this.parentobj;
+      },
+      set(value) {
+        this.pgroupo = value;
+      }
+    },
+    // Is it a group?
     is_group() {
       return this.group_obj.type == 'group';
     }
   },
   watch: {
+    // Update group on group id changes
     group_id() {
       if (this.group_id != null) this.update();
       else this.group_obj = null;
     }
   },
   beforeMount() {
+    // Fetch data from server if not given group from caller
     if (!this.groupo && this.group_id) this.update();
   },
   methods: {
+    // Checks if can drag
+    drag_check(evn, origEvt) {
+      return evn.relatedContext.element.can_modify;
+    },
+    // Fetch gorup data from server
     update() {
       auth
         .request('group/fetch', { group_id: this.group_id })
         .then(response => {
           this.group_obj = response.data.group;
+          console.log(this.group_obj);
         })
         .catch(error => {});
     },
-    enable_editing() {},
+    // Adds child to this group
     add_child() {
       this.group_obj.children.push({
         editing: true,
@@ -124,25 +130,41 @@ export default {
 
 #root {
   border: solid 1px black;
-  border-radius: 15pt;
-  padding: 15pt;
-  margin: 15pt;
+  border-radius: 5px;
+  padding: 10pt;
+  margin: 10pt;
 }
 
-// List transitions
-.children-list-item {
-  transition: all 0.25s;
-  margin-right: 10px;
+.children-list {
+  display: flex;
+  flex-direction: column;
 }
 
-.children-list-enter,
-.children-list-leave-to {
+// Toolbar transitions
+.toolbar-actions-enter-active,
+.toolbar-actions-leave-active {
+  transition: opacity 0.5s;
+}
+
+.toolbar-actions-enter,
+.toolbar-actions-leave-to {
   opacity: 0;
-  transform: translateY(15px);
 }
 
-.children-list-leave-active {
-  position: absolute;
+// Draggable styles
+.draggable-ghost {
+  background-color: red;
+  opacity: 50%;
+}
+
+// Editable text fields
+.editable-text {
+}
+
+.editable-text:disabled {
+  border: none;
+  background-color: #0000;
+  color: #000;
 }
 </style>
 

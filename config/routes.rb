@@ -21,6 +21,8 @@ Rails.application.routes.draw do
   get 'group/create'
   post 'group/create'
 
+  post 'group/update'
+
   get 'group/modify'
 
   get 'group/destroy'

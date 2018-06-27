@@ -148,6 +148,70 @@ class GroupController < ApplicationControllerAPI
     render :json => response, :status => status_code
   end
 
+  def update
+    response = {}
+    status_code = nil
+
+    begin
+      # Must be POST request to retrieve group
+      return unless request.post?
+
+      # Receives parameters
+      group_id          = params[:group_id]
+      new_name          = params[:name]
+      new_min_credits   = params[:min_credits]
+      new_min_subjects  = params[:min_subjects]
+
+      changes = {}
+      changes[:name]          = new_name if new_name
+      changes[:min_credits]   = new_min_credits if new_min_credits
+      changes[:min_subjects]  = new_min_subjects if new_min_subjects
+
+      if changes.size == 0
+        status_code = 400
+        raise 'At least one change is required'
+      end
+
+      if group_id == nil
+        status_code = 400
+        raise 'group_id is required'
+      end
+
+      # Check if user can retrieve group
+      group = Group.find_by(:id => group_id)
+
+      if !group
+        status_code = 404
+        raise 'Group was not found'
+      end
+
+      if !(can_modify? group)
+        status_code = 403
+        raise 'User not allowed to fetch this group'
+      end
+
+      # Change data in group
+      group.update(changes)
+
+      if !group.valid?
+        status_code = 400
+        raise 'Invalid changes'
+      end
+
+      # Save changes
+      group.save
+    rescue Exception => e
+      status_code = 500 if status_code == nil
+      response[:status] = 'error'
+      response[:error]  = "#{e}"
+    else
+      status_code = 200
+      response[:status] = 'success'
+    end
+
+    render :json => response, :status => status_code
+  end
+
   def create
     response = {}
     status_code = 200

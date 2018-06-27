@@ -77,6 +77,8 @@ export default {
   request(path, data) {
     if (!data) data = {};
     data.auth = { session_key: this.get_session_token() };
+    console.log('sent: ');
+    console.log(data);
     return Vue.http.post(path, data);
   }
 };
