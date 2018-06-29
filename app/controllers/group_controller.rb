@@ -173,12 +173,12 @@ class GroupController < ApplicationControllerAPI
       changes[:index]         = new_index if new_index
 
       if changes.size == 0
-        status_code = 400
+        @status_code = 400
         raise 'At least one change is required'
       end
 
       if group_id == nil
-        status_code = 400
+        @status_code = 400
         raise 'group_id is required'
       end
 
@@ -186,12 +186,12 @@ class GroupController < ApplicationControllerAPI
       group = Group.find_by(:id => group_id)
 
       if !group
-        status_code = 404
+        @status_code = 404
         raise 'Group was not found'
       end
 
       if !(can_modify? group)
-        status_code = 403
+        @status_code = 403
         raise 'User not allowed to fetch this group'
       end
 
@@ -200,12 +200,12 @@ class GroupController < ApplicationControllerAPI
         parent = Group.find_by(:id => new_parent)
 
         if !parent
-          status_code = 404
+          @status_code = 404
           raise 'Parent group was not found'
         end
 
         if !(can_modify? parent)
-          status_code = 403
+          @status_code = 403
           raise 'User not allowed to modify parent group'
         end
       end
@@ -214,7 +214,7 @@ class GroupController < ApplicationControllerAPI
       group.update(changes)
 
       if !group.valid?
-        status_code = 400
+        @status_code = 400
         raise 'Invalid changes'
       end
 

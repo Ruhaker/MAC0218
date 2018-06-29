@@ -1,9 +1,10 @@
 <template>
   <div id='root'>
+    <left-sidebar id='left-sidebar'/>
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed">
     <main-content id='main_content' :groupids='groups' v-on:change-plan='changed_plan($event)'/>
-    <sidebar id='sidebar'/>
+    <right-sidebar id='right-sidebar'/>
   </div>
 </template>
 
@@ -12,17 +13,16 @@ import auth from '../util/auth.js';
 document.auth = auth;
 
 import MainContent from '../util/main_content';
-import Sidebar from '../util/sidebar';
+import RightSidebar from '../util/right_sidebar';
+import LeftSidebar from '../util/left_sidebar';
 import 'vue-ionicons/ionicons.css';
 
 export default {
-  components: { MainContent, Sidebar },
+  components: { MainContent, RightSidebar, LeftSidebar },
   data: function() {
-    return { groups: [1] };
+    return {};
   },
-  methods: {
-    changed_plan(event) {}
-  }
+  methods: {}
 };
 </script>
 
@@ -64,7 +64,11 @@ div#main_content {
   overflow: auto;
 }
 
-div#sidebar {
+div#right-sidebar {
+  flex: 1;
+  background: inherit;
+}
+div#left-sidebar {
   flex: 1;
   background: inherit;
 }

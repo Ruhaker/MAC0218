@@ -1,47 +1,43 @@
 class SubjectController < ApplicationControllerAPI
   include Auth
+
+  #
+  # List subjects according to a text field
+  #
+  def List
+    
+  end
+
   #
   # Creates a new subject
   #
   # For now, any supervisor can create courses, but this will change later.
   #
   def create
-    response = {}
-    status_code = 200
-
     begin
       # Must be POST request to create subject
       return unless request.post?
 
       # Receives parameters from the subject creation page
-      subject_code            = params[:code]
-      subject_name            = params[:name]
-      subject_credits_class   = params[:credits_class]
-      subject_credits_work    = params[:credits_work]
-      subject_workload        = params[:workload]
-      subject_description     = params[:description]
-
-      # Fallback to default values for nil parameters
-      subject_code            = ""  unless subject_code
-      subject_name            = ""  unless subject_name
-      subject_credits_class   = nil unless subject_credits_class
-      subject_credits_work    = nil unless subject_credits_work
-      subject_workload        = nil unless subject_workload
-      subject_description     = ""  unless subject_description
+      subject_code            = get_param(:code)
+      subject_name            = get_param(:name)
+      subject_credits_class   = get_param(:credits_class)
+      subject_credits_work    = get_param(:credits_work)
+      subject_workload        = get_param(:workload)
+      subject_description     = get_param(:description)
 
       # Retrieves current user and checks if it is a supervisor
-      user = get_logged_user()
-      if !user
-        status_code = 401
+      if !@user
+        @status_code = 401
         raise 'Not logged in!'
       end
-      if !user.is? "supervisor"
-        status_code = 403
+      if !@user.is? "supervisor"
+        @status_code = 403
         raise 'User cannot edit course!'
       end
 
       # Create subject
-      subject = Subject.create!(
+      subject = Subject.new(
         :code    			  => subject_code,
         :name   			  => subject_name,
         :credits_class  => subject_credits_class,
@@ -50,20 +46,25 @@ class SubjectController < ApplicationControllerAPI
         :description   	=> subject_description
       )
 
-      redirect_back fallback_location: "/"
+      if !subject.valid?
+        @status_code = 400
+        raise 'Invalid data from subject'
+      end
+
+      subject.save
+
+      @response[:id] = subject.id
 
     rescue Exception => e
-      response[:status] = 'error'
-      response[:error]  = "#{e}"
+      @response[:status] = 'error'
+      @response[:error]  = "#{e}"
 
     else
-      status_code 201
-      response[:status] = 'success'
-      response[:message] = 'Subject was created with success!'
-
+      @status_code = 201
+      @response[:status] = 'success'
     end
 
-    render :json => response, :status => status_code
+    render :json => @response, :status => @status_code
   end
 
   #

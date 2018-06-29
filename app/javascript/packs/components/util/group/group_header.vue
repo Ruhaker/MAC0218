@@ -11,7 +11,7 @@
       </div>
     </div>
     <!-- If Group -->
-    <form v-on:submit.prevent='changed_group' v-on:focusout='delay_restore'>
+    <form v-on:submit.prevent='changed_group' v-on:focusout='delay_save' ref='edit_form'>
       <div v-if='group_obj && is_group' class='toolbar'>
         <div class='left toolbar'>
           <move-icon v-if='parentobj && parentobj.can_modify' rootClass='handle header-icon' w='20' h='20' />
@@ -35,18 +35,18 @@
           </div>
           <transition name='toolbar-actions'>
             <div v-if='group_obj.can_modify'>
-              <div v-if='editing' v-on:click="disable_editing">
+              <div v-if='editing'>
                 <check-icon rootClass='header-icon' w='25' h='25' />
               </div>
               <div v-else style='display: flex'>
                 <div v-if='!isroot' v-on:click="delete_group">
-                  <trash-icon rootClass='header-icon' w='25' h='25' />
+                  <trash-icon title='Deletar' rootClass='header-icon' w='25' h='25' />
                 </div>
                 <div v-on:click="enable_editing">
-                  <create-icon rootClass='header-icon' w='25' h='25' />
+                  <create-icon title='Editar' rootClass='header-icon' w='25' h='25' />
                 </div>
                 <div v-on:click="add_child">
-                  <add-icon rootClass='header-icon' w='25' h='25' />
+                  <add-icon title='Adicionar grupo' rootClass='header-icon' w='25' h='25' />
                 </div>
               </div>
             </div>
@@ -82,7 +82,6 @@ export default {
   data() {
     return {
       is_editing: false,
-      old_obj: null,
       editing: false,
       title_focus: false,
       min_cred_focus: false,
@@ -124,8 +123,8 @@ export default {
         1
       );
     },
-    delay_restore() {
-      this.$nextTick(() => this.restore_editing());
+    delay_save() {
+      this.$nextTick(() => this.changed_group());
     },
     // Change group
     changed_group(evn) {
@@ -158,7 +157,7 @@ export default {
             console.log('updated!');
             this.disable_editing();
           })
-          .catch(() => this.restore_editing());
+          .catch(error => console.error(error));
       }
       this.disable_editing();
     },
@@ -173,15 +172,6 @@ export default {
         ]);
         this.$refs.group_title.focus();
       }
-    },
-    // Restore editing
-    restore_editing() {
-      if (this.title_focus || this.min_cred_focus || this.min_sub_focus) return;
-      if (this.group_obj.new) this.delete_group();
-      this.disable_editing();
-      Object.keys(this.old_obj).forEach(key => {
-        this.group_obj[key] = this.old_obj[key];
-      });
     },
     // Enable editing
     disable_editing() {
