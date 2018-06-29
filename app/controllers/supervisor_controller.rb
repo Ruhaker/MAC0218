@@ -1,4 +1,4 @@
-class SupervisorController < ApplicationController
+class SupervisorController < ApplicationControllerAPI
   include Auth
 
   def create
