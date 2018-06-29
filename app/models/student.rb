@@ -1,7 +1,7 @@
 class Student < User
     has_and_belongs_to_many :subjects, :through => :subject_students, :join_table => :subject_students
     has_many :plans, :dependent => :destroy
-    has_and_belongs_to_many :courses, :through => :plans, :join_table => :plans
+    has_many :courses, :through => :plans, :join_table => :plans
 
     validates :nusp, numericality: true,
                         presence: {message: 'this field cannot be left black'},

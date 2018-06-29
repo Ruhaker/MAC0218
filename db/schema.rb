@@ -10,10 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180625020403) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+ActiveRecord::Schema.define(version: 20180627130235) do
 
   create_table "courses", force: :cascade do |t|
     t.string "name"
@@ -24,6 +21,16 @@ ActiveRecord::Schema.define(version: 20180625020403) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "group_indices", force: :cascade do |t|
+    t.integer "subject_id"
+    t.integer "group_id"
+    t.integer "index"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_group_indices_on_group_id"
+    t.index ["subject_id"], name: "index_group_indices_on_subject_id"
+  end
+
   create_table "groups", force: :cascade do |t|
     t.string "name"
     t.integer "min_credits"
@@ -32,6 +39,7 @@ ActiveRecord::Schema.define(version: 20180625020403) do
     t.datetime "updated_at", null: false
     t.integer "course_id"
     t.integer "group_id"
+    t.integer "index"
   end
 
   create_table "groups_subjects", force: :cascade do |t|
@@ -96,8 +104,9 @@ ActiveRecord::Schema.define(version: 20180625020403) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "nusp"
-    t.bigint "cpf"
+    t.integer "cpf", limit: 8
     t.string "type"
+    t.boolean "is_admin"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

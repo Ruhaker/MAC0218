@@ -30,9 +30,19 @@ export default {
 // Toolbar utilities
 .toolbar {
   display: flex;
+  vertical-align: middle;
+  align-items: center;
 }
 .spacer {
   flex-grow: 1;
+}
+
+.ghost {
+  opacity: 0.5;
+}
+
+.chosen {
+  opacity: 0.2;
 }
 </style>
 

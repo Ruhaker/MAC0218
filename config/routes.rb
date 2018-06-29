@@ -17,15 +17,8 @@ Rails.application.routes.draw do
 
   # Paths for dealing with groups
   post 'group/fetch'
-
-  get 'group/create'
   post 'group/create'
-
   post 'group/update'
-
-  get 'group/modify'
-
-  get 'group/destroy'
   post 'group/destroy'
 
   post 'group/add_subject'

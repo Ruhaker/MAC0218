@@ -6,7 +6,7 @@ var session_token = null;
 export default {
   // Retrieves session token
   get_session_token() {
-    if (session_token == null)
+    if (!session_token)
       session_token = localStorage.token ? localStorage.token : null;
     return session_token;
   },
@@ -23,12 +23,15 @@ export default {
         this.request('user/fetch')
           .then(result => {
             user = result.data.user;
-            console.log(user);
             resolve(user);
           })
           .catch(error => {
             user = null;
-            console.error(error.data);
+            if (error == 404) {
+              user = null;
+              session_token = null;
+              localStorage.removeItem('token');
+            }
             reject(error);
           });
       }
@@ -48,8 +51,6 @@ export default {
           resolve(result);
         })
         .catch(error => {
-          console.error('Error logging in');
-          console.error(error);
           reject(error);
         });
     });
@@ -63,12 +64,10 @@ export default {
         .then(result => {
           user = null;
           session_token = null;
-          localStorage.token = null;
+          localStorage.removeItem('token');
           resolve(result);
         })
         .catch(error => {
-          console.error('Error logging out');
-          console.error(error);
           reject(error);
         });
     });
@@ -76,8 +75,9 @@ export default {
   // Sends POST request to API
   request(path, data) {
     if (!data) data = {};
-    data.auth = { session_key: this.get_session_token() };
-    console.log('sent: ');
+    let session_key = this.get_session_token();
+    if (session_key) data.auth = { session_key };
+    console.log(`requested ${path}: `);
     console.log(data);
     return Vue.http.post(path, data);
   }

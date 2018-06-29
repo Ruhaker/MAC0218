@@ -8,7 +8,7 @@ class CourseController < ApplicationControllerAPI
   #
   def create
     response = {}
-    status_code = 200
+    status_code = nil
 
     begin
       # Must be POST request to create course
@@ -27,6 +27,8 @@ class CourseController < ApplicationControllerAPI
       course_teaching_unit = "" unless course_teaching_unit
       course_expected_time = 0  unless course_expected_time
 
+      course_name = course_name.strip
+
       # Retrieves current user and checks if it is a supervisor
       user = get_logged_user()
 
@@ -36,7 +38,7 @@ class CourseController < ApplicationControllerAPI
       end
       if !user.is? "supervisor"
         status_code = 403
-        raise 'User cannot edit course'
+        raise 'User cannot create course'
       end
 
       # Create a course
@@ -47,11 +49,6 @@ class CourseController < ApplicationControllerAPI
         :expected_time => course_expected_time
       })
 
-      if !course.valid?
-        status_code = 400
-        raise 'Invalid course data'
-      end
-
       base_group = Group.create!({
         :name         => "Grade",
         :min_credits  => nil,
@@ -59,18 +56,25 @@ class CourseController < ApplicationControllerAPI
       })
 
       course.group = base_group
-      course.save
 
-      redirect_back fallback_location: "/"
+      if !course.valid?
+        status_code = 400
+        base_group.destroy
+        raise 'Invalid course data'
+      end
+
+      # Save new course
+      course.save!
     rescue ActiveRecord::RecordInvalid => e
       status_code = 500
       response[:status] = 'error'
       response[:error]  = "#{e}"
     rescue Exception => e
+      status_code = 500 if !status_code
       response[:status] = 'error'
       response[:error]  = "#{e}"
     else
-      status_code 201
+      status_code = 201
       response[:status] = 'success'
       response[:message] = 'Course created with success'
     end

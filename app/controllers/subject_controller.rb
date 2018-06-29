@@ -37,7 +37,7 @@ class SubjectController < ApplicationControllerAPI
       end
       if !user.is? "supervisor"
         status_code = 403
-        raise 'User/Student cannot edit course!'
+        raise 'User cannot edit course!'
       end
 
       # Create subject

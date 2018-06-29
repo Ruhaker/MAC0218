@@ -1,8 +1,8 @@
 class Subject < ApplicationRecord
-
-    has_and_belongs_to_many :groups, :join_table => :groups_subjects
+    has_many :group_indices
+    has_and_belongs_to_many :groups, :through => :group_indices
     has_and_belongs_to_many :subjects
-    has_and_belongs_to_many :students, :through => :subject_students, :join_table => :subject_students
+    has_many :students, :through => :subject_students
 
     validates :code, presence: {message: 'this field cannot be left black'},
                        format: {with: /[A-Z]{3}[0-9]{4}/,
