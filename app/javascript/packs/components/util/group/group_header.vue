@@ -11,26 +11,26 @@
       </div>
     </div>
     <!-- If Group -->
-    <form v-on:submit.prevent='changed_group' v-on:focusout='restore_editing'>
+    <form v-on:submit.prevent='changed_group' v-on:focusout='delay_restore'>
       <div v-if='group_obj && is_group' class='toolbar'>
         <div class='left toolbar'>
           <move-icon v-if='parentobj && parentobj.can_modify' rootClass='handle header-icon' w='20' h='20' />
-            <input type='text' class='editable-text title' ref='group_title'
-                v-on:dblclick='enable_editing' v-model='group_obj.name' :readonly='!editing'/>
+            <input type='text' class='editable-text title' ref='group_title' @focus='title_focus = true' @blur='title_focus = false'
+                @dblclick='enable_editing' v-model='group_obj.name' :readonly='!editing'/>
             <input type="submit" hidden />
         </div>
         <div class='spacer'/>
         <div class='right toolbar'>
           <div v-if='group_obj.min_credits || editing'>
           Créditos: {{group_obj.done_credits}} / 
-            <input type='number' class='editable-text' ref='group_min_credits'
-                v-on:dblclick='enable_editing' v-model.number='group_obj.min_credits' :readonly='!editing'/>
+            <input type='number' class='editable-text' ref='group_min_credits' @focus='min_cred_focus = true' @blur='min_cred_focus = false'
+                @dblclick='enable_editing' v-model.number='group_obj.min_credits' :readonly='!editing'/>
             <input type="submit" hidden />
           </div>
           <div v-if='group_obj.min_subjects || editing'>
           Matérias: {{group_obj.done_credits}} / 
-            <input type='number' class='editable-text' ref='group_min_subjects'
-                v-on:dblclick='enable_editing' v-model.number='group_obj.min_subjects' :readonly='!editing'/>
+            <input type='number' class='editable-text' ref='group_min_subjects' @focus='min_sub_focus = true' @blur='min_sub_focus = false'
+                @dblclick='enable_editing' v-model.number='group_obj.min_subjects' :readonly='!editing'/>
             <input type="submit" hidden />
           </div>
           <transition name='toolbar-actions'>
@@ -80,7 +80,14 @@ export default {
     isroot: { default: true }
   },
   data() {
-    return { is_editing: false, old_obj: null, editing: false };
+    return {
+      is_editing: false,
+      old_obj: null,
+      editing: false,
+      title_focus: false,
+      min_cred_focus: false,
+      min_sub_focus: false
+    };
   },
   components: {
     'chrome-color-picker': Chrome,
@@ -116,6 +123,9 @@ export default {
         ),
         1
       );
+    },
+    delay_restore() {
+      this.$nextTick(() => this.restore_editing());
     },
     // Change group
     changed_group(evn) {
@@ -166,6 +176,7 @@ export default {
     },
     // Restore editing
     restore_editing() {
+      if (this.title_focus || this.min_cred_focus || this.min_sub_focus) return;
       if (this.group_obj.new) this.delete_group();
       this.disable_editing();
       Object.keys(this.old_obj).forEach(key => {

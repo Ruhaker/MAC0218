@@ -11,7 +11,7 @@
       <div class='toolbar-button'>
         <div v-on:click='open = !open'>
           <transition name='plus-to-x'>
-            <add-icon rootClass='toolbar-icon' w='30' h='30' :key='open'/>
+            <add-icon rootClass='toolbar-icon' w='30' h='30'/>
           </transition>
         </div>
       </div>
