@@ -62,3 +62,12 @@ Para a segunda entrega:
 * Controladores para criação de usuários, curso, grupos e disciplinas;
 * Criação de mais testes para os modelos e controladores;
 * Visualização simples, para fins de depuração;
+
+#### Terceira entrega:
+
+Para a terceira e última entrega:
+
+* Implementação do frontend, utilizando Vue.js;
+* Melhoria no visual do site;
+* Ligação do frontend com o backend;
+* Finalização dos testes;
