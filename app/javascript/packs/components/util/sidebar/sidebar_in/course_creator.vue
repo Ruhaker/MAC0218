@@ -67,6 +67,9 @@ export default {
   text-align: center;
   border-top: solid 1pt #ddd;
   border-bottom: solid 1pt #ddd;
+
+  height: fit-content;
+
   cursor: pointer;
 
   transition-duration: 1s;

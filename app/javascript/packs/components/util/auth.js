@@ -4,6 +4,10 @@ var user = null;
 var session_token = null;
 
 export default {
+  // Updates user object
+  update() {
+    this.get_user_object(true);
+  },
   // Retrieves session token
   get_session_token() {
     if (!session_token)
@@ -11,9 +15,9 @@ export default {
     return session_token;
   },
   // Retrieves user data
-  get_user_object() {
+  get_user_object(update) {
     return new Promise((resolve, reject) => {
-      if (user != null) {
+      if (user != null && !update) {
         resolve(user);
       } else {
         if (this.get_session_token() == null) {

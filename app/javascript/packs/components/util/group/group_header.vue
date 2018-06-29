@@ -24,13 +24,13 @@
           <div v-if='group_obj.min_credits || editing'>
           Créditos: {{group_obj.done_credits}} / 
             <input type='number' class='editable-text' ref='group_min_credits'
-                v-on:dblclick='enable_editing' v-model='group_obj.min_credits' :readonly='!editing'/>
+                v-on:dblclick='enable_editing' v-model.number='group_obj.min_credits' :readonly='!editing'/>
             <input type="submit" hidden />
           </div>
           <div v-if='group_obj.min_subjects || editing'>
           Matérias: {{group_obj.done_credits}} / 
             <input type='number' class='editable-text' ref='group_min_subjects'
-                v-on:dblclick='enable_editing' v-model='group_obj.min_subjects' :readonly='!editing'/>
+                v-on:dblclick='enable_editing' v-model.number='group_obj.min_subjects' :readonly='!editing'/>
             <input type="submit" hidden />
           </div>
           <transition name='toolbar-actions'>
@@ -129,10 +129,9 @@ export default {
             ordering: this.group_obj.new_index
           })
           .then(result => {
-            this.group_obj.id = result.data.id;
             delete this.group_obj.new;
             delete this.group_obj.new_index;
-            this.$emit('reload-group');
+            this.$emit('reload-group', { group_id: result.data.id });
           });
       } else {
         // Get only changed values

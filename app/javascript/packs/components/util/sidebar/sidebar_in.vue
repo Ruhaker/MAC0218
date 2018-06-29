@@ -19,6 +19,7 @@
     <div v-if='is_admin'>
       <course-creator/>
     </div>
+    <div class='spacer'/>
   </div>
 </template>
 

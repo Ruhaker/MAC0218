@@ -159,12 +159,14 @@ class GroupController < ApplicationControllerAPI
 
       # Receives parameters
       group_id          = get_param(:group_id)
+      new_parent        = get_param(:parent_id, false)
       new_name          = get_param(:name, false)
       new_min_credits   = get_param(:min_credits, false)
       new_min_subjects  = get_param(:min_subjects, false)
       new_index         = get_param(:index, false)
 
       changes = {}
+      changes[:group_id]      = new_parent if new_parent
       changes[:name]          = new_name if new_name
       changes[:min_credits]   = new_min_credits if new_min_credits
       changes[:min_subjects]  = new_min_subjects if new_min_subjects
@@ -191,6 +193,21 @@ class GroupController < ApplicationControllerAPI
       if !(can_modify? group)
         status_code = 403
         raise 'User not allowed to fetch this group'
+      end
+
+      # If changing parent, check if can modify parent group
+      if new_parent
+        parent = Group.find_by(:id => new_parent)
+
+        if !parent
+          status_code = 404
+          raise 'Parent group was not found'
+        end
+
+        if !(can_modify? parent)
+          status_code = 403
+          raise 'User not allowed to modify parent group'
+        end
       end
 
       # Change data in group

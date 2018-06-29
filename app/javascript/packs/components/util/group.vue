@@ -52,7 +52,9 @@ export default {
   computed: {
     // Returns this group's id
     group_id() {
-      return this.groupid;
+      if (this.groupid) return this.groupid;
+      if (!this.group_obj) return null;
+      return this.group_obj.id;
     },
     // Return this group's object
     group_obj: {
@@ -109,7 +111,7 @@ export default {
         auth
           .request('group/update', {
             type: child.type,
-            group_id: child.id,
+            group_id: this.group_id,
             index
           })
           .then(() => {
@@ -126,9 +128,11 @@ export default {
       );
     },
     // Fetch group data from server
-    update() {
+    update(data) {
+      var group_id = this.group_id;
+      if (data) group_id = data.group_id;
       auth
-        .request('group/fetch', { group_id: this.group_id })
+        .request('group/fetch', { group_id: group_id })
         .then(response => {
           this.group_obj = response.data.group;
         })

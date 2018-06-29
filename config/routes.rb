@@ -26,6 +26,8 @@ Rails.application.routes.draw do
   post 'group/rem_subject'
 
   # Paths for dealing with courses
+  post 'course/list'
+
   get 'course/create'
   post 'course/create'
 
