@@ -7,6 +7,9 @@
       <draggable v-model="group_obj.children" v-on:change='changed_children'
           :options='draggable_options' ghostClass='draggable-ghost' :move='drag_check' :disabled='!group_obj.can_modify'>
         <group :groupobj='child' :parentobj='group_obj' v-for='child in group_obj.children' v-bind:key="child.id" />
+        <div>
+          <group-footer v-if='group_obj.children.length == 0' />
+        </div>
       </draggable>
     </div>
   </div>
@@ -15,6 +18,8 @@
 <script>
 import group from './group';
 import auth from './auth';
+
+import regeneratorRuntime from 'regenerator-runtime';
 
 import GroupHeader from './group/group_header';
 
@@ -100,8 +105,17 @@ export default {
     window.bus.$on('reload-groups', () => this.update());
   },
   methods: {
-    changed_children(evn) {
-      console.log(this.group_obj.children);
+    async changed_children(evn) {
+      if (evn.added) {
+        try {
+          await auth.request('group/update', {
+            group_id: evn.added.element.id,
+            parent_id: this.group_id
+          });
+        } catch (e) {
+          return;
+        }
+      }
       this.update_indices();
     },
 
@@ -111,7 +125,7 @@ export default {
         auth
           .request('group/update', {
             type: child.type,
-            group_id: this.group_id,
+            group_id: child.id,
             index
           })
           .then(() => {
@@ -134,6 +148,7 @@ export default {
       auth
         .request('group/fetch', { group_id: group_id })
         .then(response => {
+          console.log(response.data.group);
           this.group_obj = response.data.group;
         })
         .catch(error => {});
