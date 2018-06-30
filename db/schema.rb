@@ -11,9 +11,6 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 20180627130235) do
-    
-  # These are extensions that must be enable in order to support this database
-  enable_extension "plpgsql"
 
   create_table "courses", force: :cascade do |t|
     t.string "name"
@@ -107,7 +104,7 @@ ActiveRecord::Schema.define(version: 20180627130235) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "nusp"
-    t.integer "cpf", limit: 8
+    t.bigint "cpf"
     t.string "type"
     t.boolean "is_admin"
     t.index ["email"], name: "index_users_on_email", unique: true
