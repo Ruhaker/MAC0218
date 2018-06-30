@@ -1,4 +1,4 @@
-# (Nome do projeto a definir)
+# Cursos USP
 
 ## Administre melhor seu curso na USP!
 
