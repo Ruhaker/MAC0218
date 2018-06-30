@@ -98,7 +98,11 @@ export default {
   },
   methods: {
     set_progress(progress) {
-      auth.request('subject/update', { subject_id: this.subject.id, progress });
+      auth
+        .request('subject/update', { subject_id: this.subject.id, progress })
+        .then(() => {
+          window.bus.$emit('reload-groups');
+        });
     },
     subject_info(data) {
       let subject_id = data.subject_id;
