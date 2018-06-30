@@ -92,7 +92,7 @@ form {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-areas: '. . form form form form form .. ';
-  vertical-align: middle;
+  margin: auto;
   width: 100%;
   margin-top: 10pt;
   margin-bottom: 10pt;

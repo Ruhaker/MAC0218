@@ -29,9 +29,9 @@
           <div class='spacer'/>
         </div>
         <div class='header'>
-          <button v-on:click='set_progress(null)'>Não feito</button>
-          <button v-on:click='set_progress("doing")'>Fazendo</button>
-          <button v-on:click='set_progress("done")'>Feito</button>
+          <button v-on:click='set_progress(0)'>Não feito</button>
+          <button v-on:click='set_progress(1)'>Fazendo</button>
+          <button v-on:click='set_progress(2)'>Feito</button>
         </div>
         <h3 class='title'>{{subject.code}}</h3>
         <h5 class='title'>{{subject.name}}</h5>
@@ -98,7 +98,7 @@ export default {
   },
   methods: {
     set_progress(progress) {
-      auth.request('subject/update', { progress });
+      auth.request('subject/update', { subject_id: this.subject.id, progress });
     },
     subject_info(data) {
       let subject_id = data.subject_id;

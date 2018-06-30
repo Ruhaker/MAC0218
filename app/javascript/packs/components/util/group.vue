@@ -127,7 +127,8 @@ export default {
       });
     },
     async calc_progress(group, res) {
-      if ((await auth.get_user_object()).type != 'student')
+      let user = await auth.get_user_object();
+      if (!user || user.type != 'student')
         return { credits: null, subjects: null };
       if (!group) group = this.group_obj;
       if (!res) res = { credits: 0, subjects: 0 };
@@ -141,7 +142,7 @@ export default {
             this.calc_progress(child, res);
           });
       } else if (group.type == 'subject') {
-        if (group.progress == 'done') {
+        if (group.progress == 2) {
           res.credits += group.credits;
           res.subjects++;
         }

@@ -33,7 +33,7 @@ class UserController < ApplicationControllerAPI
             return unless request.post?
 
             # Fetch session key
-            session_key = params[:auth][:session_key]
+            session_key = get_param(:auth)[:session_key]
 
             if !session_key
                 @response = {}

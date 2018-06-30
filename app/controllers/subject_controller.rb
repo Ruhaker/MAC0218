@@ -37,6 +37,94 @@ class SubjectController < ApplicationControllerAPI
     render :json => @response, :status => @status_code
   end
 
+  def update
+    begin
+      # Must be POST request to retrieve group
+      return unless request.post?
+
+      # Receives parameters
+      subject_id        = get_param(:subject_id)
+      new_code          = get_param(:code, false)
+      new_name          = get_param(:name, false)
+      new_description   = get_param(:description, false)
+      new_progress      = get_param(:progress, false)
+
+      changes = {}
+      changes[:progress]      = new_progress if new_progress
+
+      if changes.size == 0
+        @status_code = 400
+        raise 'At least one change is required'
+      end
+
+      if new_progress && @user.is?('supervisor')
+        @status_code = 400
+        raise 'Only students may change progress'
+      end
+
+      # Check if user can retrieve group
+      subject = Subject.find_by(:id => subject_id)
+
+      if !subject
+        @status_code = 404
+        raise 'Subject was not found'
+      end
+
+      if changes.size > 1 || !changes[:progress]
+        if !@user.is? 'supervisor'
+          @status_code = 403
+          raise 'User not allowed to change this subject'
+        end
+      end
+
+      # If progress changed, get user's subject relationship
+      if changes[:progress]
+        rel = SubjectStudent.find_by(
+          :student_id => @user.id,
+          :subject_id => subject.id)
+
+        if !rel
+          rel = SubjectStudent.new({
+            :progress   => changes[:progress]
+          })
+
+          rel.student = @user
+          rel.subject = @subject
+
+          if !rel.valid?
+            @status_code = 500
+            raise 'Failed creating relationship'
+          end
+
+          rel.save
+        else
+          rel.progress = changes[:progress]
+          rel.save
+        end
+      end
+
+      # Change data in subject
+      subject.update(changes)
+
+      if !subject.valid?
+        @status_code = 400
+        raise 'Invalid changes'
+      end
+
+      # Save changes
+      subject.save
+    rescue Exception => e
+      @status_code = 500 unless @status_code
+      @response[:status] = 'error'
+      @response[:error]  = "#{e}"
+    else
+      @status_code = 200
+      @response[:status]  = 'success'
+    end
+
+    render :json => @response, :status => @status_code
+  end
+
   #
   # Retrieves a subject
   #
