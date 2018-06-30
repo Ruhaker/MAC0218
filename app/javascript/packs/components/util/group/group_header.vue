@@ -250,6 +250,9 @@ export default {
 // Editable text fields
 .editable-text.title {
   flex-grow: 1;
+  font-family: inherit;
+  font-size: medium;
+  padding-left: 10px;
 }
 .left.toolbar {
   flex-grow: 1;

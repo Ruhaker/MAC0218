@@ -59,7 +59,7 @@ div#root {
 
 div#main_content {
   flex: 3;
-  background-color: #0000;
+  background-color: rgba(0, 0, 0, 0.06);
   font-family: 'Encode Sans Condensed', sans-serif;
   overflow: auto;
 }

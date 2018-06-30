@@ -249,10 +249,12 @@ export default {
 }
 
 .root {
-  border: solid 1px black;
-  border-radius: 5px;
+  border: solid 0.7px #00000029;
+  border-radius: 40px;
   padding: 10pt;
   margin: 10pt;
+  box-shadow: 0.4px 0.7px #3333337a;
+  background-color: white;
 }
 
 .root[footer='true'] {
