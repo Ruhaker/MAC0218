@@ -1,5 +1,5 @@
 <template>
-    <div class='root' ref='root' :footer='footer' v-if='group_obj'>
+    <div class='root' ref='root' :footer='footer' v-if='group_obj || footer'>
       <!-- Draw header -->
       <div class='header'>
         <group-header :groupobj='group_obj' :parentobj='parent_obj' :isroot='is_root'

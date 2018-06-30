@@ -28,6 +28,11 @@
           </div>
           <div class='spacer'/>
         </div>
+        <div class='header'>
+          <button v-on:click='set_progress(null)'>Não feito</button>
+          <button v-on:click='set_progress("doing")'>Fazendo</button>
+          <button v-on:click='set_progress("done")'>Feito</button>
+        </div>
         <h3 class='title'>{{subject.code}}</h3>
         <h5 class='title'>{{subject.name}}</h5>
         <div class='title'>{{subject.credits_class}} créditos aula</div>
@@ -92,6 +97,9 @@ export default {
     }
   },
   methods: {
+    set_progress(progress) {
+      auth.request('subject/update', { progress });
+    },
     subject_info(data) {
       let subject_id = data.subject_id;
       if (subject_id == null) this.show_info = false;
@@ -170,6 +178,21 @@ input[type='number']::-webkit-inner-spin-button {
 .header {
   display: flex;
   border-bottom: solid 1px #ddd;
+}
+
+.header > button {
+  flex: 1;
+  background-color: #333;
+  color: #ddd;
+  border: solid #ddd 1px;
+  cursor: pointer;
+}
+.header > button:hover:active {
+  background-color: #444;
+}
+
+.header > button:hover {
+  background-color: #222;
 }
 
 .handle:hover {
