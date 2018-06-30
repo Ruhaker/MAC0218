@@ -278,9 +278,6 @@ export default {
 }
 
 // Editable text fields
-.editable-text {
-}
-
 .editable-text:disabled {
   border: none;
   background-color: #0000;

@@ -216,9 +216,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#header {
-}
-
 .header-icon {
   color: #555;
   height: 25px;

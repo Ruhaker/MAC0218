@@ -85,11 +85,10 @@ class SubjectController < ApplicationControllerAPI
 
         if !rel
           rel = SubjectStudent.new({
-            :progress   => changes[:progress]
+            :progress   => changes[:progress],
+            :student_id => @user.id,
+            :subject_id => subject.id
           })
-
-          rel.student = @user
-          rel.subject = @subject
 
           if !rel.valid?
             @status_code = 500
@@ -102,6 +101,8 @@ class SubjectController < ApplicationControllerAPI
           rel.save
         end
       end
+
+      changes = changes.except :progress
 
       # Change data in subject
       subject.update(changes)
