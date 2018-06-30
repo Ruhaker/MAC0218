@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   post 'subject/list'
 
+  post 'subject/update'
   post 'subject/fetch'
   post 'subject/enroll'
 

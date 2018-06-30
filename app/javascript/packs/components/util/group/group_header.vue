@@ -8,7 +8,7 @@
               @dblclick='enable_editing' v-if='group_obj' v-model='group_obj.name' :readonly='!editing'/>
         </div>
         <div class='right toolbar'>
-          <div v-if='!is_group'>Progresso: {{group_obj.progress ? group_obj.progress : 'Não foi feito'}}</div>
+          <div v-if='!is_group && !footer'>Progresso: {{group_obj.progress ? group_obj.progress : 'Não foi feito'}}</div>
           <div v-if='(group_obj && group_obj.min_credits) || editing'>
           Créditos: {{donecredits ? donecredits : '-'}} / 
             <input type='number' class='editable-text min' ref='group_min_credits' @focus='min_cred_focus = true' @blur='min_cred_focus = false'
@@ -20,22 +20,24 @@
                 @dblclick='enable_editing' v-if='group_obj' v-model.number='group_obj.min_subjects' :readonly='!editing'/>
           </div>
           <transition name='toolbar-actions'>
-            <div v-if='!footer && (!parentobj || parentobj.can_modify)'>
-              <div v-if='editing'>
-                <check-icon rootClass='header-icon' w='25' h='25' />
+            <div style='display: flex'>
+              <div v-if='!is_group && !footer' v-on:click="request_subject_info(group_obj.subj_id)">
+                <information-circle-icon title='Informações' rootClass='header-icon' w='25' h='25' />
               </div>
-              <div v-else style='display: flex'>
-                <div v-if='!is_group' v-on:click="request_subject_info(group_obj.id)">
-                  <information-circle-icon title='Informações' rootClass='header-icon' w='25' h='25' />
+              <div v-if='!footer && (!parentobj || parentobj.can_modify)'>
+                <div v-if='editing'>
+                  <check-icon rootClass='header-icon' w='25' h='25' />
                 </div>
-                <div v-if='!isroot' v-on:click="delete_group">
-                  <trash-icon title='Deletar' rootClass='header-icon' w='25' h='25' />
-                </div>
-                <div v-on:click="enable_editing" v-if='is_group'>
-                  <create-icon title='Editar' rootClass='header-icon' w='25' h='25' />
-                </div>
-                <div v-on:click="add_child" v-if='is_group'>
-                  <add-icon title='Adicionar grupo' rootClass='header-icon' w='25' h='25' />
+                <div v-else style='display: flex'>
+                  <div v-if='!isroot' v-on:click="delete_group">
+                    <trash-icon title='Deletar' rootClass='header-icon' w='25' h='25' />
+                  </div>
+                  <div v-on:click="enable_editing" v-if='is_group'>
+                    <create-icon title='Editar' rootClass='header-icon' w='25' h='25' />
+                  </div>
+                  <div v-on:click="add_child" v-if='is_group'>
+                    <add-icon title='Adicionar grupo' rootClass='header-icon' w='25' h='25' />
+                  </div>
                 </div>
               </div>
             </div>
