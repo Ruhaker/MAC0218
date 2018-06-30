@@ -152,6 +152,7 @@ export default {
     },
     async changed_children(evn) {
       if (evn.added) {
+        console.log(evn);
         if (evn.added.element.type == 'group') {
           try {
             await auth.request('group/update', {
@@ -191,7 +192,7 @@ export default {
     update_indices() {
       var error = false;
       this.group_obj.children.forEach((child, index) => {
-        if (this.group_type == 'group')
+        if (child.type == 'group')
           auth
             .request('group/update', {
               group_id: child.id,
@@ -201,7 +202,7 @@ export default {
               child.index = index;
             })
             .catch(e => (error = true));
-        else if (this.group_type == 'subject')
+        else if (child.type == 'subject')
           auth
             .request('group/update_index', { index_id: child.id, index })
             .then(() => {

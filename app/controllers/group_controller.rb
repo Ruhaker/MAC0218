@@ -97,6 +97,7 @@ class GroupController < ApplicationControllerAPI
       subject[:subj_id]   = child_subject.id
       subject[:code]      = child_subject.code
       subject[:name]      = child_subject.name
+      subject[:index]     = child_index.index
       subject[:progress]  = nil
 
       # Fetch subject progress if is student
@@ -283,7 +284,7 @@ class GroupController < ApplicationControllerAPI
       # Change data in group
       index.update(changes)
 
-      if !group.valid?
+      if !index.valid?
         @status_code = 400
         raise 'Invalid changes'
       end
