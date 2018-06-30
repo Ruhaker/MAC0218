@@ -4,6 +4,8 @@
   "dependencies": {
     "@rails/webpacker": "3.5",
     "material-design-icons": "^3.0.1",
+    "regenerator-runtime": "^0.12.0",
+    "tween.js": "^16.6.0",
     "vue": "^2.5.16",
     "vue-color": "^2.4.6",
     "vue-ionicons": "^2.2.1",

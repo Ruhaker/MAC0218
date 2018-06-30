@@ -1,11 +1,15 @@
 <template>
   <div id='root' ref='root'>
     <!-- Draw header -->
-    <group-header :groupobj='group_obj' :parentobj='parent_obj' v-on:add-child='add_child'/>
+    <group-header :groupobj='group_obj' :parentobj='parent_obj' :isroot='is_root' v-on:add-child='add_child' v-on:reload-group='update'/>
     <!-- Draw children -->
     <div v-if='group_obj && is_group' class='children-list'>
-      <draggable v-model="group_obj.children" :options='draggable_options' ghostClass='draggable-ghost' :move='drag_check' :disabled='!group_obj.can_modify'>
-        <group :groupobj='child' :parentobj='group_obj' v-for='(child, index) in group_obj.children' v-bind:key="index" />
+      <draggable v-model="group_obj.children" v-on:change='changed_children'
+          :options='draggable_options' ghostClass='draggable-ghost' :move='drag_check' :disabled='!group_obj.can_modify'>
+        <group :groupobj='child' :parentobj='group_obj' v-for='child in group_obj.children' v-bind:key="child.id" />
+        <div>
+          <group-footer v-if='group_obj.children.length == 0' />
+        </div>
       </draggable>
     </div>
   </div>
@@ -14,6 +18,8 @@
 <script>
 import group from './group';
 import auth from './auth';
+
+import regeneratorRuntime from 'regenerator-runtime';
 
 import GroupHeader from './group/group_header';
 
@@ -51,7 +57,9 @@ export default {
   computed: {
     // Returns this group's id
     group_id() {
-      return this.groupid;
+      if (this.groupid) return this.groupid;
+      if (!this.group_obj) return null;
+      return this.group_obj.id;
     },
     // Return this group's object
     group_obj: {
@@ -76,6 +84,10 @@ export default {
     // Is it a group?
     is_group() {
       return this.group_obj.type == 'group';
+    },
+    // Is it a root group?
+    is_root() {
+      return this.parent_obj == null;
     }
   },
   watch: {
@@ -88,30 +100,63 @@ export default {
   beforeMount() {
     // Fetch data from server if not given group from caller
     if (!this.groupo && this.group_id) this.update();
+
+    // If requested reload, update data
+    window.bus.$on('reload-groups', () => this.update());
   },
   methods: {
+    async changed_children(evn) {
+      if (evn.added) {
+        try {
+          await auth.request('group/update', {
+            group_id: evn.added.element.id,
+            parent_id: this.group_id
+          });
+        } catch (e) {
+          return;
+        }
+      }
+      this.update_indices();
+    },
+
+    update_indices() {
+      var error = false;
+      this.group_obj.children.forEach((child, index) => {
+        auth
+          .request('group/update', {
+            type: child.type,
+            group_id: child.id,
+            index
+          })
+          .then(() => {
+            child.index = index;
+          })
+          .catch(e => (error = true));
+      });
+      if (error) this.update();
+    },
     // Checks if can drag
     drag_check(evn, origEvt) {
-      return evn.relatedContext.element.can_modify;
+      return (
+        evn.relatedContext.element && evn.relatedContext.element.can_modify
+      );
     },
-    // Fetch gorup data from server
-    update() {
+    // Fetch group data from server
+    update(data) {
+      var group_id = this.group_id;
+      if (data) group_id = data.group_id;
       auth
-        .request('group/fetch', { group_id: this.group_id })
+        .request('group/fetch', { group_id: group_id })
         .then(response => {
+          console.log(response.data.group);
           this.group_obj = response.data.group;
-          console.log(this.group_obj);
         })
         .catch(error => {});
     },
     // Adds child to this group
-    add_child() {
-      this.group_obj.children.push({
-        editing: true,
-        type: 'subject',
-        code: 'MSH12345',
-        name: 'Matéria daora'
-      });
+    add_child(data) {
+      data.new_index = this.group_obj.children.length;
+      this.group_obj.children.push(data);
     }
   }
 };
@@ -149,12 +194,6 @@ export default {
 .toolbar-actions-enter,
 .toolbar-actions-leave-to {
   opacity: 0;
-}
-
-// Draggable styles
-.draggable-ghost {
-  background-color: red;
-  opacity: 50%;
 }
 
 // Editable text fields

@@ -1,19 +1,17 @@
 <template>
   <div id='root'>
-    <sidebar-in v-if="loaded && user" />
-    <sidebar-out v-if="loaded && !user" />
+    <search-box />
   </div>
 </template>
 
 <script>
-import SidebarIn from './sidebar/sidebar_in';
-import SidebarOut from './sidebar/sidebar_out';
+import SearchBox from './items/search_box';
 
 import auth from './auth.js';
 
 export default {
-  name: 'sidebar',
-  components: { SidebarIn, SidebarOut },
+  name: 'left-sidebar',
+  components: { SearchBox },
   props: {},
   data() {
     return { user: null, loaded: false };
@@ -43,8 +41,9 @@ export default {
 <style lang="scss" scoped>
 #root {
   display: flex;
-  flex-direction: columns;
+  flex-direction: column;
   background: #333;
+  height: 100%;
 }
 
 p {

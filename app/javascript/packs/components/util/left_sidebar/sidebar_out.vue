@@ -17,6 +17,7 @@
               </div>
             </div>
           </transition>
+          <div style="color: red; font-size: 15px">{{error}}</div>
           <div class='link' v-on:click="() => sign_in_mode = !sign_in_mode">
             {{sign_in_mode ? "Não tem uma conta? Clique aqui para criar!" : "Já tem uma conta? Clique aqui para entrar!"}}
           </div>
@@ -51,7 +52,8 @@ export default {
       form_password: '',
       form_cpassword: '',
       form_name: '',
-      form_identifier: ''
+      form_identifier: '',
+      error: ''
     };
   },
   methods: {
@@ -66,7 +68,9 @@ export default {
       auth
         .login(this.form_email, this.form_password, navigator.userAgent)
         .then(() => window.bus.$emit('auth-changed'))
-        .catch(() => {});
+        .catch(error => {
+          this.error = error.data.error;
+        });
     },
     register() {
       auth
@@ -79,7 +83,9 @@ export default {
         .then(result => {
           this.login();
         })
-        .catch(error => {});
+        .catch(error => {
+          this.error = error.data.error;
+        });
     }
   }
 };

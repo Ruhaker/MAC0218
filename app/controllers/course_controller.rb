@@ -2,41 +2,69 @@ class CourseController < ApplicationControllerAPI
   include Auth
 
   #
-  # Creates a new course
+  # Lists courses
   #
-  # For now, any supervisor can create courses, but this will change later.
   #
-  def create
-    response = {}
-    status_code = 200
-
+  def list
     begin
       # Must be POST request to create course
       return unless request.post?
 
       # Receives parameters from the course creation page
-      p = params
-      course_name          = p[:name]
-      course_credits       = p[:credits]
-      course_teaching_unit = p[:teaching_unit]
-      corse_expected_time  = p[:expected_time]
+      filter = get_param(:filter)
 
-      # Fallback to default values for nil parameters
-      course_name          = "" unless course_name
-      course_credits       = 0  unless course_credits
-      course_teaching_unit = "" unless course_teaching_unit
-      course_expected_time = 0  unless course_expected_time
+      @response[:courses] = []
+
+      # Find courses that fit the filter
+      Course.where({
+        :teaching_unit => filter[:teaching_unit]
+      }).each do |course|
+        course_data = {}
+        course_data[:id] = course.id
+        course_data[:name] = course.name
+
+        @response[:courses].push course_data
+      end
+    rescue Exception => e
+      @status_code = 500 if !@status_code
+      @response[:status] = 'error'
+      @response[:error]  = "#{e}"
+    else
+      @status_code = 201
+      @response[:status] = 'success'
+    end
+
+    render :json => @response, :status => @status_code
+  end
+
+  #
+  # Creates a new course
+  #
+  # For now, any supervisor can create courses, but this will change later.
+  #
+  def create
+    begin
+      # Must be POST request to create course
+      return unless request.post?
+
+      # Receives parameters from the course creation page
+      course_name          = get_param(:name)
+      course_credits       = get_param(:credits, false)
+      course_teaching_unit = get_param(:teaching_unit)
+      corse_expected_time  = get_param(:expected_time)
+
+      course_name = course_name.strip
 
       # Retrieves current user and checks if it is a supervisor
       user = get_logged_user()
 
       if !user
-        status_code = 401
+        @status_code = 401
         raise 'Not logged in'
       end
       if !user.is? "supervisor"
-        status_code = 403
-        raise 'User cannot edit course'
+        @status_code = 403
+        raise 'User cannot create course'
       end
 
       # Create a course
@@ -47,11 +75,6 @@ class CourseController < ApplicationControllerAPI
         :expected_time => course_expected_time
       })
 
-      if !course.valid?
-        status_code = 400
-        raise 'Invalid course data'
-      end
-
       base_group = Group.create!({
         :name         => "Grade",
         :min_credits  => nil,
@@ -59,23 +82,25 @@ class CourseController < ApplicationControllerAPI
       })
 
       course.group = base_group
-      course.save
 
-      redirect_back fallback_location: "/"
-    rescue ActiveRecord::RecordInvalid => e
-      status_code = 500
-      response[:status] = 'error'
-      response[:error]  = "#{e}"
+      if !course.valid?
+        @status_code = 400
+        base_group.destroy
+        raise 'Invalid course data'
+      end
+
+      # Save new course
+      course.save!
     rescue Exception => e
-      response[:status] = 'error'
-      response[:error]  = "#{e}"
+      @status_code = 500 if !@status_code
+      @response[:status] = 'error'
+      @response[:error]  = "#{e}"
     else
-      status_code 201
-      response[:status] = 'success'
-      response[:message] = 'Course created with success'
+      @status_code = 201
+      @response[:status] = 'success'
     end
 
-    render :json => response, :status => status_code
+    render :json => @response, :status => @status_code
   end
 
   #

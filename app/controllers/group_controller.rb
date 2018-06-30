@@ -31,12 +31,15 @@ class GroupController < ApplicationControllerAPI
   #
   # Returns whether given user can modify given group
   #
-  def can_modify?(group)
+  def can_modify?(group, allow_root = true)
     # Get root group
     curr_group = group
     while curr_group.group
       curr_group = curr_group.group
     end
+
+    # If group is root and can't be root, can't edit
+    return false if curr_group == group && !allow_root
 
     # Get logged in user
     user = get_logged_user()
@@ -71,6 +74,7 @@ class GroupController < ApplicationControllerAPI
     result[:min_credits]  = group.min_credits
     result[:min_subjects] = group.min_subjects
     result[:can_modify]   = can_modify? group
+    result[:index]        = group.index
     result[:children]     = []
 
     # Subgroups data
@@ -101,13 +105,13 @@ class GroupController < ApplicationControllerAPI
       result[:children].push subject
     end
 
+    # Sort data by indexes
+    result[:children] = result[:children].sort_by { |child| child[:index] }
+
     return result
   end
 
   def fetch
-    response = {}
-    status_code = nil
-
     begin
       # Must be POST request to retrieve group
       return unless request.post?
@@ -116,7 +120,7 @@ class GroupController < ApplicationControllerAPI
       group_id = params[:group_id]
 
       if group_id == nil
-        status_code = 400
+        @status_code = 400
         raise 'group_id is required'
       end
 
@@ -124,56 +128,57 @@ class GroupController < ApplicationControllerAPI
       group = Group.find_by(:id => group_id)
 
       if !group
-        status_code = 404
+        @status_code = 404
         raise 'Group was not found'
       end
 
       if !(can_retrieve? group)
-        status_code = 403
+        @status_code = 403
         raise 'User not allowed to fetch this group'
       end
 
       # Build response data
-      response[:group] = build_group_data(group)
+      @response[:group] = build_group_data(group)
 
     rescue Exception => e
-      status_code = 500 if status_code == nil
-      response[:status] = 'error'
-      response[:error]  = "#{e}"
+        @status_code = 500 unless @status_code
+        @response[:status] = 'error'
+        @response[:error]  = "#{e}"
     else
-      status_code = 200
-      response[:status] = 'success'
+        @status_code = 200
+        @response[:status]  = 'success'
     end
 
-    render :json => response, :status => status_code
+    render :json => @response, :status => @status_code
   end
 
   def update
-    response = {}
-    status_code = nil
-
     begin
       # Must be POST request to retrieve group
       return unless request.post?
 
       # Receives parameters
-      group_id          = params[:group_id]
-      new_name          = params[:name]
-      new_min_credits   = params[:min_credits]
-      new_min_subjects  = params[:min_subjects]
+      group_id          = get_param(:group_id)
+      new_parent        = get_param(:parent_id, false)
+      new_name          = get_param(:name, false)
+      new_min_credits   = get_param(:min_credits, false)
+      new_min_subjects  = get_param(:min_subjects, false)
+      new_index         = get_param(:index, false)
 
       changes = {}
+      changes[:group_id]      = new_parent if new_parent
       changes[:name]          = new_name if new_name
       changes[:min_credits]   = new_min_credits if new_min_credits
       changes[:min_subjects]  = new_min_subjects if new_min_subjects
+      changes[:index]         = new_index if new_index
 
       if changes.size == 0
-        status_code = 400
+        @status_code = 400
         raise 'At least one change is required'
       end
 
       if group_id == nil
-        status_code = 400
+        @status_code = 400
         raise 'group_id is required'
       end
 
@@ -181,71 +186,74 @@ class GroupController < ApplicationControllerAPI
       group = Group.find_by(:id => group_id)
 
       if !group
-        status_code = 404
+        @status_code = 404
         raise 'Group was not found'
       end
 
       if !(can_modify? group)
-        status_code = 403
+        @status_code = 403
         raise 'User not allowed to fetch this group'
+      end
+
+      # If changing parent, check if can modify parent group
+      if new_parent
+        parent = Group.find_by(:id => new_parent)
+
+        if !parent
+          @status_code = 404
+          raise 'Parent group was not found'
+        end
+
+        if !(can_modify? parent)
+          @status_code = 403
+          raise 'User not allowed to modify parent group'
+        end
       end
 
       # Change data in group
       group.update(changes)
 
       if !group.valid?
-        status_code = 400
+        @status_code = 400
         raise 'Invalid changes'
       end
 
       # Save changes
       group.save
     rescue Exception => e
-      status_code = 500 if status_code == nil
-      response[:status] = 'error'
-      response[:error]  = "#{e}"
+      @status_code = 500 unless @status_code
+      @response[:status] = 'error'
+      @response[:error]  = "#{e}"
     else
-      status_code = 200
-      response[:status] = 'success'
+      @status_code = 200
+      @response[:status]  = 'success'
     end
 
-    render :json => response, :status => status_code
+    render :json => @response, :status => @status_code
   end
 
   def create
-    response = {}
-    status_code = 200
-
     begin
       # Must be POST request to create group
       return unless request.post?
 
       # Receives parameters from the group creation page
-      group_parent_id     = params[:parent_group_id]
-      group_name          = params[:name]
-      group_min_credits   = params[:min_credits]
-      group_min_subjects  = params[:min_subjects]
-
-      if group_parent_id == nil
-        status_code = 400
-        raise 'parent_group_id is required'
-      end
-
-      # Fallback to default values for nil parameters
-      group_name          = ""  unless group_name
-      group_min_credits   = nil unless group_min_credits
-      group_min_subjects  = nil unless group_min_subjects
+      group_parent_id     = get_param(:parent_group_id)
+      group_name          = get_param(:name)
+      group_min_credits   = get_param(:min_credits, false)
+      group_min_subjects  = get_param(:min_subjects, false)
+      group_ordering      = get_param(:ordering)
 
       # Check if user can modify given parent group
       parent_group = Group.find(group_parent_id)
 
       if !parent_group
-        status_code = 404
+        @status_code = 404
         raise 'Parent group was not found'
       end
 
       if !(can_modify? parent_group)
-        status_code = 403
+        @status_code = 403
         raise 'Cannot edit this group with this user'
       end
 
@@ -253,51 +261,62 @@ class GroupController < ApplicationControllerAPI
       group = Group.create(
         :name         => group_name,
         :min_credits  => group_min_credits,
-        :min_subjects => group_min_subjects
+        :min_subjects => group_min_subjects,
+        :index        => group_ordering
       )
 
-      if group
-        status_code = 500
+      if !group
+        @status_code = 500
         raise 'Failed to create group'
       end
 
       Group.find(group_parent_id).groups << group
 
+      @response[:id] = group.id
     rescue Exception => e
-      response[:status] = 'error'
-      response[:error]  = "#{e}"
+      @status_code = 500 unless @status_code
+      @response[:status] = 'error'
+      @response[:error]  = "#{e}"
     else
-      status_code = 201
-      response[:status] = 'success'
+      @status_code = 200
+      @response[:status]  = 'success'
     end
 
-    render :json => response, :status => status_code
-  end
-
-  def modify
-    # Must be POST request to modify group
-    return unless request.post?
+    render :json => @response, :status => @status_code
   end
 
   def destroy
-    # Must be POST request to create group
-    return unless request.post?
+    begin
+      # Must be POST request to create group
+      return unless request.post?
 
-    # Receives parameters from the group deletion page
-    group_id = params[:group_id]
+      # Receives parameters from the group deletion page
+      group_id = get_param(:group_id)
 
-    # Check if user can modify given group
-    group = Group.find(group_id)
-    return unless group
-    return unless can_modify? group
+      # Check if user can modify given group
+      group = Group.find(group_id)
+      if !group
+        @status_code = 404
+        raise 'Group was not found'
+      end
 
-    # Can't destroy root group
-    return unless group.group
+      if !can_modify?(group, false)
+        @status_code = 403
+        raise 'User can\'t modify this group'
+      end
 
-    # Destroy given group
-    group.destroy
-    
-    redirect_back fallback_location: "/"
+      # Destroy given group
+      group.destroy
+    rescue Exception => e
+      @status_code = 500 unless @status_code
+      @response[:status] = 'error'
+      @response[:error]  = "#{e}"
+    else
+      @status_code = 200
+      @response[:status]  = 'success'
+    end
+
+    render :json => @response, :status => @status_code
   end
 
   def add_subject
@@ -315,17 +334,17 @@ class GroupController < ApplicationControllerAPI
     group = Group.find(group_id)
     return unless group
     return unless can_modify? group
-    
+
     # Adds subject to group
     subject = Subject.find(subject_id)
     return unless subject
 
     group.subjects << subject
-    
+
     redirect_back fallback_location: "/"
 
   end
-  
+
   def rem_subject
     # Must be POST request to create group
     return unless request.post?
@@ -341,13 +360,13 @@ class GroupController < ApplicationControllerAPI
     group = Group.find(group_id)
     return unless group
     return unless can_modify? group
-    
+
     # Adds subject to group
     subject = Subject.find(subject_id)
     return unless subject
 
     group.subjects.delete(subject)
-    
+
     redirect_back fallback_location: "/"
   end
 end

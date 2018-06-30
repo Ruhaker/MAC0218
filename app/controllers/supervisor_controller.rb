@@ -1,35 +1,51 @@
-class SupervisorController < ApplicationController
+class SupervisorController < ApplicationControllerAPI
   include Auth
 
   def create
-    # Must be POST request to create user
-    return unless request.post?
-    
-    # Load params passed to here
-    login_field  = params[:login_field]
-    user_fname   = params[:full_name]
-    cpf          = params[:cpf]
-    password     = params[:password]
-    
-    # Fallback to default values for nil variables
-    login_field = "" unless login_field
-    user_fname  = "" unless user_fname
-    cpf         = 0  unless cpf
-    password    = "" unless password
-    
-    # Generate 10 char hex password salt for this account
-    pw_salt = SecureRandom.hex 5
-    pw_hash = calculate_hash(pw_salt, password)
+    begin
+      # Must be POST request to create user
+      return unless request.post?
 
-    # Create student
-    Supervisor.create!({
-      :email   => login_field,
-      :name    => user_fname,
-      :cpf     => cpf,
-      :pw_salt => pw_salt,
-      :pw_hash => pw_hash
-    })
-    
-    redirect_back fallback_location: "/"
+      # Load params passed to here
+      email        = get_param(:email)
+      user_fname   = get_param(:full_name)
+      cpf          = get_param(:cpf)
+      password     = get_param(:password)
+
+      # Generate 10 char hex password salt for this account
+      pw_salt = SecureRandom.hex 5
+      pw_hash = calculate_hash(pw_salt, password)
+
+
+      # If has not same email nor nusp
+      if User.find_by(:email => email)
+        @status_code = 409
+        raise 'email is already being used by another user'
+      end
+
+      if Supervisor.find_by(:cpf => cpf)
+        @status_code = 409
+        raise 'cpf is already being used by another user'
+      end
+
+      # Create student
+      student = Supervisor.create({
+        :email   => email,
+        :name    => user_fname,
+        :cpf    => cpf,
+        :pw_salt => pw_salt,
+        :pw_hash => pw_hash
+      })
+
+    rescue Exception => e
+        @status_code = 500 unless @status_code
+        @response[:status] = 'error'
+        @response[:error]  = "#{e}"
+    else
+        @status_code = 200
+        @response[:status]  = 'success'
+    end
+
+    render :json => @response, :status => @status_code
   end
 end
