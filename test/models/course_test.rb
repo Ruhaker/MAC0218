@@ -17,26 +17,43 @@ class CourseTest < ActiveSupport::TestCase
         )
     end
 
-    test "have name" do
-        assert     @present.name
+    test "should have name" do
+        assert @present.name
+    end
+    
+    test "should not have name" do
         assert_not @empty.name
     end
 
-    test "have credits" do
-        assert     @present.credits
+    test "should have credits" do
+        assert @present.credits
+    end
+
+    test "should not have credits" do
         assert_not @empty.credits
     end
 
-    test "have teaching_unit" do
-        assert     @present.teaching_unit
+    test "should have teaching_unit" do
+        assert @present.teaching_unit
+    end
+
+    test "should not have teaching_unit" do
         assert_not @empty.teaching_unit
     end
 
-    test "credits is an integer number" do
+    test "should have expected_time" do
+        assert @present.expected_time
+    end
+
+    test "should not have expected_time" do
+        assert_not @empty.expected_time
+    end
+
+    test "credits should be integer" do
         assert @present.credits.is_a?(Integer)
     end
 
-    test "expected_time is an integer number" do
+    test "expected_time should be integer" do
         assert @present.expected_time.is_a?(Integer)
     end
 end

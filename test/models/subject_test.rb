@@ -1,76 +1,88 @@
 require 'test_helper'
 
 class SubjectTest < ActiveSupport::TestCase
+
+    # Returns a random subject code
+    def random_code
+        return (0...3).map { (65 + rand(26)).chr }.join + (0...4).map { rand(9) }.join
+    end
+
     def setup
-        @subject = Subject.create(
-            code: "MAC0110",
-            name: "Introdução à Computação",
-            credits_class: 4,
-            credits_work: 0,
-            workload: 60,
-            description: "Apresentação a linguagens de programação...")
-        @subject.students << Student.find_by!({:name => "Gabriely Rangel Pereira"})
-        @subject.students << Student.find_by!({:name => "Victor Seiji Hariki"})
-        @subject.groups   << Group.find_by!({:name => "Des. de Software"})
-        @subject.groups   << Group.find_by!({:name => "Obrigatórias"})
+        @present = Subject.new(
+            code:          random_code,
+            name:          Faker::Lorem.sentence,
+            credits_class: rand(50),
+            credits_work:  rand(50),
+            workload:      rand(500),
+            description:   Faker::Lorem.paragraph
+        )
+        @empty = Subject.new(
+            code:          nil,
+            name:          nil,
+            credits_class: nil,
+            credits_work:  nil,
+            workload:      nil,
+            description:   nil
+        )
     end 
     
-    # Tests the subject students
-    test "subject students should exist" do
-        @subject.students.each do |student|
-            assert @subject.students.exists?(student.id) , "Subject student should be valid: #{student.to_s}"
-        end
+    test "should have code" do
+        assert @present.code
     end
 
-    test "subject student shouldn't exist" do
-    	@student = Student.find_by!({:name => "José Alves Garcia"})
-    	assert_not @subject.students.exists?(@student.id), "Subject student shouldn't be valid: #{@student.to_s}"
+    test "should have name" do
+        assert @present.name
     end
 
-    test "subject groups should exist" do
-    	@subject.groups.each do |group|
-    		assert @subject.groups.exists?(group.id), "Subject group should be valid: #{group.to_s}"
-    	end
+    test "should have credits_class" do
+        assert @present.credits_class
     end
 
-    test "subject group shouldn't exist" do
-    	@group = Group.find_by!({:name => "Opt. de Estatística"})
-    	assert_not @subject.groups.exists?(@group.id), "Subject group shouldn't be valid: #{@group.to_s}"
+    test "should have credits_work" do
+        assert @present.credits_work
     end
 
-    test "should be valid" do
-        assert @subject.valid?, "Subject data should be valid: #{@subject.to_s}"
+    test "should have workload" do
+        assert @present.workload
     end
 
-    test "code should be present" do
-        @subject.code = ""
-        assert_not @subject.valid?
+    test "should have description" do
+        assert @present.description
     end
 
-    test "name should be present" do
-        @subject.name = ""
-        assert_not @subject.valid?
+    test "should not have code" do
+        assert_not @empty.code    
     end
 
-    test "credits _work should be present" do
-        @subject.credits_work = ""
-        assert_not @subject.valid?
+    test "should not have name" do
+        assert_not @empty.name    
+    end
+    
+    test "should not have credits_class" do
+        assert_not @empty.credits_class
+    end
+    
+    test "should not have credits_work" do
+        assert_not @empty.credits_work
+    end
+    
+    test "should not have workload" do
+        assert_not @empty.workload
     end
 
-    test "credits _class should be present" do
-        @subject.credits_class = ""
-        assert_not @subject.valid?
+    test "should not have description" do
+        assert_not @empty.description
     end
 
-
-    test "credits_class should be an integer number" do
-        @subject.credits_class = 19.5
-        assert_not @subject.valid?
+    test "credits_class should be integer" do
+        assert @present.credits_class.is_a?(Integer)
     end
 
-    test "credits_work should be an integer number" do
-        @subject.credits_work = 19.5
-        assert_not @subject.valid?
+    test "credits_work should be integer" do
+        assert @present.credits_work.is_a?(Integer)
     end
 
+    test "workload should be integer" do
+        assert @present.workload.is_a?(Integer)
+    end
 end
