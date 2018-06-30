@@ -1,51 +1,40 @@
 <template>
   <div id='header'>
-    <!-- If Subject -->
-    <div v-if='group_obj && !is_group' class='toolbar'>
-      <div class='left toolbar'>
-        <move-icon v-if='parentobj && parentobj.can_modify' rootClass='handle header-icon' w='20' h='20' />
-        <div>{{group_obj.code}} - {{group_obj.name}}</div>
-      </div>
-      <div class='spacer'/>
-      <div class='right toolbar'>
-      </div>
-    </div>
-    <!-- If Group -->
-    <form v-on:submit.prevent='changed_group' v-on:focusout='delay_save' ref='edit_form'>
-      <div v-if='group_obj && is_group' class='toolbar'>
+    <form v-on:submit.prevent='changed_group' v-on:focusout='delay_save' ref='group_edit_form'>
+      <div class='toolbar'>
         <div class='left toolbar'>
-          <move-icon v-if='parentobj && parentobj.can_modify' rootClass='handle header-icon' w='20' h='20' />
-            <input type='text' class='editable-text title' ref='group_title' @focus='title_focus = true' @blur='title_focus = false'
-                @dblclick='enable_editing' v-model='group_obj.name' :readonly='!editing'/>
-            <input type="submit" hidden />
+          <move-icon title='Mover' v-if='!footer && parentobj && parentobj.can_modify' rootClass='handle header-icon' w='20' h='20' />
+          <input type='text' class='editable-text title' ref='group_title' @focus='title_focus = true' @blur='title_focus = false'
+              @dblclick='enable_editing' v-if='group_obj' v-model='group_obj.name' :readonly='!editing'/>
         </div>
-        <div class='spacer'/>
         <div class='right toolbar'>
-          <div v-if='group_obj.min_credits || editing'>
-          Créditos: {{group_obj.done_credits}} / 
-            <input type='number' class='editable-text' ref='group_min_credits' @focus='min_cred_focus = true' @blur='min_cred_focus = false'
-                @dblclick='enable_editing' v-model.number='group_obj.min_credits' :readonly='!editing'/>
-            <input type="submit" hidden />
+          <div v-if='!is_group'>Progresso: {{group_obj.progress ? group_obj.progress : 'Não foi feito'}}</div>
+          <div v-if='(group_obj && group_obj.min_credits) || editing'>
+          Créditos: {{donecredits ? donecredits : '-'}} / 
+            <input type='number' class='editable-text min' ref='group_min_credits' @focus='min_cred_focus = true' @blur='min_cred_focus = false'
+                @dblclick='enable_editing' v-if='group_obj' v-model.number='group_obj.min_credits' :readonly='!editing'/>
           </div>
-          <div v-if='group_obj.min_subjects || editing'>
-          Matérias: {{group_obj.done_credits}} / 
-            <input type='number' class='editable-text' ref='group_min_subjects' @focus='min_sub_focus = true' @blur='min_sub_focus = false'
-                @dblclick='enable_editing' v-model.number='group_obj.min_subjects' :readonly='!editing'/>
-            <input type="submit" hidden />
+          <div v-if='(group_obj && group_obj.min_subjects) || editing'>
+          Matérias: {{donesubjects ? donesubjects : '-'}} / 
+            <input type='number' class='editable-text min' ref='group_min_subjects' @focus='min_sub_focus = true' @blur='min_sub_focus = false'
+                @dblclick='enable_editing' v-if='group_obj' v-model.number='group_obj.min_subjects' :readonly='!editing'/>
           </div>
           <transition name='toolbar-actions'>
-            <div v-if='group_obj.can_modify'>
+            <div v-if='!footer && (!parentobj || parentobj.can_modify)'>
               <div v-if='editing'>
                 <check-icon rootClass='header-icon' w='25' h='25' />
               </div>
               <div v-else style='display: flex'>
+                <div v-if='!is_group' v-on:click="request_subject_info(group_obj.id)">
+                  <information-circle-icon title='Informações' rootClass='header-icon' w='25' h='25' />
+                </div>
                 <div v-if='!isroot' v-on:click="delete_group">
                   <trash-icon title='Deletar' rootClass='header-icon' w='25' h='25' />
                 </div>
-                <div v-on:click="enable_editing">
+                <div v-on:click="enable_editing" v-if='is_group'>
                   <create-icon title='Editar' rootClass='header-icon' w='25' h='25' />
                 </div>
-                <div v-on:click="add_child">
+                <div v-on:click="add_child" v-if='is_group'>
                   <add-icon title='Adicionar grupo' rootClass='header-icon' w='25' h='25' />
                 </div>
               </div>
@@ -53,6 +42,7 @@
           </transition>
         </div>
       </div>
+      <input type="submit" hidden />
     </form>
     <hr v-if='group_obj && is_group'>
   </div>
@@ -69,6 +59,7 @@ import CreateIcon from 'vue-ionicons/dist/md-create.vue';
 import CheckIcon from 'vue-ionicons/dist/md-checkmark.vue';
 import MoveIcon from 'vue-ionicons/dist/md-move.vue';
 import TrashIcon from 'vue-ionicons/dist/md-trash.vue';
+import InformationCircleIcon from 'vue-ionicons/dist/md-information-circle.vue';
 
 import { Chrome } from 'vue-color';
 
@@ -77,7 +68,10 @@ export default {
   props: {
     groupobj: { default: null },
     parentobj: { default: null },
-    isroot: { default: true }
+    isroot: { default: true },
+    footer: { default: false },
+    donecredits: { default: null },
+    donesubjects: { default: null }
   },
   data() {
     return {
@@ -94,24 +88,45 @@ export default {
     CreateIcon,
     CheckIcon,
     MoveIcon,
-    TrashIcon
+    TrashIcon,
+    InformationCircleIcon
   },
   computed: {
     group_obj() {
+      if (this.footer)
+        return {
+          name: `Este grupo está vazio!${
+            this.parentobj && this.parentobj.can_modify
+              ? ' Arraste disciplinas para começar!'
+              : ''
+          }`
+        };
       return this.groupobj;
     },
     // Is it a group?
     is_group() {
       return this.group_obj.type == 'group';
+    },
+    // Is it a subject index?
+    is_index() {
+      return this.group_obj.type == 'subject';
     }
   },
   mounted() {
     if (this.group_obj && this.group_obj.new) this.enable_editing();
   },
   methods: {
+    request_subject_info(subject_id) {
+      window.bus.$emit('request-subject-info', { subject_id });
+    },
     async delete_group() {
       try {
-        await auth.request('group/destroy', { group_id: this.group_obj.id });
+        if (this.is_group)
+          await auth.request('group/destroy', { group_id: this.group_obj.id });
+        else if (this.is_index)
+          await auth.request('group/destroy_index', {
+            index_id: this.group_obj.id
+          });
       } catch (ignore) {}
 
       this.$emit('update-indices');
@@ -124,10 +139,18 @@ export default {
       );
     },
     delay_save() {
-      this.$nextTick(() => this.changed_group());
+      this.$nextTick(() => {
+        if (!this.min_cred_focus && !this.min_sub_focus && !this.title_focus)
+          this.changed_group();
+      });
     },
     // Change group
     changed_group(evn) {
+      let max_val = 999;
+      if (this.group_obj.min_credits > max_val)
+        this.group_obj.min_credits = max_val;
+      if (this.group_obj.min_subjects > max_val)
+        this.group_obj.min_subjects = max_val;
       if (this.group_obj.new) {
         auth
           .request('group/create', {
@@ -170,10 +193,11 @@ export default {
           'min_credits',
           'min_subjects'
         ]);
-        this.$refs.group_title.focus();
+        if (!this.min_cred_focus && !this.min_sub_focus && !this.title_focus)
+          this.$refs.group_title.focus();
       }
     },
-    // Enable editing
+    // Disable editing
     disable_editing() {
       this.editing = false;
     },
@@ -190,6 +214,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+#header {
+}
+
 .header-icon {
   color: #555;
   height: 25px;
@@ -220,11 +247,14 @@ export default {
 
 // Editable text fields
 .editable-text.title {
-  width: 200pt;
+  flex-grow: 1;
+}
+.left.toolbar {
+  flex-grow: 1;
 }
 
-.editable-text.title {
-  width: 200pt;
+.editable-text.min {
+  width: 30pt;
 }
 
 .editable-text:read-only {

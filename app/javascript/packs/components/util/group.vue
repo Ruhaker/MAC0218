@@ -1,18 +1,20 @@
 <template>
-  <div id='root' ref='root'>
-    <!-- Draw header -->
-    <group-header :groupobj='group_obj' :parentobj='parent_obj' :isroot='is_root' v-on:add-child='add_child' v-on:reload-group='update'/>
-    <!-- Draw children -->
-    <div v-if='group_obj && is_group' class='children-list'>
-      <draggable v-model="group_obj.children" v-on:change='changed_children'
-          :options='draggable_options' ghostClass='draggable-ghost' :move='drag_check' :disabled='!group_obj.can_modify'>
-        <group :groupobj='child' :parentobj='group_obj' v-for='child in group_obj.children' v-bind:key="child.id" />
-        <div>
-          <group-footer v-if='group_obj.children.length == 0' />
-        </div>
-      </draggable>
+    <div class='root' ref='root' :footer='footer' v-if='group_obj'>
+      <!-- Draw header -->
+      <div class='header'>
+        <group-header :groupobj='group_obj' :parentobj='parent_obj' :isroot='is_root'
+            :donecredits='done_credits' :donesubjects='done_subjects' v-on:add-child='add_child' v-on:reload-group='update' :footer='footer'/>
+        <div v-if='group_obj && !is_group' class='status-band'/>
+      </div>
+      <!-- Draw children -->
+      <div v-if='!footer && group_obj && is_group' class='children-list'>
+        <draggable v-model="group_obj.children" v-on:change='changed_children'
+            :options='draggable_options' ghostClass='draggable-ghost' :move='drag_check' :disabled='!group_obj.can_modify'>
+          <group :groupobj='child' :parentobj='group_obj' v-for='child in group_obj.children' v-bind:key="child.id" />
+          <group :parentobj='group_obj' v-if='group_obj.children && group_obj.children.length == 0' :footer='true'/>
+        </draggable>
+      </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -32,19 +34,21 @@ export default {
   props: {
     groupid: { default: null },
     groupobj: { default: null },
-    parentobj: { default: null }
+    parentobj: { default: null },
+    footer: { default: false }
   },
   data() {
     return {
       // Local instance of group objects
       groupo: null,
       pgroupo: null,
+      done_credits: null,
+      done_subjects: null,
       // Options for Vue.Draggable
       draggable_options: {
         animation: 200,
         group: 'item',
-        handle: '.handle',
-        ghostClass: 'ghost'
+        handle: '.handle'
       }
     };
   },
@@ -55,6 +59,11 @@ export default {
     draggable
   },
   computed: {
+    // Return this group's type
+    group_type() {
+      if (!this.group_obj) return null;
+      return this.group_obj.type;
+    },
     // Returns this group's id
     group_id() {
       if (this.groupid) return this.groupid;
@@ -104,16 +113,75 @@ export default {
     // If requested reload, update data
     window.bus.$on('reload-groups', () => this.update());
   },
+  mounted() {
+    this.update_progress();
+  },
   methods: {
+    async update_progress() {
+      await this.update();
+      this.calc_progress().then(res => {
+        if (this.group_obj) {
+          this.group_obj.done_credits = res.credits;
+          this.group_obj.done_subjects = res.subjects;
+        }
+      });
+    },
+    async calc_progress(group, res) {
+      if ((await auth.get_user_object()).type != 'student')
+        return { credits: null, subjects: null };
+      if (!group) group = this.group_obj;
+      if (!res) res = { credits: 0, subjects: 0 };
+
+      if (group.type == 'group') {
+        if (group.done_credits && group.done_subjects) {
+          res.credits += group.done_credits;
+          red.subjects += group.done_subjects;
+        } else
+          group.children.forEach(child => {
+            this.calc_progress(child, res);
+          });
+      } else if (group.type == 'subject') {
+        if (group.progress == 'done') {
+          res.credits += group.credits;
+          res.subjects++;
+        }
+      }
+
+      return res;
+    },
     async changed_children(evn) {
       if (evn.added) {
-        try {
-          await auth.request('group/update', {
-            group_id: evn.added.element.id,
-            parent_id: this.group_id
-          });
-        } catch (e) {
-          return;
+        if (evn.added.element.type == 'group') {
+          try {
+            await auth.request('group/update', {
+              group_id: evn.added.element.id,
+              parent_id: this.group_id
+            });
+          } catch (e) {
+            console.log(e);
+            return;
+          }
+        } else if (evn.added.element.type == 'new_subject') {
+          try {
+            await auth.request('group/add_subject', {
+              group_id: this.group_id,
+              subject_id: evn.added.element.id,
+              ordering: evn.added.newIndex
+            });
+          } catch (e) {
+            console.log(e);
+            return;
+          }
+        } else if (evn.added.element.type == 'subject') {
+          try {
+            await auth.request('group/update_index', {
+              index_id: evn.added.element.id,
+              group_id: this.group_id
+            });
+          } catch (e) {
+            console.log(e);
+            return;
+          }
         }
       }
       this.update_indices();
@@ -122,16 +190,22 @@ export default {
     update_indices() {
       var error = false;
       this.group_obj.children.forEach((child, index) => {
-        auth
-          .request('group/update', {
-            type: child.type,
-            group_id: child.id,
-            index
-          })
-          .then(() => {
-            child.index = index;
-          })
-          .catch(e => (error = true));
+        if (this.group_type == 'group')
+          auth
+            .request('group/update', {
+              group_id: child.id,
+              index
+            })
+            .then(() => {
+              child.index = index;
+            })
+            .catch(e => (error = true));
+        else if (this.group_type == 'subject')
+          auth
+            .request('group/update_index', { index_id: child.id, index })
+            .then(() => {
+              child.index = index;
+            });
       });
       if (error) this.update();
     },
@@ -142,16 +216,16 @@ export default {
       );
     },
     // Fetch group data from server
-    update(data) {
+    async update(data) {
       var group_id = this.group_id;
       if (data) group_id = data.group_id;
-      auth
-        .request('group/fetch', { group_id: group_id })
-        .then(response => {
-          console.log(response.data.group);
-          this.group_obj = response.data.group;
-        })
-        .catch(error => {});
+      if (this.groupid || this.group_type == 'group') {
+        let response = await auth.request('group/fetch', {
+          group_id: group_id
+        });
+        console.log(response.data.group);
+        this.group_obj = response.data.group;
+      }
     },
     // Adds child to this group
     add_child(data) {
@@ -173,11 +247,15 @@ export default {
   color: #111;
 }
 
-#root {
+.root {
   border: solid 1px black;
   border-radius: 5px;
   padding: 10pt;
   margin: 10pt;
+}
+
+.root[footer='true'] {
+  border: dashed 1px black;
 }
 
 .children-list {
@@ -204,6 +282,10 @@ export default {
   border: none;
   background-color: #0000;
   color: #000;
+}
+
+.group #root {
+  background-color: greenyellow;
 }
 </style>
 

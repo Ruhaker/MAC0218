@@ -64,8 +64,10 @@ class GroupController < ApplicationControllerAPI
   #
   # Build dictionary from group
   #
-  def build_group_data(group)
+  def build_group_data(group, depth = 6)
     result = {}
+
+    return result if depth == 0
 
     # Group data
     result[:type]         = 'group'
@@ -79,17 +81,20 @@ class GroupController < ApplicationControllerAPI
 
     # Subgroups data
     group.groups.each do |child_group|
-      result[:children].push(build_group_data(child_group))
+      result[:children].push(build_group_data(child_group, depth - 1))
     end
 
     # Get logged in user
     user = get_logged_user()
 
     # Subjects data
-    group.subjects.each do |child_subject|
+    group.group_indices.each do |child_index|
+      child_subject = child_index.subject
+
       subject = {}
       subject[:type]      = 'subject'
-      subject[:id]        = child_subject.id
+      subject[:id]        = child_index.id
+      subject[:subj_id]   = child_subject.id
       subject[:code]      = child_subject.code
       subject[:name]      = child_subject.name
       subject[:progress]  = nil
@@ -106,7 +111,7 @@ class GroupController < ApplicationControllerAPI
     end
 
     # Sort data by indexes
-    result[:children] = result[:children].sort_by { |child| child[:index] }
+    result[:children] = result[:children].sort_by { |child| child[:index] or 0 }
 
     return result
   end
@@ -117,12 +122,7 @@ class GroupController < ApplicationControllerAPI
       return unless request.post?
 
       # Receives parameters
-      group_id = params[:group_id]
-
-      if group_id == nil
-        @status_code = 400
-        raise 'group_id is required'
-      end
+      group_id = get_param(:group_id)
 
       # Check if user can retrieve group
       group = Group.find_by(:id => group_id)
@@ -144,6 +144,7 @@ class GroupController < ApplicationControllerAPI
         @status_code = 500 unless @status_code
         @response[:status] = 'error'
         @response[:error]  = "#{e}"
+        @response[:bt]  = "#{e.backtrace}"
     else
         @status_code = 200
         @response[:status]  = 'success'
@@ -177,11 +178,6 @@ class GroupController < ApplicationControllerAPI
         raise 'At least one change is required'
       end
 
-      if group_id == nil
-        @status_code = 400
-        raise 'group_id is required'
-      end
-
       # Check if user can retrieve group
       group = Group.find_by(:id => group_id)
 
@@ -193,6 +189,11 @@ class GroupController < ApplicationControllerAPI
       if !(can_modify? group)
         @status_code = 403
         raise 'User not allowed to fetch this group'
+      end
+
+      if changes[:group_id] && !group.group
+        @status_code = 400
+        raise 'Can\'t change parent_id of root group'
       end
 
       # If changing parent, check if can modify parent group
@@ -220,6 +221,75 @@ class GroupController < ApplicationControllerAPI
 
       # Save changes
       group.save
+    rescue Exception => e
+      @status_code = 500 unless @status_code
+      @response[:status] = 'error'
+      @response[:error]  = "#{e}"
+    else
+      @status_code = 200
+      @response[:status]  = 'success'
+    end
+
+    render :json => @response, :status => @status_code
+  end
+
+  def update_index
+    begin
+      # Must be POST request to retrieve group
+      return unless request.post?
+
+      # Receives parameters
+      index_id          = get_param(:index_id)
+      new_group         = get_param(:group_id, false)
+      new_index         = get_param(:index, false)
+
+      changes = {}
+      changes[:group_id]      = new_group if new_group
+      changes[:index]         = new_index if new_index
+
+      if changes.size == 0
+        @status_code = 400
+        raise 'At least one change is required'
+      end
+
+      # Check if user can retrieve index
+      index = GroupIndex.find_by(:id => index_id)
+
+      if !index
+        @status_code = 404
+        raise 'Index was not found'
+      end
+
+      if !(can_modify? index.group)
+        @status_code = 403
+        raise 'User not allowed to modify this index'
+      end
+
+      # If changing parent, check if can modify parent group
+      if new_group
+        parent = Group.find_by(:id => new_group)
+
+        if !parent
+          @status_code = 404
+          raise 'Parent group was not found'
+        end
+
+        if !(can_modify? parent)
+          @status_code = 403
+          raise 'User not allowed to modify parent group'
+        end
+      end
+
+      # Change data in group
+      index.update(changes)
+
+      if !group.valid?
+        @status_code = 400
+        raise 'Invalid changes'
+      end
+
+      # Save changes
+      index.save
     rescue Exception => e
       @status_code = 500 unless @status_code
       @response[:status] = 'error'
@@ -294,7 +364,7 @@ class GroupController < ApplicationControllerAPI
       group_id = get_param(:group_id)
 
       # Check if user can modify given group
-      group = Group.find(group_id)
+      group = Group.find_by(:id => group_id)
       if !group
         @status_code = 404
         raise 'Group was not found'
@@ -319,29 +389,102 @@ class GroupController < ApplicationControllerAPI
     render :json => @response, :status => @status_code
   end
 
+  def destroy_index
+    begin
+      # Must be POST request to create group
+      return unless request.post?
+
+      # Receives parameters from the group deletion page
+      index_id = get_param(:index_id)
+
+      # Check if user can modify given group
+      index = GroupIndex.find_by(:id => index_id)
+      if !index
+        @status_code = 404
+        raise 'Group was not found'
+      end
+
+      if !can_modify?(index.group)
+        @status_code = 403
+        raise 'User can\'t modify this group'
+      end
+
+      # Destroy given index
+      index.destroy
+    rescue Exception => e
+      @status_code = 500 unless @status_code
+      @response[:status] = 'error'
+      @response[:error]  = "#{e}"
+    else
+      @status_code = 200
+      @response[:status]  = 'success'
+    end
+
+    render :json => @response, :status => @status_code
+  end
+
   def add_subject
-    # Must be POST request to create group
-    return unless request.post?
+    begin
+      # Must be POST request to create group
+      return unless request.post?
 
-    # Receives parameters
-    group_id   = params[:group_id]
-    subject_id = params[:subject_id]
+      # Receives parameters
+      group_id   = get_param(:group_id)
+      subject_id = get_param(:subject_id)
+      ordering   = get_param(:ordering)
 
-    return unless group_id
-    return unless subject_id
+      # Check if user can modify given group
+      group = Group.find(group_id)
 
-    # Check if user can modify given group
-    group = Group.find(group_id)
-    return unless group
-    return unless can_modify? group
+      if !group
+        @status_code = 404
+        raise 'Group was not found'
+      end
 
-    # Adds subject to group
-    subject = Subject.find(subject_id)
-    return unless subject
+      if !can_modify?(group)
+        @status_code = 403
+        raise 'User can\'t modify this group'
+      end
 
-    group.subjects << subject
+      # Gets subject
+      subject = Subject.find(subject_id)
 
-    redirect_back fallback_location: "/"
+      if !group
+        @status_code = 404
+        raise 'Subject was not found'
+      end
+
+      # Adds to group
+      group.subjects << subject
+
+      group.save
+      subject.save
+
+      # Finally, set index
+      relationship = GroupIndex.find_by(:group_id => group.id, :subject_id => subject.id)
+
+      if !relationship
+        raise 'Index was not created'
+      end
+
+      relationship.index = ordering
+
+      if !relationship.valid?
+        @status_code = 400
+        raise 'Given ordering was invalid'
+      end
+
+      relationship.save
+    rescue Exception => e
+      @status_code = 500 unless @status_code
+      @response[:status] = 'error'
+      @response[:error]  = "#{e}"
+    else
+      @status_code = 200
+      @response[:status]  = 'success'
+    end
+
+    render :json => @response, :status => @status_code
 
   end
 

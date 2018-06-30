@@ -4,14 +4,81 @@ class SubjectController < ApplicationControllerAPI
   #
   # List subjects according to a text field
   #
-  def List
-    
+  def list
+    begin
+      # Must be POST request to create course
+      return unless request.post?
+
+      # Receives search string
+      search = get_param(:search)
+
+      @response[:subjects] = []
+
+      # Find subjects that fit the search string
+      Subject.search(search).each do |subject|
+        course_data = {}
+        puts subject
+        course_data[:id]   = subject.id
+        course_data[:type] = 'new_subject'
+        course_data[:code] = subject.code
+        course_data[:name] = subject.name
+
+        @response[:subjects].push course_data
+      end
+    rescue Exception => e
+      @status_code = 500 if !@status_code
+      @response[:status] = 'error'
+      @response[:error]  = "#{e}"
+    else
+      @status_code = 201
+      @response[:status] = 'success'
+    end
+
+    render :json => @response, :status => @status_code
+  end
+
+  #
+  # Retrieves a subject
+  #
+  def fetch
+    begin
+      # Must be POST request to create course
+      return unless request.post?
+
+      # Receives subject id
+      subject_id = get_param(:subject_id)
+
+      @response[:subject] = {}
+
+      # Find subject
+      subject = Subject.find_by(:id => subject_id)
+
+      if !subject
+        @status_code = 404
+        raise 'Subject was not found'
+      end
+
+      @response[:subject][:id]            = subject.id
+      @response[:subject][:credits_class] = subject.credits_class
+      @response[:subject][:credits_work]  = subject.credits_work
+      @response[:subject][:code]          = subject.code
+      @response[:subject][:name]          = subject.name
+      @response[:subject][:description]   = subject.description
+      @response[:subject][:description]   = 'Descrição vazia' if subject.description.empty?
+    rescue Exception => e
+      @status_code = 500 if !@status_code
+      @response[:status] = 'error'
+      @response[:error]  = "#{e}"
+    else
+      @status_code = 201
+      @response[:status] = 'success'
+    end
+
+    render :json => @response, :status => @status_code
   end
 
   #
   # Creates a new subject
-  #
-  # For now, any supervisor can create courses, but this will change later.
   #
   def create
     begin

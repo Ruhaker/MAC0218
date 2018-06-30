@@ -1,6 +1,37 @@
 class CourseController < ApplicationControllerAPI
   include Auth
 
+  def fetch
+      begin
+          # Must be POST request to get user
+          return unless request.post?
+
+          # Receive course id
+          course_id = get_param(:course_id)
+
+          # Find course
+          course = Course.find_by(:id => course_id)
+
+          if !course
+            @status_code = 404
+            raise 'Course was not found'
+          end
+
+          @response[:course] = {}
+          @response[:course][:id]       = course.id
+          @response[:course][:group_id] = course.group.id
+          @response[:course][:name]     = course.name
+      rescue Exception => e
+      @status_code = 500 if !@status_code
+      @response[:status] = 'error'
+      @response[:error]  = "#{e}"
+    else
+      @status_code = 200
+      @response[:status] = 'success'
+    end
+
+    render :json => @response, :status => @status_code
+  end
   #
   # Lists courses
   #
@@ -30,7 +61,7 @@ class CourseController < ApplicationControllerAPI
       @response[:status] = 'error'
       @response[:error]  = "#{e}"
     else
-      @status_code = 201
+      @status_code = 200
       @response[:status] = 'success'
     end
 
@@ -90,7 +121,7 @@ class CourseController < ApplicationControllerAPI
       end
 
       # Save new course
-      course.save!
+      course.save
     rescue Exception => e
       @status_code = 500 if !@status_code
       @response[:status] = 'error'

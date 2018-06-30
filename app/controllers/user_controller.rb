@@ -74,6 +74,16 @@ class UserController < ApplicationControllerAPI
                     @response[:user][:plans].push user_plan
                 end
             end
+
+            if user.is? 'supervisor'
+                @response[:user][:courses] = []
+                user.courses.each do |course|
+                    user_course = {}
+                    user_course[:id] = course.id
+                    user_course[:name] = course.name
+                    @response[:user][:courses].push user_course
+                end
+            end
         rescue Exception => e
             @status_code = 500 unless @status_code
             @response[:status] = 'error'

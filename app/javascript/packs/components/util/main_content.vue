@@ -21,6 +21,7 @@ export default {
   beforeMount() {
     // Listen to events
     window.bus.$on('plan-changed', this.plan_changed);
+    window.bus.$on('course-changed', this.course_changed);
   },
   methods: {
     plan_changed(data) {
@@ -37,6 +38,18 @@ export default {
           this.course_group_id = data.c_group_id;
         })
         .catch(error => {});
+    },
+    course_changed(data) {
+      if (!data.course_id) {
+        this.plan_group_id = this.course_group_id = null;
+        return;
+      }
+
+      auth.request('course/fetch', data).then(response => {
+        let data = response.data.course;
+        this.plan_group_id = null;
+        this.course_group_id = data.group_id;
+      });
     }
   }
 };

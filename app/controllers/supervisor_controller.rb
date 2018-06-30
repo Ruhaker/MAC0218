@@ -1,6 +1,45 @@
 class SupervisorController < ApplicationControllerAPI
   include Auth
 
+  def list
+    begin
+      # Must be POST request to create user
+      return unless request.post?
+
+      # Verify permissions
+      if !@user
+        @status_code = 401
+        raise 'Must be logged in to list supervisors'
+      end
+
+      if !@user.is_admin
+        @status_code = 403
+        raise 'Must be admin to list supervisors'
+      end
+
+      @response[:supervisors] = []
+
+      # Fetch data
+      Supervisor.all.each do |supervisor_obj|
+        supervisor = {}
+        supervisor[:id] = supervisor_obj.id
+        supervisor[:name] = supervisor_obj.name
+        supervisor[:email] = supervisor_obj.email
+        @response[:supervisors].push supervisor
+      end
+
+    rescue Exception => e
+        @status_code = 500 unless @status_code
+        @response[:status] = 'error'
+        @response[:error]  = "#{e}"
+    else
+        @status_code = 200
+        @response[:status]  = 'success'
+    end
+
+    render :json => @response, :status => @status_code
+  end
+
   def create
     begin
       # Must be POST request to create user

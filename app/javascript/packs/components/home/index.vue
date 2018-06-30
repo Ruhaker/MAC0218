@@ -20,7 +20,7 @@ import 'vue-ionicons/ionicons.css';
 export default {
   components: { MainContent, RightSidebar, LeftSidebar },
   data: function() {
-    return {};
+    return { groups: [] };
   },
   methods: {}
 };

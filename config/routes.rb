@@ -4,7 +4,9 @@ Rails.application.routes.draw do
 
   post 'plan/fetch'
 
-  get 'subject/enroll'
+  post 'subject/list'
+
+  post 'subject/fetch'
   post 'subject/enroll'
 
   get 'subject/create'
@@ -19,13 +21,16 @@ Rails.application.routes.draw do
   post 'group/fetch'
   post 'group/create'
   post 'group/update'
+  post 'group/update_index'
   post 'group/destroy'
+  post 'group/destroy_index'
 
   post 'group/add_subject'
 
   post 'group/rem_subject'
 
   # Paths for dealing with courses
+  post 'course/fetch'
   post 'course/list'
 
   get 'course/create'
@@ -40,6 +45,8 @@ Rails.application.routes.draw do
   # Paths for creating users
   get  'supervisor/create'
   post 'supervisor/create'
+  post 'supervisor/list'
+  post 'supervisor/assign'
 
   get  'student/create'
   post 'student/create'

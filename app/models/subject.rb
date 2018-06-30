@@ -1,4 +1,10 @@
 class Subject < ApplicationRecord
+    include SearchCop
+
+    search_scope :search do
+        attributes :code, :name, :description
+    end
+
     has_many :group_indices
     has_and_belongs_to_many :groups, :through => :group_indices
     has_and_belongs_to_many :subjects
