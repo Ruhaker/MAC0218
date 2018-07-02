@@ -9,7 +9,7 @@
       <!-- Draw children -->
       <div v-if='!footer && group_obj && is_group' class='children-list'>
         <draggable v-model="group_obj.children" v-on:change='changed_children'
-            :options='draggable_options' ghostClass='draggable-ghost' :move='drag_check' :disabled='!group_obj.can_modify'>
+            :options='draggable_options' ghostClass='draggable-ghost' :disabled='!group_obj.can_modify'>
           <group :groupobj='child' :parentobj='group_obj' v-for='child in group_obj.children' v-bind:key="child.id" />
           <group :parentobj='group_obj' v-if='group_obj.children && group_obj.children.length == 0' :footer='true'/>
         </draggable>
@@ -43,13 +43,7 @@ export default {
       groupo: null,
       pgroupo: null,
       done_credits: null,
-      done_subjects: null,
-      // Options for Vue.Draggable
-      draggable_options: {
-        animation: 200,
-        group: 'item',
-        handle: '.handle'
-      }
+      done_subjects: null
     };
   },
   components: {
@@ -59,6 +53,14 @@ export default {
     draggable
   },
   computed: {
+    // Options for Vue.Draggable
+    draggable_options() {
+      return {
+        animation: 200,
+        group: { name: 'item', put: this.group_obj.can_modify },
+        handle: '.handle'
+      };
+    },
     // Return this group's type
     group_type() {
       if (!this.group_obj) return null;
@@ -112,6 +114,9 @@ export default {
 
     // If requested reload, update data
     window.bus.$on('reload-groups', () => this.update());
+    window.bus.$on('reload-group', data => {
+      if (data.group_id == group_id) this.update();
+    });
   },
   methods: {
     async changed_children(evn) {
@@ -151,6 +156,7 @@ export default {
         }
       }
       this.update_indices();
+      this.update();
     },
 
     update_indices() {
@@ -174,12 +180,6 @@ export default {
             });
       });
       if (error) this.update();
-    },
-    // Checks if can drag
-    drag_check(evn, origEvt) {
-      return (
-        evn.relatedContext.element && evn.relatedContext.element.can_modify
-      );
     },
     // Fetch group data from server
     async update(data) {

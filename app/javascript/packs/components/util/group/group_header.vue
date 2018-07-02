@@ -135,13 +135,7 @@ export default {
       } catch (ignore) {}
 
       this.$emit('update-indices');
-
-      this.parentobj.children.splice(
-        this.parentobj.children.findIndex(
-          element => element.id === this.group_obj.id
-        ),
-        1
-      );
+      window.bus.$emit('reload-groups');
     },
     delay_save() {
       this.$nextTick(() => {

@@ -70,20 +70,24 @@ class GroupController < ApplicationControllerAPI
     return result if depth == 0
 
     # Group data
-    result[:type]         = 'group'
-    result[:id]           = group.id
-    result[:name]         = group.name
-    result[:min_credits]  = group.min_credits
-    result[:min_subjects] = group.min_subjects
-    result[:can_modify]   = can_modify? group
-    result[:index]        = group.index
-    result[:children]     = []
-    result[:done_credits] = 0
+    result[:type]           = 'group'
+    result[:id]             = group.id
+    result[:name]           = group.name
+    result[:min_credits]    = group.min_credits
+    result[:min_subjects]   = group.min_subjects
+    result[:can_modify]     = can_modify? group
+    result[:index]          = group.index
+    result[:children]       = []
+    result[:done_credits]   = 0
+    result[:done_subjects]  = 0
 
     # Subgroups data
     group.groups.each do |child_group|
       child_group_data = build_group_data(child_group, depth - 1)
       result[:done_credits] += child_group_data[:done_credits]
+      result[:done_subjects] += 1 if\
+        child_group_data[:progress_cred] == 2 || child_group_data[:progress_subj] == 2 ||\
+        (child_group_data[:min_credits] == nil && child_group_data[:min_subjects] == nil)
       result[:children].push(child_group_data)
     end
 
@@ -107,12 +111,29 @@ class GroupController < ApplicationControllerAPI
       if user && user.is?('student')
         relationship = SubjectStudent.find_by(:student_id => user.id, :subject_id => child_subject.id)
         if relationship
-          subject[:progress]     = relationship.progress
-          result[:done_credits] += child_subject.credits_class + child_subject.credits_work if subject[:progress] == 2
+          subject[:progress]      = relationship.progress
+          result[:done_credits]  += child_subject.credits_class + child_subject.credits_work if subject[:progress] == 2
+          result[:done_subjects] += 1 if subject[:progress] == 2
         end
       end
 
       result[:children].push subject
+    end
+
+    # Progress for credits
+    if result[:min_credits]
+      result[:progress_cred]  = 0 if result[:done_credits] < result[:min_credits]
+      result[:progress_cred]  = 2 if result[:done_credits] >= result[:min_credits]
+    else
+      result[:progress_cred]  = nil
+    end
+
+    # Progress for subjects
+    if result[:min_subjects]
+      result[:progress_subj]  = 0 if result[:done_subjects] < result[:min_subjects]
+      result[:progress_subj]  = 2 if result[:done_subjects] >= result[:min_subjects]
+    else
+      result[:progress_subj]  = nil
     end
 
     # Sort data by indexes

@@ -4,7 +4,7 @@
       <input type='text' :placeholder="`Procurar ${item_type}`" v-model='search_string' />
     </form>
     <div class='content'>
-      <draggable v-model="search_results" :options="draggable_options" :move='drag_check' v-if='!show_info'>
+      <draggable v-model="search_results" :options="draggable_options" v-if='!show_info'>
         <div v-for='(result, index) in search_results' :key='index'>
           <div class='search-result'>
             <move-icon title='Mover' rootClass='handle' w='20' h='20' />
@@ -118,12 +118,6 @@ export default {
     },
     request_subject_info(subject_id) {
       window.bus.$emit('request-subject-info', { subject_id });
-    },
-    // Checks if can drag
-    drag_check(evn, origEvt) {
-      return (
-        evn.relatedContext.element && evn.relatedContext.element.can_modify
-      );
     }
   }
 };
