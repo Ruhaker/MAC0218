@@ -78,10 +78,13 @@ class GroupController < ApplicationControllerAPI
     result[:can_modify]   = can_modify? group
     result[:index]        = group.index
     result[:children]     = []
+    result[:done_credits] = 0
 
     # Subgroups data
     group.groups.each do |child_group|
-      result[:children].push(build_group_data(child_group, depth - 1))
+      child_group_data = build_group_data(child_group, depth - 1)
+      result[:done_credits] += child_group_data[:done_credits]
+      result[:children].push(child_group_data)
     end
 
     # Get logged in user
@@ -104,7 +107,8 @@ class GroupController < ApplicationControllerAPI
       if user && user.is?('student')
         relationship = SubjectStudent.find_by(:student_id => user.id, :subject_id => child_subject.id)
         if relationship
-          subject[:progress] = relationship.progress
+          subject[:progress]     = relationship.progress
+          result[:done_credits] += child_subject.credits_class + child_subject.credits_work if subject[:progress] == 2
         end
       end
 

@@ -113,43 +113,7 @@ export default {
     // If requested reload, update data
     window.bus.$on('reload-groups', () => this.update());
   },
-  mounted() {
-    this.update_progress();
-  },
   methods: {
-    async update_progress() {
-      await this.update();
-      this.calc_progress().then(res => {
-        if (this.group_obj) {
-          this.group_obj.done_credits = res.credits;
-          this.group_obj.done_subjects = res.subjects;
-        }
-      });
-    },
-    async calc_progress(group, res) {
-      let user = await auth.get_user_object();
-      if (!user || user.type != 'student')
-        return { credits: null, subjects: null };
-      if (!group) group = this.group_obj;
-      if (!res) res = { credits: 0, subjects: 0 };
-
-      if (group.type == 'group') {
-        if (group.done_credits && group.done_subjects) {
-          res.credits += group.done_credits;
-          red.subjects += group.done_subjects;
-        } else
-          group.children.forEach(child => {
-            this.calc_progress(child, res);
-          });
-      } else if (group.type == 'subject') {
-        if (group.progress == 2) {
-          res.credits += group.credits;
-          res.subjects++;
-        }
-      }
-
-      return res;
-    },
     async changed_children(evn) {
       if (evn.added) {
         console.log(evn);
@@ -251,7 +215,7 @@ export default {
 
 .root {
   border: solid 0.7px #00000029;
-  border-radius: 40px;
+  border-radius: 10pt;
   padding: 10pt;
   margin: 10pt;
   box-shadow: 0.4px 0.7px #3333337a;

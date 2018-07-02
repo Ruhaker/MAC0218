@@ -29,9 +29,7 @@
           <div class='spacer'/>
         </div>
         <div class='header'>
-          <button v-on:click='set_progress(0)'>Não feito</button>
-          <button v-on:click='set_progress(1)'>Fazendo</button>
-          <button v-on:click='set_progress(2)'>Feito</button>
+          <button v-on:click='set_progress(index)' :key='index' v-for='(text, index) in util.progress_texts'>{{text}}</button>
         </div>
         <h3 class='title'>{{subject.code}}</h3>
         <h5 class='title'>{{subject.name}}</h5>
@@ -45,6 +43,8 @@
 
 <script>
 import auth from '../auth.js';
+
+import util from '../util.js';
 
 import draggable from 'vuedraggable';
 import MoveIcon from 'vue-ionicons/dist/md-move.vue';
@@ -62,6 +62,9 @@ export default {
     CloseIcon,
     InformationCircleIcon
   },
+  beforeMount() {
+    this.util = util;
+  },
   mounted() {
     this.search_string = '';
     window.bus.$on('request-subject-info', this.subject_info);
@@ -72,6 +75,7 @@ export default {
       show_info: false,
       search_string: null,
       search_results: [],
+      util: null,
       // Options for Vue.Draggable
       draggable_options: {
         animation: 200,

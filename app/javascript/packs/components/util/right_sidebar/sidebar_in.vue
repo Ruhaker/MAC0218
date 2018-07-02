@@ -70,6 +70,7 @@ export default {
         .logout()
         .then(() => {
           window.bus.$emit('auth-changed');
+          window.bus.$emit('reload-groups');
         })
         .catch(() => {});
     }

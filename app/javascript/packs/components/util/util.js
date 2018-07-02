@@ -1,4 +1,5 @@
 export default {
+  progress_texts: ['Não feito', 'Fazendo', 'Feito'],
   // Gets copy of the object with specified keys
   pick(obj, keys) {
     return Object.keys(obj)
