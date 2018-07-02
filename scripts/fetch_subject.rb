@@ -3,7 +3,7 @@ require 'nokogiri'
 require 'open-uri'
 
 if ARGV.count == 0
-    puts "Usage: rails runner fetch_subject.rb <sgldis>"
+    puts "Usage: rails runner fetch_subject.rb <sgldis> <Unidade de ensino>"
     exit
 end
 
@@ -26,7 +26,7 @@ def parse_data(page)
     puts "Resumo   : #{d[5].text.strip}"
 
     ret = {}
-    #ret[:faculdade    ] = a[0].text.strip
+    #ret[:teaching_unit] = ARGV[1]
     #ret[:curso        ] = a[1].text.strip
     ret[:code         ] = b[0].text.strip.match(/Disciplina: ([^ ]+) - .+/i).captures.first
     ret[:name         ] = b[0].text.strip.match(/Disciplina: [^ ]+ - (.+)/i).captures.first

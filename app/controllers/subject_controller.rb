@@ -17,12 +17,18 @@ class SubjectController < ApplicationControllerAPI
       # Find subjects that fit the search string
       Subject.search(search).each do |subject|
         course_data = {}
-        puts subject
-        course_data[:id]   = subject.id
-        course_data[:type] = 'new_subject'
-        course_data[:code] = subject.code
-        course_data[:name] = subject.name
+        course_data[:id]        = subject.id
+        course_data[:type]      = 'new_subject'
+        course_data[:code]      = subject.code
+        course_data[:name]      = subject.name
+        course_data[:progress]  = nil
 
+        if @user && @user.is?('student')
+          relationship = SubjectStudent.find_by(:student_id => @user.id, :subject_id => subject.id)
+          if relationship
+            course_data[:progress] = relationship.progress
+          end
+        end
         @response[:subjects].push course_data
       end
     rescue Exception => e
@@ -154,6 +160,13 @@ class SubjectController < ApplicationControllerAPI
       @response[:subject][:name]          = subject.name
       @response[:subject][:description]   = subject.description
       @response[:subject][:description]   = 'Descrição vazia' if subject.description.empty?
+
+      if @user && @user.is?('student')
+        relationship = SubjectStudent.find_by(:student_id => @user.id, :subject_id => subject.id)
+        if relationship
+          @response[:subject][:progress] = relationship.progress
+        end
+      end
     rescue Exception => e
       @status_code = 500 if !@status_code
       @response[:status] = 'error'

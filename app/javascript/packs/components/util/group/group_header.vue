@@ -9,14 +9,13 @@
         </div>
         <div class='right toolbar'>
           <div v-if='!is_group && !footer'>Progresso: {{util.progress_texts[group_obj.progress ? group_obj.progress : 0]}}</div>
-          <div v-if='is_group' style='display: flex'>
-          Créditos: {{group_obj.done_credits}}<div v-if='(group_obj && group_obj.min_credits) || editing'> / 
+          <div v-if='is_group && ((group_obj && group_obj.min_credits) || editing)' class='progress_display'>
+          Créditos: {{group_obj.done_credits}} / 
             <input type='number' class='editable-text min' ref='group_min_credits' @focus='min_cred_focus = true' @blur='min_cred_focus = false'
                 @dblclick='enable_editing' v-if='group_obj' v-model.number='group_obj.min_credits' :readonly='!editing'/>
-            </div>
           </div>
-          <div v-if='(group_obj && group_obj.min_subjects) || editing'>
-          Matérias: {{0 ? 0 : '-'}} / 
+          <div v-if='is_group && ((group_obj && group_obj.min_subjects) || editing)' class='progress_display'>
+          Filhos: {{0 ? 0 : '-'}} /
             <input type='number' class='editable-text min' ref='group_min_subjects' @focus='min_sub_focus = true' @blur='min_sub_focus = false'
                 @dblclick='enable_editing' v-if='group_obj' v-model.number='group_obj.min_subjects' :readonly='!editing'/>
           </div>
@@ -222,6 +221,11 @@ export default {
 
 .header-icon:hover {
   color: #111;
+}
+
+.progress_display {
+  display: flex;
+  padding: 5pt;
 }
 
 // Toolbar transitions

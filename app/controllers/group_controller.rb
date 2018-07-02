@@ -91,9 +91,6 @@ class GroupController < ApplicationControllerAPI
       result[:children].push(child_group_data)
     end
 
-    # Get logged in user
-    user = get_logged_user()
-
     # Subjects data
     group.group_indices.each do |child_index|
       child_subject = child_index.subject
@@ -108,8 +105,8 @@ class GroupController < ApplicationControllerAPI
       subject[:progress]  = nil
 
       # Fetch subject progress if is student
-      if user && user.is?('student')
-        relationship = SubjectStudent.find_by(:student_id => user.id, :subject_id => child_subject.id)
+      if @user && @user.is?('student')
+        relationship = SubjectStudent.find_by(:student_id => @user.id, :subject_id => child_subject.id)
         if relationship
           subject[:progress]      = relationship.progress
           result[:done_credits]  += child_subject.credits_class + child_subject.credits_work if subject[:progress] == 2

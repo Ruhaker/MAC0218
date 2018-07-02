@@ -29,7 +29,8 @@
           <div class='spacer'/>
         </div>
         <div class='header'>
-          <button v-on:click='set_progress(index)' :key='index' v-for='(text, index) in util.progress_texts'>{{text}}</button>
+          <button :active='active'
+              v-on:click='set_progress(index)' :key='index' v-for='{text, active, index} in buttons'>{{text}}</button>
         </div>
         <h3 class='title'>{{subject.code}}</h3>
         <h5 class='title'>{{subject.name}}</h5>
@@ -89,6 +90,19 @@ export default {
       }
     };
   },
+  computed: {
+    buttons() {
+      var curr_progress = this.subject.progress;
+      return util.progress_texts.map((text, index) => {
+        return {
+          text,
+          active:
+            index == curr_progress || (index == 0 && curr_progress == null),
+          index
+        };
+      });
+    }
+  },
   watch: {
     search_string() {
       this.show_info = false;
@@ -106,6 +120,7 @@ export default {
         .request('subject/update', { subject_id: this.subject.id, progress })
         .then(() => {
           window.bus.$emit('reload-groups');
+          this.$set(this.subject, 'progress', progress);
         });
     },
     subject_info(data) {
@@ -124,6 +139,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
 /********************
  * Formulary inputs *
  ********************/
@@ -134,6 +154,7 @@ $input-field-border-radius: 8pt;
 // Text input styling
 form {
   display: flex;
+  flex-shrink: 0;
 }
 
 form input {
@@ -189,8 +210,8 @@ input[type='number']::-webkit-inner-spin-button {
   border: solid #ddd 1px;
   cursor: pointer;
 }
-.header > button:hover:active {
-  background-color: #444;
+.header > button[active='true'] {
+  background-color: #252;
 }
 
 .header > button:hover {
@@ -219,10 +240,10 @@ input[type='number']::-webkit-inner-spin-button {
  ********/
 
 .content {
-  display: flex;
-  flex-direction: column;
+  display: block;
+  overflow: auto;
   width: 100%;
-  flex-grow: 1;
+  flex-grow: 0;
   color: #ddd;
 }
 
