@@ -18,6 +18,7 @@
               <information-circle-icon title='Informações' rootClass='header-icon' w='25' h='25' />
               <div class='spacer'/>
             </div>
+            <div :style="`width: 10px; background-color: ${util.progress_color[result.progress]}; margin: 5pt`"/>
           </div>
         </div>
       </draggable>
@@ -44,8 +45,9 @@
 
 <script>
 import auth from '../auth.js';
-
 import util from '../util.js';
+
+import regeneratorRuntime from 'regenerator-runtime';
 
 import draggable from 'vuedraggable';
 import MoveIcon from 'vue-ionicons/dist/md-move.vue';
@@ -67,14 +69,15 @@ export default {
     this.util = util;
   },
   mounted() {
-    this.search_string = '';
     window.bus.$on('request-subject-info', this.subject_info);
+    window.bus.$on('reload-search', this.reload_search);
+    window.bus.$emit('reload-search');
   },
   data() {
     return {
       subject: { code: 'AAA0000', name: 'Lorem ipsum' },
       show_info: false,
-      search_string: null,
+      search_string: '',
       search_results: [],
       util: null,
       // Options for Vue.Draggable
@@ -106,20 +109,23 @@ export default {
   watch: {
     search_string() {
       this.show_info = false;
-      auth
-        .request('subject/list', { search: this.search_string })
-        .then(result => {
-          console.log(result.data);
-          this.search_results = result.data.subjects;
-        });
+      this.reload_search();
     }
   },
   methods: {
+    async reload_search() {
+      let result = await auth.request('subject/list', {
+        search: this.search_string
+      });
+      this.search_results = result.data.subjects;
+    },
+
     set_progress(progress) {
       auth
         .request('subject/update', { subject_id: this.subject.id, progress })
         .then(() => {
           window.bus.$emit('reload-groups');
+          window.bus.$emit('reload-search');
           this.$set(this.subject, 'progress', progress);
         });
     },

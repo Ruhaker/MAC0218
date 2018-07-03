@@ -191,6 +191,8 @@ export default {
         });
         console.log(response.data.group);
         this.group_obj = response.data.group;
+        if (this.group_obj.visualizing)
+          window.bus.$emit('update-progress', this.group_obj);
       }
     },
     // Adds child to this group

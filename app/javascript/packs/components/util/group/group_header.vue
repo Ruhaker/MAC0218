@@ -15,7 +15,7 @@
                 @dblclick='enable_editing' v-if='group_obj' v-model.number='group_obj.min_credits' :readonly='!editing'/>
           </div>
           <div v-if='is_group && ((group_obj && group_obj.min_subjects) || editing)' class='progress_display'>
-          Filhos: {{0 ? 0 : '-'}} /
+          Filhos: {{group_obj.done_subjects}} /
             <input type='number' class='editable-text min' ref='group_min_subjects' @focus='min_sub_focus = true' @blur='min_sub_focus = false'
                 @dblclick='enable_editing' v-if='group_obj' v-model.number='group_obj.min_subjects' :readonly='!editing'/>
           </div>
@@ -29,13 +29,21 @@
                   <check-icon rootClass='header-icon' w='25' h='25' />
                 </div>
                 <div v-else style='display: flex'>
+                  <div v-if='group_obj.min_credits || group_obj.min_subjects'>
+                    <div v-on:click="toggle_visualizing(true)" v-if='group_obj.can_modify && is_group && !visualizing'>
+                      <eye-icon title='Visualizar na barra' rootClass='header-icon' w='25' h='25' />
+                    </div>
+                    <div v-on:click="toggle_visualizing(false)" v-if='group_obj.can_modify && is_group && visualizing'>
+                      <eye-off-icon title='PArar de visualizar na barra' rootClass='header-icon' w='25' h='25' />
+                    </div>
+                  </div>
                   <div v-if='!isroot' v-on:click="delete_group">
                     <trash-icon title='Deletar' rootClass='header-icon' w='25' h='25' />
                   </div>
-                  <div v-on:click="enable_editing" v-if='is_group'>
+                  <div v-on:click="enable_editing" v-if='group_obj.can_modify && is_group'>
                     <create-icon title='Editar' rootClass='header-icon' w='25' h='25' />
                   </div>
-                  <div v-on:click="add_child" v-if='is_group'>
+                  <div v-on:click="add_child" v-if='group_obj.can_modify && is_group'>
                     <add-icon title='Adicionar grupo' rootClass='header-icon' w='25' h='25' />
                   </div>
                 </div>
@@ -62,6 +70,8 @@ import CheckIcon from 'vue-ionicons/dist/md-checkmark.vue';
 import MoveIcon from 'vue-ionicons/dist/md-move.vue';
 import TrashIcon from 'vue-ionicons/dist/md-trash.vue';
 import InformationCircleIcon from 'vue-ionicons/dist/md-information-circle.vue';
+import EyeIcon from 'vue-ionicons/dist/md-eye.vue';
+import EyeOffIcon from 'vue-ionicons/dist/md-eye-off.vue';
 
 import { Chrome } from 'vue-color';
 
@@ -90,9 +100,19 @@ export default {
     CheckIcon,
     MoveIcon,
     TrashIcon,
-    InformationCircleIcon
+    InformationCircleIcon,
+    EyeIcon,
+    EyeOffIcon
   },
   computed: {
+    visualizing: {
+      get() {
+        return this.group_obj.visualizing;
+      },
+      set(value) {
+        this.group_obj.visualizing = value;
+      }
+    },
     group_obj() {
       if (this.footer)
         return {
@@ -120,6 +140,13 @@ export default {
     if (this.group_obj && this.group_obj.new) this.enable_editing();
   },
   methods: {
+    async toggle_visualizing(new_state) {
+      this.save_obj();
+      this.visualizing = new_state;
+      await this.changed_group();
+      if (this.visualizing) window.bus.$emit('update-progress', this.group_obj);
+      else window.bus.$emit('remove-progress', this.group_obj);
+    },
     request_subject_info(subject_id) {
       window.bus.$emit('request-subject-info', { subject_id });
     },
@@ -143,7 +170,7 @@ export default {
       });
     },
     // Change group
-    changed_group(evn) {
+    changed_group() {
       let max_val = 999;
       if (this.group_obj.min_credits > max_val)
         this.group_obj.min_credits = max_val;
@@ -156,12 +183,15 @@ export default {
             name: this.group_obj.name,
             min_credits: this.group_obj.min_credits,
             min_subjects: this.group_obj.min_subjects,
-            ordering: this.group_obj.new_index
+            ordering: this.group_obj.new_index,
+            visualizing: this.visualizing
           })
           .then(result => {
             delete this.group_obj.new;
             delete this.group_obj.new_index;
             this.$emit('reload-group', { group_id: result.data.id });
+            if (this.group_obj.visualizing)
+              window.bus.$emit('update-progress', this.group_obj);
           });
       } else {
         // Get only changed values
@@ -177,6 +207,8 @@ export default {
           .then(() => {
             console.log('updated!');
             this.disable_editing();
+            if (this.group_obj.visualizing)
+              window.bus.$emit('update-progress', this.group_obj);
           })
           .catch(error => console.error(error));
       }
@@ -186,14 +218,21 @@ export default {
     enable_editing() {
       if (this.group_obj.can_modify) {
         this.editing = true;
-        this.old_obj = util.pick(this.group_obj, [
-          'name',
-          'min_credits',
-          'min_subjects'
-        ]);
+        this.save_obj();
         if (!this.min_cred_focus && !this.min_sub_focus && !this.title_focus)
           this.$refs.group_title.focus();
       }
+    },
+    // Saves previous version for change detection
+    save_obj() {
+      console.log(this.group_obj);
+      this.old_obj = util.pick(this.group_obj, [
+        'name',
+        'min_credits',
+        'min_subjects',
+        'visualizing'
+      ]);
+      console.log(this.old_obj);
     },
     // Disable editing
     disable_editing() {

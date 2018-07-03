@@ -80,14 +80,14 @@ class GroupController < ApplicationControllerAPI
     result[:children]       = []
     result[:done_credits]   = 0
     result[:done_subjects]  = 0
+    result[:visualizing]    = group.visualizing
 
     # Subgroups data
     group.groups.each do |child_group|
       child_group_data = build_group_data(child_group, depth - 1)
       result[:done_credits] += child_group_data[:done_credits]
       result[:done_subjects] += 1 if\
-        child_group_data[:progress_cred] == 2 || child_group_data[:progress_subj] == 2 ||\
-        (child_group_data[:min_credits] == nil && child_group_data[:min_subjects] == nil)
+        child_group_data[:progress_cred] == 2 || child_group_data[:progress_subj] == 2
       result[:children].push(child_group_data)
     end
 
@@ -118,7 +118,7 @@ class GroupController < ApplicationControllerAPI
     end
 
     # Progress for credits
-    if result[:min_credits]
+    if result[:min_credits] && result[:min_credits] > 0
       result[:progress_cred]  = 0 if result[:done_credits] < result[:min_credits]
       result[:progress_cred]  = 2 if result[:done_credits] >= result[:min_credits]
     else
@@ -126,7 +126,7 @@ class GroupController < ApplicationControllerAPI
     end
 
     # Progress for subjects
-    if result[:min_subjects]
+    if result[:min_subjects] && result[:min_subjects] > 0
       result[:progress_subj]  = 0 if result[:done_subjects] < result[:min_subjects]
       result[:progress_subj]  = 2 if result[:done_subjects] >= result[:min_subjects]
     else
@@ -188,6 +188,7 @@ class GroupController < ApplicationControllerAPI
       new_min_credits   = get_param(:min_credits, false)
       new_min_subjects  = get_param(:min_subjects, false)
       new_index         = get_param(:index, false)
+      new_visualizing   = get_param(:visualizing, false)
 
       changes = {}
       changes[:group_id]      = new_parent if new_parent
@@ -195,6 +196,7 @@ class GroupController < ApplicationControllerAPI
       changes[:min_credits]   = new_min_credits if new_min_credits
       changes[:min_subjects]  = new_min_subjects if new_min_subjects
       changes[:index]         = new_index if new_index
+      changes[:visualizing]   = new_visualizing if new_visualizing != nil
 
       if changes.size == 0
         @status_code = 400
